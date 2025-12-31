@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Linux Container - Bintan&#x27;s Wiki</title>
+        <title>4_kube-scheduler源码分析 - Bintan&#x27;s Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-33cc1c70.js";
+            window.path_to_searchindex_js = "../../../searchindex-33cc1c70.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-d448a341.js"></script>
+        <script src="../../../toc-d448a341.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,13 +140,13 @@
                     <h1 class="menu-title">Bintan&#x27;s Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
                         <a href="https://github.com/lubingtan/lubingtan.github.io" title="Git repository" aria-label="Git repository">
                             <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
-                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/./" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/./docs/Cloud_Native/Kubernetes/4_kube-scheduler源码分析.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -180,17 +180,328 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="linux-container"><a class="header" href="#linux-container">Linux Container</a></h1>
+                        <h1 id="k8s-scheduler-流程"><a class="header" href="#k8s-scheduler-流程">k8s scheduler 流程</a></h1>
+<p>[toc]</p>
+<h1 id="1-配置初始化"><a class="header" href="#1-配置初始化">1. 配置初始化</a></h1>
+<h2 id="三种配置源"><a class="header" href="#三种配置源">三种配置源</a></h2>
+<p>关键过程位于<code>pkg/scheduler/scheduler.go</code></p>
+<pre><code class="language-Go">func New(client clientset.Interface,
+  informerFactory informers.SharedInformerFactory,
+  recorderFactory profile.RecorderFactory,
+  stopCh &lt;-chan struct{},
+  opts ...Option) (*Scheduler, error)
+</code></pre>
+<p>根据配置的<code>schedulerAlgorithmSource</code>不同，有三个分支，第一种就是用默认的provider，第二种是读取文件配置，第三种是读取configmap配置</p>
+<pre><code class="language-Go">  switch {
+  case source.Provider != nil:
+    // Create the config from a named algorithm provider.
+    sc, err := configurator.createFromProvider(*source.Provider)
+    if err != nil {
+      return nil, fmt.Errorf("couldn't create scheduler using provider %q: %v", *source.Provider, err)
+    }
+    sched = sc
+  case source.Policy != nil:
+    // Create the config from a user specified policy source.
+    policy := &amp;schedulerapi.Policy{}
+    switch {
+    case source.Policy.File != nil:
+      if err := initPolicyFromFile(source.Policy.File.Path, policy); err != nil {
+        return nil, err
+      }
+    case source.Policy.ConfigMap != nil:
+      if err := initPolicyFromConfigMap(client, source.Policy.ConfigMap, policy); err != nil {
+        return nil, err
+      }
+    }
+  } 
+</code></pre>
+<h2 id="默认配置"><a class="header" href="#默认配置">默认配置</a></h2>
+<p>我们就直接看默认配置吧。</p>
+<p>位于<code>pkg/scheduler/factory.go</code>的<code>createFromProvider</code></p>
+<pre><code class="language-Go">// createFromProvider creates a scheduler from the name of a registered algorithm provider.
+func (c *Configurator) createFromProvider(providerName string) (*Scheduler, error) {
+  klog.V(2).InfoS("Creating scheduler from algorithm provider", "algorithmProvider", providerName)
+  r := algorithmprovider.NewRegistry()
+  defaultPlugins, exist := r[providerName]
+  if !exist {
+    return nil, fmt.Errorf("algorithm provider %q is not registered", providerName)
+  }
+
+  for i := range c.profiles {
+    prof := &amp;c.profiles[i]
+    plugins := &amp;schedulerapi.Plugins{}
+    plugins.Append(defaultPlugins)
+    plugins.Apply(prof.Plugins)
+    prof.Plugins = plugins
+  }
+  return c.create()
+}
+</code></pre>
+<p>其中<code>profiles </code>是个<code>KubeSchedulerProfile</code>结构，其中有<code>SchedulerName</code>, <code>Plugins</code>， 如果没有指定<code>SchedulerName</code>默认等于<code>"default-scheduler"</code></p>
+<pre><code class="language-Go">type KubeSchedulerProfile struct {
+  // SchedulerName is the name of the scheduler associated to this profile.
+  // If SchedulerName matches with the pod's "spec.schedulerName", then the pod
+  // is scheduled with this profile.
+  SchedulerName string
+
+  // Plugins specify the set of plugins that should be enabled or disabled.
+  // Enabled plugins are the ones that should be enabled in addition to the
+  // default plugins. Disabled plugins are any of the default plugins that
+  // should be disabled.
+  // When no enabled or disabled plugin is specified for an extension point,
+  // default plugins for that extension point will be used if there is any.
+  // If a QueueSort plugin is specified, the same QueueSort Plugin and
+  // PluginConfig must be specified for all profiles.
+  Plugins *Plugins
+
+  // PluginConfig is an optional set of custom plugin arguments for each plugin.
+  // Omitting config args for a plugin is equivalent to using the default config
+  // for that plugin.
+  PluginConfig []PluginConfig
+}
+
+</code></pre>
+<p>默认的<code>Plugins</code>配置位于<code>pkg/scheduler/algorithmprovider/registry.go</code>，这个配置相当长，具体有什么pulugin可以查看代码</p>
+<pre><code class="language-Go">func getDefaultConfig() *schedulerapi.Plugins
+</code></pre>
+<h2 id="plugins是什么"><a class="header" href="#plugins是什么">Plugins是什么</a></h2>
+<p>plugins就是为了给pod分配节点，而创建的各种算法插件。</p>
+<p>默认配置中主要配置了各种plugins，plugins可以分为这么几类（详情可以查看<code>pkg/scheduler/apis/config/types.go</code>中的<code>Plugins</code>结构体）：</p>
+<ol>
+<li>
+<p><strong>QueueSort</strong>: 给pod排序的</p>
+</li>
+<li>
+<p><strong>PreFilter</strong>: 在filter之前执行一下</p>
+</li>
+<li>
+<p><strong>Filter</strong>: 过滤不可用的节点,</p>
+</li>
+<li>
+<p>**PostFilter：**过滤后执行一下</p>
+</li>
+<li>
+<p>**PreScore ：**打分前执行一下</p>
+</li>
+<li>
+<p><strong>Score</strong>：在给node排名时打分</p>
+</li>
+<li>
+<p><strong>Reserve</strong>：在node被分配给一个pod后执行，用来保留或取消保留某些资源</p>
+</li>
+<li>
+<p><strong>Permit</strong>：在执行bind node之前执行，用来组织或者延迟bind</p>
+</li>
+<li>
+<p>**PreBind：**在执行bind node之前执行</p>
+</li>
+<li>
+<p>**Bind：**执行bind（只有一个DefaultBinder实现了）</p>
+</li>
+<li>
+<p><strong>PostBind</strong>：bind成功后执行</p>
+</li>
+</ol>
+<p><code>Pulgin</code>的<code>interface</code>定义位于<code>pkg/scheduler/framework/interface.go</code>，有上述提到的各种Plugin的接口定义</p>
+<h1 id="2-创建scheduler"><a class="header" href="#2-创建scheduler">2. 创建Scheduler</a></h1>
+<h2 id="生成schedulingqueue"><a class="header" href="#生成schedulingqueue">生成SchedulingQueue</a></h2>
+<p>SchedulingQueue接收了lessFn（也就是排序函数），在SchedulingQueue中会实现pod的排序。后面的NextPod也是调用了SchedulingQueue的Pop方法</p>
+<pre><code class="language-Go">  lessFn := profiles[c.profiles[0].SchedulerName].QueueSortFunc()
+  podQueue := internalqueue.NewSchedulingQueue(
+    lessFn,
+    c.informerFactory,
+    internalqueue.WithPodInitialBackoffDuration(time.Duration(c.podInitialBackoffSeconds)*time.Second),
+    internalqueue.WithPodMaxBackoffDuration(time.Duration(c.podMaxBackoffSeconds)*time.Second),
+    internalqueue.WithPodNominator(nominator),
+    internalqueue.WithClusterEventMap(clusterEventMap),
+  )
+</code></pre>
+<h2 id="framework接口"><a class="header" href="#framework接口">Framework接口</a></h2>
+<p>从profiles生成profile map，关键代码位于<code>pkg/scheduler/factory.go</code></p>
+<pre><code class="language-Go">// create a scheduler from a set of registered plugins.
+func (c *Configurator) create() (*Scheduler, error) {
+// ......
+  profiles, err := profile.NewMap(c.profiles, c.registry, c.recorderFactory,
+    frameworkruntime.WithClientSet(c.client),
+    frameworkruntime.WithInformerFactory(c.informerFactory),
+    frameworkruntime.WithSnapshotSharedLister(c.nodeInfoSnapshot),
+    frameworkruntime.WithRunAllFilters(c.alwaysCheckAllPredicates),
+    frameworkruntime.WithPodNominator(nominator),
+    frameworkruntime.WithCaptureProfile(frameworkruntime.CaptureProfile(c.frameworkCapturer)),
+    frameworkruntime.WithClusterEventMap(clusterEventMap),
+    frameworkruntime.WithParallelism(int(c.parallellism)),
+  )
+// ......
+  return &amp;Scheduler{
+    SchedulerCache:  c.schedulerCache,
+    Algorithm:       algo,
+    Profiles:        profiles,
+    NextPod:         internalqueue.MakeNextPodFunc(podQueue),
+    Error:           MakeDefaultErrorFunc(c.client, c.informerFactory.Core().V1().Pods().Lister(), podQueue, c.schedulerCache),
+    StopEverything:  c.StopEverything,
+    SchedulingQueue: podQueue,
+  }, nil
+} 
+</code></pre>
+<p>其中profiles是个map （<code>type Map map[string]framework.Framework</code>），从<code>KubeSchedulerProfile</code>结构生成<code>framework.Framework</code>的关键代码位于<code>pkg/scheduler/profile/profile.go</code></p>
+<pre><code class="language-Go">// newProfile builds a Profile for the given configuration.
+func newProfile(cfg config.KubeSchedulerProfile, r frameworkruntime.Registry, recorderFact RecorderFactory,
+  opts ...frameworkruntime.Option) (framework.Framework, error) {
+  recorder := recorderFact(cfg.SchedulerName)
+  opts = append(opts, frameworkruntime.WithEventRecorder(recorder))
+  fwk, err := frameworkruntime.NewFramework(r, &amp;cfg, opts...)
+  if err != nil {
+    return nil, err
+  }
+  return fwk, nil
+}
+</code></pre>
+<p>Framework接口的定义位于<code>pkg/scheduler/framework/interface.go</code></p>
+<h2 id="生成plugins接口"><a class="header" href="#生成plugins接口">生成Plugins接口</a></h2>
+<p>关键过程位于<code>pkg/scheduler/framework/runtime/framework.go</code></p>
+<pre><code class="language-Go">// NewFramework initializes plugins given the configuration and the registry.
+func NewFramework(r Registry, profile *config.KubeSchedulerProfile, opts ...Option) (framework.Framework, error)
+</code></pre>
+<p>其中的参数<code>Registry</code>是个PluginFactory map</p>
+<pre><code class="language-Go">type Registry map[string]PluginFactory
+</code></pre>
+<p>根据Registry可以生成pluginsMap，</p>
+<pre><code class="language-Go">pluginsMap := make(map[string]framework.Plugin)
+</code></pre>
+<p>通过反射，将plugin注入到framework中的各种plugins</p>
+<pre><code class="language-Go">  for _, e := range f.getExtensionPoints(profile.Plugins) {
+    if err := updatePluginList(e.slicePtr, e.plugins, pluginsMap); err != nil {
+      return nil, err
+    }
+  }
+</code></pre>
+<p><code>getExtensionPoints</code>以及<code>updatePluginList</code>的定义：</p>
+<pre><code class="language-Go">func (f *frameworkImpl) getExtensionPoints(plugins *config.Plugins) []extensionPoint {
+  return []extensionPoint{
+    {plugins.PreFilter, &amp;f.preFilterPlugins},
+    {plugins.Filter, &amp;f.filterPlugins},
+    {plugins.PostFilter, &amp;f.postFilterPlugins},
+    {plugins.Reserve, &amp;f.reservePlugins},
+    {plugins.PreScore, &amp;f.preScorePlugins},
+    {plugins.Score, &amp;f.scorePlugins},
+    {plugins.PreBind, &amp;f.preBindPlugins},
+    {plugins.Bind, &amp;f.bindPlugins},
+    {plugins.PostBind, &amp;f.postBindPlugins},
+    {plugins.Permit, &amp;f.permitPlugins},
+    {plugins.QueueSort, &amp;f.queueSortPlugins},
+  }
+}
+
+func updatePluginList(pluginList interface{}, pluginSet config.PluginSet, pluginsMap map[string]framework.Plugin) error {
+  plugins := reflect.ValueOf(pluginList).Elem()
+  pluginType := plugins.Type().Elem()
+  set := sets.NewString()
+  for _, ep := range pluginSet.Enabled {
+    pg, ok := pluginsMap[ep.Name]
+    if !ok {
+      return fmt.Errorf("%s %q does not exist", pluginType.Name(), ep.Name)
+    }
+
+    if !reflect.TypeOf(pg).Implements(pluginType) {
+      return fmt.Errorf("plugin %q does not extend %s plugin", ep.Name, pluginType.Name())
+    }
+
+    if set.Has(ep.Name) {
+      return fmt.Errorf("plugin %q already registered as %q", ep.Name, pluginType.Name())
+    }
+
+    set.Insert(ep.Name)
+
+    newPlugins := reflect.Append(plugins, reflect.ValueOf(pg))
+    plugins.Set(newPlugins)
+  }
+  return nil
+}
+</code></pre>
+<p>这样子Framework就拥有了各种plugins</p>
+<h1 id="3-scheduler执行过程"><a class="header" href="#3-scheduler执行过程">3. Scheduler执行过程</a></h1>
+<p>主函数就是<code>scheduleOne</code>这个方法。其余过程就不看了，主要看下那些plugins是怎么执行的。</p>
+<h2 id="创建了cyclestate"><a class="header" href="#创建了cyclestate">创建了CycleState</a></h2>
+<pre><code class="language-Go">state := framework.NewCycleState()
+</code></pre>
+<p>这个<code>CycleState</code>位于<code>pkg/scheduler/framework/cycle_state.go</code>，它主要记录一些key值</p>
+<pre><code class="language-Go">type CycleState struct {
+  mx      sync.RWMutex
+  storage map[StateKey]StateData
+  // if recordPluginMetrics is true, PluginExecutionDuration will be recorded for this cycle.
+  recordPluginMetrics bool
+}
+</code></pre>
+<h2 id="执行调度过程"><a class="header" href="#执行调度过程">执行调度过程</a></h2>
+<pre><code class="language-Go">scheduleResult, err := sched.Algorithm.Schedule(schedulingCycleCtx, fwk, state, pod)
+</code></pre>
+<p><code>Algorithm</code>实际实现的地方位于<code>pkg/scheduler/core/generic_scheduler.go</code>中的这个结构体<code>genericScheduler</code></p>
+<p>首先进行 snapshot，获取集群信息</p>
+<pre><code class="language-Go">  if err := g.snapshot(); err != nil {
+    return result, err
+  }
+</code></pre>
+<h3 id="获取合适的节点"><a class="header" href="#获取合适的节点">获取合适的节点</a></h3>
+<pre><code class="language-Go">feasibleNodes, diagnosis, err := g.findNodesThatFitPod(ctx, fwk, state, pod)
+</code></pre>
+<h4 id="prefilter"><a class="header" href="#prefilter">PreFilter</a></h4>
+<pre><code class="language-Go">s := fwk.RunPreFilterPlugins(ctx, state, pod)
+</code></pre>
+<h4 id="filter"><a class="header" href="#filter">Filter</a></h4>
+<p>用plugin进行Filter</p>
+<pre><code class="language-Go">status := fwk.RunFilterPluginsWithNominatedPods(ctx, state, pod, nodeInfo)
+</code></pre>
+<p>用extender进行Filter</p>
+<pre><code class="language-Go">feasibleNodes, err = g.findNodesThatPassExtenders(pod, feasibleNodes, diagnosis.NodeToStatusMap)
+</code></pre>
+<h3 id="优先节点"><a class="header" href="#优先节点">优先节点</a></h3>
+<h4 id="prescore"><a class="header" href="#prescore">PreScore</a></h4>
+<pre><code class="language-Go">preScoreStatus := fwk.RunPreScorePlugins(ctx, state, pod, nodes)
+</code></pre>
+<h4 id="score"><a class="header" href="#score">Score</a></h4>
+<pre><code class="language-Go">scoresMap, scoreStatus := fwk.RunScorePlugins(ctx, state, pod, nodes)
+</code></pre>
+<h3 id="选择节点"><a class="header" href="#选择节点">选择节点</a></h3>
+<p>选择最高分的节点</p>
+<pre><code class="language-Go">host, err := g.selectHost(priorityList)
+</code></pre>
+<h3 id="bind之前"><a class="header" href="#bind之前">Bind之前</a></h3>
+<h4 id="assume"><a class="header" href="#assume">Assume</a></h4>
+<pre><code class="language-Go">err = sched.assume(assumedPod, scheduleResult.SuggestedHost)
+</code></pre>
+<h4 id="reserve"><a class="header" href="#reserve">Reserve</a></h4>
+<pre><code class="language-Go">sts := fwk.RunReservePluginsReserve(schedulingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost);
+</code></pre>
+<h4 id="permit"><a class="header" href="#permit">Permit</a></h4>
+<pre><code class="language-Go">runPermitStatus := fwk.RunPermitPlugins(schedulingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
+</code></pre>
+<h4 id="unreserve"><a class="header" href="#unreserve">Unreserve</a></h4>
+<pre><code class="language-Go">fwk.RunReservePluginsUnreserve(schedulingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
+</code></pre>
+<h3 id="异步执行bind"><a class="header" href="#异步执行bind">异步执行Bind</a></h3>
+<h4 id="prebind"><a class="header" href="#prebind">PreBind</a></h4>
+<pre><code class="language-Go">preBindStatus := fwk.RunPreBindPlugins(bindingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
+</code></pre>
+<h4 id="bind"><a class="header" href="#bind">Bind</a></h4>
+<pre><code class="language-Go">go func() {
+  // ......
+  err := sched.bind(bindingCycleCtx, fwk, assumedPod, scheduleResult.SuggestedHost, state)
+  // ......
+} 
+</code></pre>
+<h4 id="postbind"><a class="header" href="#postbind">PostBind</a></h4>
+<pre><code class="language-Go">fwk.RunPostBindPlugins(bindingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="docs/Cloud_Native/Kubernetes/rbac.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/2_kubernetes-api-server.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="docs/Cloud_Native/Linux_Container/容器知识备忘录.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/5_client-go list &amp; watch 原理.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -200,11 +511,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="docs/Cloud_Native/Kubernetes/rbac.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/2_kubernetes-api-server.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="docs/Cloud_Native/Linux_Container/容器知识备忘录.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/5_client-go list &amp; watch 原理.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -224,13 +535,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="../../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../../mark-09e88c2c.min.js"></script>
+        <script src="../../../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="../../../clipboard-1626706a.min.js"></script>
+        <script src="../../../highlight-abc7f01d.js"></script>
+        <script src="../../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 

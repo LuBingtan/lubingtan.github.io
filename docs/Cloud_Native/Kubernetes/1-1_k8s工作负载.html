@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Linux Container - Bintan&#x27;s Wiki</title>
+        <title>1-1_k8s工作负载 - Bintan&#x27;s Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="favicon-8114d1fc.png">
-        <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
-        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-33cc1c70.js";
+            window.path_to_searchindex_js = "../../../searchindex-33cc1c70.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-d448a341.js"></script>
+        <script src="../../../toc-d448a341.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,13 +140,13 @@
                     <h1 class="menu-title">Bintan&#x27;s Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
                         <a href="https://github.com/lubingtan/lubingtan.github.io" title="Git repository" aria-label="Git repository">
                             <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
-                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/./" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/./docs/Cloud_Native/Kubernetes/1-1_k8s工作负载.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -180,17 +180,87 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="linux-container"><a class="header" href="#linux-container">Linux Container</a></h1>
+                        <h1 id="pod"><a class="header" href="#pod">Pod</a></h1>
+<h2 id="什么是pod"><a class="header" href="#什么是pod">什么是Pod</a></h2>
+<p><em>Pod</em> 是可以在 Kubernetes 中创建和管理的、最小的可部署的计算单元。</p>
+<p><em>Pod</em> （就像在鲸鱼荚或者豌豆荚中）是一组（一个或多个） <a href="https://kubernetes.io/zh/docs/concepts/overview/what-is-kubernetes/#why-containers">容器</a>； 这些容器共享存储、网络、以及怎样运行这些容器的声明。 Pod 中的内容总是并置（colocated）的并且一同调度，在Pod的<strong>共享上下文中</strong>运行。</p>
+<blockquote>
+<p>Pod 的共享上下文包括一组 Linux 名字空间、控制组（cgroup）和可能一些其他的隔离 方面，即用来隔离 Docker 容器的技术。 在 Pod 的上下文中，每个独立的应用可能会进一步实施隔离。就 Docker 概念的术语而言，Pod 类似于共享名字空间和文件系统卷的一组 Docker 容器。</p>
+</blockquote>
+<p>Pod 所建模的是特定于应用的“逻辑主机”，其中包含一个或多个应用器， 这些容器是相对紧密的耦合在一起的。 在非云环境中，在相同的物理机或虚拟机上运行的应用类似于在同一逻辑主机上运行的云应用。</p>
+<p>除了应用容器，Pod 还可以包含在 Pod 启动期间运行的 <a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/init-containers/">Init 容器</a>。 你也可以在集群中支持<a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/ephemeral-containers/">临时性容器</a> 的情况下，为调试的目的注入临时性容器。</p>
+<h2 id="如何使用pod"><a class="header" href="#如何使用pod">如何使用Pod</a></h2>
+<p>通常你不需要直接创建 Pod，甚至单实例 Pod。更多情况下，你会使用诸如 <a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/deployment/">Deployment</a> 或 <a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/job/">Job</a> 这类工作负载资源来创建 Pod。如果 Pod 需要跟踪状态， 可以考虑 <a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/statefulset/">StatefulSet</a> 资源。</p>
+<p>每个 Pod 都旨在运行给定应用程序的单个实例。如果希望横向扩展应用程序（例如，运行多个实例 以提供更多的资源），则应该使用多个 Pod，每个实例使用一个 Pod。 在 Kubernetes 中，这通常被称为 <em>副本（Replication）</em>。 通常使用一种工作负载资源及其<a href="https://kubernetes.io/zh/docs/concepts/architecture/controller/">控制器</a> 来创建和管理一组 Pod 副本。</p>
+<h3 id="pod与容器的关系"><a class="header" href="#pod与容器的关系">Pod与容器的关系</a></h3>
+<p>Pod中可以包括一个或者多个容器，按照Pod 中容器的数量，Pod使用方式可以分为两种：</p>
+<ul>
+<li><strong>运行单个容器的 Pod</strong>。“一个Pod, 一个容器“模型是最常见的 Kubernetes 用例； 在这种情况下，可以将 Pod 看作单个容器的包装器，并且 Kubernetes 直接管理 Pod，而不是容器。</li>
+<li><strong>运行多个协同工作的容器的 Pod</strong>。 Pod 可能封装由多个紧密耦合且需要共享资源的共处容器组成的应用程序。 这些位于同一位置的容器可能形成单个内聚的服务单元 —— 一个容器将文件从共享卷提供给公众， 而另一个单独的“挂斗”（sidecar）容器则刷新或更新这些文件。 Pod 将这些容器和存储资源打包为一个可管理的实体。</li>
+</ul>
+<blockquote>
+<p>说明：将多个并置、同管的容器组织到一个 Pod 中是一种相对高级的使用场景。 只有在一些场景中，容器之间紧密关联时你才应该使用这种模式。</p>
+</blockquote>
+<p>当Pod中有多个容器时，Pod 中的容器被自动安排到集群中的同一物理机或虚拟机上，并可以一起进行调度。 容器之间可以共享资源和依赖、彼此通信、协调何时以及何种方式终止自身</p>
+<p><strong>例如</strong>，你可能有一个容器，为共享卷中的文件提供 Web 服务器支持，以及一个单独的 “sidecar（挂斗）”容器负责从远端更新这些文件。</p>
+<p>另外，有些 Pod 具有 <a href="https://kubernetes.io/zh/docs/reference/glossary/?all=true#term-init-container">Init 容器</a> ， Init 容器会在启动应用容器之前运行并完成。</p>
+<h3 id="pod与工作负载"><a class="header" href="#pod与工作负载">Pod与工作负载</a></h3>
+<p>kubernets提供了一些Pod之上的工作负载，例如Deployment、Job、Daemonset等等。</p>
+<p>你可以使用工作负载资源来创建和管理多个 Pod。工作负载资源的控制器能够处理副本的管理、上线，并在 Pod 失效时提供自愈能力。 例如，如果一个节点失败，控制器注意到该节点上的 Pod 已经停止工作， 就可以创建替换性的 Pod。调度器会将替身 Pod 调度到一个健康的节点执行。</p>
+<p>工作负载的控制器会使用负载对象中的 <code>PodTemplate</code> 来生成实际的 Pod。 <code>PodTemplate</code> 是你用来运行应用时指定的负载资源的目标状态的一部分。需要注意的是，<strong>修改 Pod 模版</strong>或者切换到新的 Pod 模版都<strong>不会对已经存在的 Pod 起作用</strong>。 Pod 不会直接收到模版的更新。相反， 新的 Pod 会被创建出来，与更改后的 Pod 模版匹配。</p>
+<p><strong>例如</strong>，Deployment 控制器针对每个 Deployment 对象确保运行中的 Pod 与当前的 Pod 模版匹配。如果模版被更新，则 Deployment 必须删除现有的 Pod，基于更新后的模版创建新的 Pod。每个工作负载资源都实现了自己的规则，用来处理对 Pod 模版的更新。</p>
+<h3 id="pod的更新与替换"><a class="header" href="#pod的更新与替换">Pod的更新与替换</a></h3>
+<p>正如前面章节所述，当某工作负载的 Pod 模板被改变时，控制器会基于更新的模板 创建新的 Pod 对象而不是对现有 Pod 执行更新或者修补操作。</p>
+<p>Kubernetes 并不禁止你直接管理 Pod。对运行中的 Pod 的某些字段执行就地更新操作 还是可能的。不过，类似 <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#patch-pod-v1-core"><code>patch</code></a> 和 <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#replace-pod-v1-core"><code>replace</code></a> 这类更新操作有一些限制：</p>
+<ul>
+<li>Pod 的绝大多数元数据都是不可变的。例如，你不可以改变其 <code>namespace</code>、<code>name</code>、 <code>uid</code> 或者 <code>creationTimestamp</code> 字段；<code>generation</code> 字段是比较特别的，如果更新 该字段，只能增加字段取值而不能减少。</li>
+<li>如果 <code>metadata.deletionTimestamp</code> 已经被设置，则不可以向 <code>metadata.finalizers</code> 列表中添加新的条目。</li>
+<li>Pod 更新不可以改变除 <code>spec.containers[*].image</code>、<code>spec.initContainers[*].image</code>、 <code>spec.activeDeadlineSeconds</code> 或 <code>spec.tolerations</code> 之外的字段。 对于 <code>spec.tolerations</code>，你只被允许添加新的条目到其中。</li>
+<li>在更新<code>spec.activeDeadlineSeconds</code> 字段时，以下两种更新操作是被允许的：
+<ol>
+<li>如果该字段尚未设置，可以将其设置为一个正数；</li>
+<li>如果该字段已经设置为一个正数，可以将其设置为一个更小的、非负的整数</li>
+</ol>
+</li>
+</ul>
+<h3 id="pod资源共享与通信"><a class="header" href="#pod资源共享与通信">Pod资源共享与通信</a></h3>
+<p>Pod 使它的成员容器间能够进行数据共享和通信。</p>
+<h4 id="存储"><a class="header" href="#存储">存储</a></h4>
+<p>一个 Pod 可以设置一组共享的存储<a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/">卷</a>。 Pod 中的所有容器都可以访问该共享卷，从而允许这些容器共享数据。 卷还允许 Pod 中的持久数据保留下来，即使其中的容器需要重新启动。 有关 Kubernetes 如何在 Pod 中实现共享存储并将其提供给 Pod 的更多信息， 请参考<a href="https://kubernetes.io/zh/docs/concepts/storage/">卷</a>。</p>
+<h4 id="网络"><a class="header" href="#网络">网络</a></h4>
+<p>每个 Pod 都在每个地址族中获得一个唯一的 IP 地址。 Pod 中的每个容器共享网络名字空间，包括 IP 地址和网络端口。 <em>Pod 内</em> 的容器可以使用 <code>localhost</code> 互相通信。 当 Pod 中的容器与 <em>Pod 之外</em> 的实体通信时，它们必须协调如何使用共享的网络资源 （例如端口）。</p>
+<p>他们也能通过如 <strong>SystemV 信号量</strong>或 <strong>POSIX 共享内存</strong>这类标准的进程间通信方式互相通信。 不同 Pod 中的容器的 IP 地址互不相同，没有 <a href="https://kubernetes.io/zh/docs/concepts/policy/pod-security-policy/">特殊配置</a> 就不能使用 IPC 进行通信。 如果某容器希望与运行于其他 Pod 中的容器通信，可以通过 IP 联网的方式实现。</p>
+<p>Pod 中的容器所看到的系统主机名与为 Pod 配置的 <code>name</code> 属性值相同。 <a href="https://kubernetes.io/zh/docs/concepts/cluster-administration/networking/">网络</a>部分提供了更多有关此内容的信息。</p>
+<h3 id="pod的容器权限"><a class="header" href="#pod的容器权限">Pod的容器权限</a></h3>
+<p>Pod 中的任何容器都可以使用容器规约中的 <a href="https://kubernetes.io/zh/docs/tasks/configure-pod-container/security-context/">安全性上下文</a>中的 <code>privileged</code> 参数启用特权模式。 这对于想要使用操作系统管理权能（Capabilities，如操纵网络堆栈和访问设备） 的容器很有用。 容器内的进程几乎可以获得与容器外的进程相同的特权。</p>
+<blockquote>
+<p><strong>说明：</strong> 你的<a href="https://kubernetes.io/zh/docs/setup/production-environment/container-runtimes">容器运行时</a>必须支持 特权容器的概念才能使用这一配置。</p>
+</blockquote>
+<h3 id="静态pod"><a class="header" href="#静态pod">静态Pod</a></h3>
+<p><em>静态 Pod（Static Pod）</em> 直接由特定节点上的 <code>kubelet</code> 守护进程管理， 不需要<a href="https://kubernetes.io/zh/docs/reference/command-line-tools-reference/kube-apiserver/">API 服务器</a>看到它们。 尽管大多数 Pod 都是通过控制面（例如，<a href="https://kubernetes.io/zh/docs/concepts/workloads/controllers/deployment/">Deployment</a>） 来管理的，对于静态 Pod 而言，<code>kubelet</code> 直接监控每个 Pod，并在其失效时重启之。</p>
+<p>静态 Pod 通常绑定到某个节点上的 <a href="https://kubernetes.io/docs/reference/generated/kubelet">kubelet</a>。 其主要用途是运行自托管的控制面。 在自托管场景中，使用 <code>kubelet</code> 来管理各个独立的 <a href="https://kubernetes.io/zh/docs/concepts/overview/components/#control-plane-components">控制面组件</a>。</p>
+<p><code>kubelet</code> 自动尝试为每个静态 Pod 在 Kubernetes API 服务器上创建一个 <a href="https://kubernetes.io/zh/docs/reference/glossary/?all=true#term-mirror-pod">镜像 Pod</a>。 这意味着在节点上运行的 Pod 在 API 服务器上是可见的，但不可以通过 API 服务器来控制。</p>
+<h3 id="pod-lifecicle"><a class="header" href="#pod-lifecicle">Pod Lifecicle</a></h3>
+<p>Pod 遵循一个预定义的生命周期，起始于 <code>Pending</code> <a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase">阶段</a>，如果至少 其中有一个主要容器正常启动，则进入 <code>Running</code>，之后取决于 Pod 中是否有容器以 失败状态结束而进入 <code>Succeeded</code> 或者 <code>Failed</code> 阶段。</p>
+<p>在 Pod 运行期间，<code>kubelet</code> 能够重启容器以处理一些失效场景。 在 Pod 内部，Kubernetes 跟踪不同容器的<a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#container-states">状态</a> 并确定使 Pod 重新变得健康所需要采取的动作。</p>
+<p>在 Kubernetes API 中，Pod 包含规约部分和实际状态部分。 Pod 对象的状态包含了一组 <a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#pod-conditions">Pod 状况（Conditions）</a>。 如果应用需要的话，你也可以向其中注入<a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#pod-readiness-gate">自定义的就绪性信息</a>。</p>
+<p>Pod 在其生命周期中只会被<a href="https://kubernetes.io/zh/docs/concepts/scheduling-eviction/">调度</a>一次。 一旦 Pod 被调度（分派）到某个节点，Pod 会一直在该节点运行，直到 Pod 停止或者 被<a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination">终止</a>。</p>
+<h4 id="pod-lifetime"><a class="header" href="#pod-lifetime">Pod Lifetime</a></h4>
+<p>和一个个独立的应用容器一样，Pod 也被认为是相对临时性（而不是长期存在）的实体。 Pod 会被创建、赋予一个唯一的 ID（<a href="https://kubernetes.io/zh/docs/concepts/overview/working-with-objects/names/#uids">UID</a>）， 并被调度到节点，并在终止（根据重启策略）或删除之前一直运行在该节点。</p>
+<p>如果一个<a href="https://kubernetes.io/zh/docs/concepts/architecture/nodes/">节点</a>死掉了，调度到该节点 的 Pod 也被计划在给定超时期限结束后<a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/pod-lifecycle/#pod-garbage-collection">删除</a>。</p>
+<p>Pod 自身不具有自愈能力。如果 Pod 被调度到某<a href="https://kubernetes.io/zh/docs/concepts/architecture/nodes/">节点</a> 而该节点之后失效，或者调度操作本身失效，Pod 会被删除；与此类似，Pod 无法在节点资源 耗尽或者节点维护期间继续存活。Kubernetes 使用一种高级抽象，称作 <a href="https://kubernetes.io/zh/docs/concepts/architecture/controller/">控制器</a>，来管理这些相对而言 可随时丢弃的 Pod 实例。</p>
+<p>任何给定的 Pod （由 UID 定义）从不会被“重新调度（rescheduled）”到不同的节点； 相反，这一 Pod 可以被一个新的、几乎完全相同的 Pod 替换掉。 如果需要，新 Pod 的名字可以不变，但是其 UID 会不同。</p>
+<p>如果某物声称其生命期与某 Pod 相同，例如存储<a href="https://kubernetes.io/zh/docs/concepts/storage/volumes/">卷</a>， 这就意味着该对象在此 Pod （UID 亦相同）存在期间也一直存在。 如果 Pod 因为任何原因被删	除，甚至某完全相同的替代 Pod 被创建时， 这个相关的对象（例如这里的卷）也会被删除并重建。</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="docs/Cloud_Native/Kubernetes/rbac.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../../kubernetes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="docs/Cloud_Native/Linux_Container/容器知识备忘录.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/1_kubernetes概念.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -200,11 +270,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="docs/Cloud_Native/Kubernetes/rbac.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../../kubernetes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="docs/Cloud_Native/Linux_Container/容器知识备忘录.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/1_kubernetes概念.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -224,13 +294,13 @@
         </script>
 
 
-        <script src="elasticlunr-ef4e11c1.min.js"></script>
-        <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="../../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../../mark-09e88c2c.min.js"></script>
+        <script src="../../../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard-1626706a.min.js"></script>
-        <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="../../../clipboard-1626706a.min.js"></script>
+        <script src="../../../highlight-abc7f01d.js"></script>
+        <script src="../../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
 
