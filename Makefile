@@ -7,7 +7,7 @@ MDBOOK_VERSION ?= v0.5.2
 MDBOOK_URL=https://github.com/rust-lang/mdBook/releases/download/$(MDBOOK_VERSION)/mdbook-$(MDBOOK_VERSION)-x86_64-unknown-linux-gnu.tar.gz
 
 mdbook: $(LOCAL_BIN)
-	wget $(MDBOOK_URL) -O - | tar xz -C $(LOCAL_BIN) mdbook
+	test -f $(LOCAL_BIN)/mdbook || wget $(MDBOOK_URL) -O - | tar xz -C $(LOCAL_BIN) mdbook
 
 gen-summary:
 	python3 tools/gen-summary.py  > ./SUMMARY.md
