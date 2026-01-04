@@ -59,7 +59,8 @@ if __name__ == '__main__':
     for date in sorted(files_group_by_date.keys(), reverse=True)[:10]:
         lines.append(f"## {date}\n")
         for file in sorted(files_group_by_date[date]):
-            relative_path = file.replace(' ', '%20')
+            relative_path = os.path.relpath(file, 'src/')
+            relative_path = relative_path.replace(' ', '%20')
             name = os.path.splitext(os.path.basename(file))[0]
             lines.append(f"> #### [{name}](./{relative_path})")
         lines.append("")  # add an empty line after each date group
