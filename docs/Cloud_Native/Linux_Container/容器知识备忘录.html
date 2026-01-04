@@ -1,0 +1,688 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>容器知识备忘录 - Bintan&#x27;s Wiki</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../../searchindex-a4cf8123.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc-d5a754ca.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Bintan&#x27;s Wiki</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lubingtan/lubingtan.github.io" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Cloud_Native/Linux_Container/容器知识备忘录.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="一份容器知识备忘录"><a class="header" href="#一份容器知识备忘录">一份容器知识备忘录</a></h1>
+<h2 id="linux-namespace"><a class="header" href="#linux-namespace">Linux Namespace</a></h2>
+<h3 id="linux-namespace-是什么"><a class="header" href="#linux-namespace-是什么">Linux Namespace 是什么？</a></h3>
+<ul>
+<li>UTS：隔离不同的机器名、域名</li>
+<li>IPC：隔离 linux 消息队列</li>
+<li>PID：隔离进程可见性（pid）</li>
+<li>Mount：隔离挂载点</li>
+<li>User：隔离用户以及用户组</li>
+<li>Network：隔离网络（网络虚拟化）</li>
+</ul>
+<p>基于namespace，docker 就可以达到看起来像是独立于宿主机之外的效果</p>
+<h3 id="怎么使用-namespace"><a class="header" href="#怎么使用-namespace">怎么使用 Namespace？</a></h3>
+<p>系统调用：</p>
+<ul>
+<li>clone 创建新进程时，根据调用参数来创建该进程的namesapce，并且它的子进程也会包含在 namespace 中</li>
+<li>unshare 将进程移除某个 namespace</li>
+<li>setns 将进程加入某个 namespace</li>
+</ul>
+<h2 id="linux-cgroup"><a class="header" href="#linux-cgroup">Linux Cgroup</a></h2>
+<h3 id="linux-cgroup-是什么"><a class="header" href="#linux-cgroup-是什么">Linux Cgroup 是什么？</a></h3>
+<p>什么是Cgroup？</p>
+<ul>
+<li>subsystem 是各种控制模块
+<ul>
+<li>blkio：控制进程对硬盘的访问（例如输入/输出大小限制）</li>
+<li>cpu：设置进程的cpu调度策略</li>
+<li>cpuset：控制进程使用的多核cpu（所谓的 绑核）</li>
+<li>devices：控制进程能够访问的设备</li>
+<li>freezer：令进程挂起以及恢复</li>
+<li>memory：控制进程访问内存</li>
+<li>net_cls：网络包分类，以便 Linux tc (traffic controller ）可以根据分类区分出来自某个 cgroup 的包并做限流或监控</li>
+<li>net_prio：控制进程的网络流量优先级</li>
+<li>ns：它的作用是使 cgroup 中的进程在新的 Namespace fork新进 程 （NEWNS ）时，创建出 个新的cgroup ，这个 cgroup 包含新的 Namespace的进程</li>
+</ul>
+</li>
+<li>cgroup：一个cgroup包含一组进程，通过subsystem与cgroup的关联，将这些进程与subsystem关联</li>
+<li>hierarchy：将一组cgroup组成树状结构，通过这种结构，cgroup 可以继承父节点cgroup的subsystem属性</li>
+</ul>
+<p>基于 Cgroup，docker 可以达到控制进程资源的效果。</p>
+<h3 id="怎么使用-cgroup"><a class="header" href="#怎么使用-cgroup">怎么使用 Cgroup？</a></h3>
+<ul>
+<li>Linux中 cgroup 以文件系统的方式暴露给用户，例如<code>mount -t cgroup cgroup ./cgroup_test/</code></li>
+<li>系统自带的 Cgroup 路径<code>/sys/fs/cgroup</code></li>
+</ul>
+<h2 id="unionfs"><a class="header" href="#unionfs">UnionFS</a></h2>
+<h3 id="unionfs-是什么"><a class="header" href="#unionfs-是什么">UnionFS 是什么？</a></h3>
+<p>UnionFS是一类文件系统的统称，它可以将多个文件系统，视为同一个文件系统的不同branch，从而实现将不同目录的文件全部挂载到同一个目录上。什么意思？举个例子，有个目录是下面的结构</p>
+<pre><code>data/
+├── mongo
+└── mysql
+</code></pre>
+<p>我有另外一个目录是这样的结构</p>
+<pre><code>data/
+├── protoc
+└── golang
+</code></pre>
+<p>通过UnionFS可以将两个文件系统都挂在同一个目录下：</p>
+<pre><code>data/
+├── mongo
+├── mysql
+├── protoc
+└── golang
+</code></pre>
+<p>当然以上是一种只读场景，当发生写入时，UnionFS使用了一种CoW的技术（copy-on-write 写时复制）。</p>
+<blockquote>
+<p>值得一提的是，系统调用中的 Fork 函数也使用了CoW的思想，fork 出子进程后，子进程的内存物理空间与父进程保持一致，直到子进程开始真正的修改时，才会复制对应的内存页</p>
+</blockquote>
+<p>当我们对一个文件进行写入时，我们并没有更改原来的文件，而是新增了一个 branch，在这个新的branch中，UnionFS会把原来的文件copy过来，并新增需要写入的内容。</p>
+<p>通过这种方式，可以同时使用只读和可读写的文件系统，并且可以保持一定的低开销。两种常见的UnionFS的实现是<strong>AUFS</strong>和<strong>OverlayFS</strong></p>
+<p>基于UnionFS，Docker 可以实现镜像分层（layer）以及镜像文件的重复利用</p>
+<h3 id="怎么使用-unionfs-"><a class="header" href="#怎么使用-unionfs-">怎么使用 UnionFS ？</a></h3>
+<p>使用系统调用 mount，以aufs为例：</p>
+<pre><code class="language-bash">mount -t aufs -o dirs=/read-write-layer:/read-only-layer-1:/read-only-layer-2 none /mnt-dir
+</code></pre>
+<p>如何设置读写权限？左边第一个目录是 read-write 权限，其他的都是 read-only的</p>
+<h2 id="解析-docker-的各种操作"><a class="header" href="#解析-docker-的各种操作">解析 docker 的各种操作</a></h2>
+<h3 id="解析-docker-run-发生了什么"><a class="header" href="#解析-docker-run-发生了什么">解析 docker run 发生了什么？</a></h3>
+<p>如何产生子进程</p>
+<ul>
+<li>fork 进程，同时创建新的 namespace，并开始 wait 子进程</li>
+<li>fork 出的进程会调用自身（也就是 /proc/self/exe，这个路径会短链到当前的可执行文件），并在arg参中数增加 init 命令</li>
+<li>init 命令会 exec 一个新的进程（注意exec 与fork 不同，exec 产生的子进程会完全替换当前的进程，包括数据、堆栈、PID等信息）</li>
+<li>exec 产生的进程会执行 <code>mount proc</code>，并执行用户指定的 command 命令</li>
+</ul>
+<p>继续丰富上面过程中的细节，对子进程进行资源限制：</p>
+<ul>
+<li>执行 docker run，fork 子进程</li>
+<li>根据用户参数，创建 Cgroup
+<ul>
+<li>cpu：写入cpu.shares文件</li>
+<li>cpuset：写入cpuset.cpus</li>
+<li>memory：写入memory.limit_in_bytes</li>
+</ul>
+</li>
+<li>将子进程 pid 加入到创建 cgroup 中</li>
+<li>wait 子进程</li>
+</ul>
+<p>继续丰富上面过程中的细节，通过管道向子进程传递参数：</p>
+<ul>
+<li>执行 docker run，fork 子进程</li>
+<li>创建一个 pipe</li>
+<li>将pipe的读取段，作为一个fd添加到子进程中</li>
+<li>父进程在pipe写入端，写入数据</li>
+<li>子进程读取 3号 fd</li>
+<li>父进程 wait 子进程</li>
+</ul>
+<h3 id="docker-镜像是什么怎么使用"><a class="header" href="#docker-镜像是什么怎么使用">docker 镜像是什么？怎么使用？</a></h3>
+<h4 id="镜像文件里有什么"><a class="header" href="#镜像文件里有什么">镜像文件里有什么？</a></h4>
+<ul>
+<li>
+<p>manifest.json： 关于这个镜像包的一些配置，比如说镜像有哪几个 layer</p>
+</li>
+<li>
+<ul>
+<li>Config 文件：关于镜像本身的一些配置，比说 ENV，Entrypoint， Cmd</li>
+</ul>
+</li>
+<li>
+<p>layer：layer 一般是一个tar包，几个 layer 共同叠加之后组成一个 root 文件系统</p>
+</li>
+</ul>
+<p>以 busybox 为例：</p>
+<p>它的 manifest.json:</p>
+<pre><code class="language-json">[
+  {
+    "Config": "d23834f29b3875b6759be00a48013ba523c6a89fcbaeaa63607512118a9c4c19.json",
+    "RepoTags": [
+      "busybox:latest"
+    ],
+    "Layers": [
+      "2a7f8eb07ab44ffd8e11d364e8b7ad18f69df5f29e2e2eb13695e6b01fbb4f77/layer.tar"
+    ]
+  }
+]
+</code></pre>
+<p>把它的layer解压之后得到目录:</p>
+<pre><code>total 48
+drwxr-xr-x 2 lubingtan lubingtan 12288 Nov 30 02:55 bin
+drwxr-xr-x 4 lubingtan lubingtan  4096 Dec  5 12:47 dev
+drwxr-xr-x 3 lubingtan lubingtan  4096 Dec  5 12:47 etc
+drwxr-xr-x 2 lubingtan lubingtan  4096 Nov 30 02:55 home
+drwxr-xr-x 2 lubingtan lubingtan  4096 Dec  5 12:47 proc
+drwx------ 2 lubingtan lubingtan  4096 Nov 30 02:55 root
+drwxr-xr-x 2 lubingtan lubingtan  4096 Dec  5 12:47 sys
+drwxrwxr-x 2 lubingtan lubingtan  4096 Nov 30 02:55 tmp
+drwxr-xr-x 3 lubingtan lubingtan  4096 Nov 30 02:55 usr
+drwxr-xr-x 4 lubingtan lubingtan  4096 Nov 30 02:55 var
+</code></pre>
+<h4 id="怎么使用镜像"><a class="header" href="#怎么使用镜像">怎么使用镜像？</a></h4>
+<p>使用镜像时怎么把读写 layer 分开？</p>
+<ul>
+<li>会新建一个 read-write 的 layer 以及一个 read-only 的 layer
+<ul>
+<li>这里 read-only 的 layer是用来存储启动容器时传入的系统信息</li>
+</ul>
+</li>
+<li>把所有镜像的 layer 以及刚刚的两个 layer mount 到一个目录下，把这个目录作为容器的 root 目录</li>
+</ul>
+<p>容器启动时怎么使用新的 root 文件系统？</p>
+<ul>
+<li>系统调用 pivot_root 可以改变整个系统的 root 文件系统，从而移除对老 root 的依赖。</li>
+<li>系统调用 chroot 是针对某个进程，其他进程还是老的 root</li>
+<li>docker 会使用 pivot_root ，umouont 掉原来的 root</li>
+</ul>
+<p>这样就可以在容器内看到镜像的文件系统了。</p>
+<p>整个流程：</p>
+<ol>
+<li>创建只读层</li>
+<li>创建容器读写层</li>
+<li>创建挂载点</li>
+<li>将挂载点作为容器的root</li>
+</ol>
+<p>容器退出的时</p>
+<ol>
+<li>卸载挂载点</li>
+<li>删除挂载点</li>
+<li>删除除读写层</li>
+</ol>
+<h3 id="解析-docker-stoplogsdelete"><a class="header" href="#解析-docker-stoplogsdelete">解析 docker stop、logs、delete</a></h3>
+<p>Stop：</p>
+<ul>
+<li>查找主进程 PID</li>
+<li>发送 SIGTERM 信号 （kill -15）</li>
+<li>等待进程结束，如果一直不结束，发送 SIGKILL （kill -9）</li>
+<li>修改容器信息，写入存储容器信息的文件</li>
+</ul>
+<p>Delete：</p>
+<ul>
+<li>根据容器名查找容器信息。</li>
+<li>判断容器是否处于停止状态。</li>
+<li>查找容器存储信息的地址。</li>
+<li>移除记录容器信息的文件。</li>
+</ul>
+<p>Logs：</p>
+<ul>
+<li>把stdout、stderr重定向到一个日志文件</li>
+<li>找到容器对应的文件，输出。</li>
+</ul>
+<h3 id="解析-docker-commit"><a class="header" href="#解析-docker-commit">解析 docker commit</a></h3>
+<ul>
+<li>容器的进程会被 pause</li>
+<li>重新打包当前的 root 文件系统</li>
+</ul>
+<h3 id="解析-docker-exec"><a class="header" href="#解析-docker-exec">解析 docker exec</a></h3>
+<ul>
+<li>使用了一个系统调用 <code>setns</code>能够进入目标进程的 namespace</li>
+</ul>
+<h2 id="linux-网络虚拟化"><a class="header" href="#linux-网络虚拟化">Linux 网络虚拟化</a></h2>
+<p>Linux 网络虚拟化以及独赢的容器网络是有很多种形式的，在书中只介绍了 veth + bridge 这中容器网络方案。</p>
+<h3 id="veth是什么"><a class="header" href="#veth是什么">Veth是什么？</a></h3>
+<ul>
+<li>veth 可以理解为虚拟网卡，它是成对出现的，即一个发送端、一个接收端，它可以用来连接不同 network namespace</li>
+<li>如何操作：</li>
+</ul>
+<pre><code class="language-bash"># 创建 network namespace
+ip netns add ns1
+ip netns add ns2
+# 创建一对 veth
+ip link add veth0 type veth peer name veth1
+# 把两个 veth 添加到两个 namespace 中
+ip link set veth0 netns ns1
+ip link set veth1 netns ns2
+# 查看 ns1 的网络设备
+ip netns exec ns1 ip link
+# 配置 veth 的ip, 以及 namespace 的路由
+ip netns exec ns1 ifconfig veth0 172.17.0.2/24 up
+ip netns exec ns1 route add default dev veth0
+ip netns exec ns2 ifconfig veth1 172.17.0.3/24 up
+ip netns exec ns2 route add default dev veth1
+# 对 veth 设备进行 ping
+ip netns exec ns1 ping -c 1 172.18.0.3
+</code></pre>
+<h3 id="bridge-是什么"><a class="header" href="#bridge-是什么">bridge 是什么？</a></h3>
+<ul>
+<li>bridge 相当于一个虚拟的交换机，可以连接不同的网络设备。通过 bridge 可以连接 namespace 中的网络设备和宿主机上的网络。</li>
+</ul>
+<pre><code class="language-bash"># 创建 namespace 以及 veth
+ip netns add ns1
+ip link add veth0 type veth peer name veth1
+# 将其中一个移到 ns1
+ip link set veth1 setns ns1
+# 创建网桥
+brctl addbr br0
+# 挂载网络设备
+brctl addif br0 eth0
+brctl addif br0 veth0
+</code></pre>
+<h3 id="路由表是什么"><a class="header" href="#路由表是什么">路由表是什么？</a></h3>
+<ul>
+<li>路由表是内核中的一个模块，通过定义路由表来决定在某个 namespace 中包的流向</li>
+</ul>
+<pre><code class="language-bash"># 启动虚拟网络设备, 并设置 veth 在 ns 中的IP
+ip link set veth0 up
+ip link set br0 up
+ip netns exec ns1 ifconfig veth1 172.18.0.2/24
+# 设置 ns1 网络空间的路由和宿主机上的路由
+# default 代表 0.0.0.0/0, 即在 net namespace 中所有的流量都经过 veth1
+ip netns exec ns1 route add default dev veth1
+# 在宿主机上, 将流向 172.18.0.2/24 网段的请求, 全部路由到 br0 上ss
+route add -net 172.18.0.2/24 dev br0
+# 从 ns 访问宿主机
+ip netns exec ns1 ping -c 10.0.2.15
+# 宿主机访问 ns
+ping -c 172.18.0.2
+</code></pre>
+<h3 id="iptables-是什么"><a class="header" href="#iptables-是什么">Iptables 是什么？</a></h3>
+<p>iptables 是对内核中的 netfilter 模块进行操作的工具，可以用来管理流量包的流动和传送，通过不同的策略对包进行加工、传送或丢弃。例如：</p>
+<ul>
+<li>MASQUERADE 策略：将请求包的源地址换成一个网络设备的地址。这个用到的场景是，ns 中的请求包到达宿主机外部后，不知道如何访问这个请求包的源地址。如果使用这个策略将源地址替换，就可以找到宿主机了。</li>
+<li>DNAT 策略：可以将 ns 内部的端口映射到宿主机端口，这样外部请求到达时，就可以访问ns中的网络了。</li>
+</ul>
+<h2 id="docker-的容器网络"><a class="header" href="#docker-的容器网络">Docker 的容器网络</a></h2>
+<h3 id="golang-中如何实现"><a class="header" href="#golang-中如何实现">golang 中如何实现</a></h3>
+<ul>
+<li>net 库</li>
+<li>netlink 库</li>
+<li>netns 库</li>
+</ul>
+<h3 id="docker-对于容器网络的抽象"><a class="header" href="#docker-对于容器网络的抽象">Docker 对于容器网络的抽象</a></h3>
+<ul>
+<li>网络：是容器的集合，在这个网络上的容器可以通过这个网络互相通信，就像挂载到同一个 Linux Bridge 设备上的网络设备一样。网络中会包括这个网络相关的配置，比如网络的容器地址段、网络操作所调用的网络驱动等信息。</li>
+<li>网络端点：连接容器与网络，凹征容器内部与网络的通信。例如Veth设备，一端挂在容器内部，一端挂在 Bridge 上，就能保证容器和网络的通信。网络端点中包括连接到网络的一些信息，比如地址、Veth 设备、端口映射、连接的容器和网络等信息。</li>
+<li>网络驱动：网络功能中的组件，不同驱动代表者对网络创建、连接、销毁的不同策略。创建网络时指定不同的网络驱动来定义如何做网络的配置。</li>
+<li>IPAM：也是网络功能中的组件，用于网络 IP 地址的分配和释放，包括容器的 IP 地址和网络网关的 IP 地址。它的功能时从指定的 subnet 网段中分配 IP 地址，以及释放 IP 地址。</li>
+</ul>
+<h3 id="如何分配ip"><a class="header" href="#如何分配ip">如何分配IP？</a></h3>
+<ul>
+<li>基于 bitmap 算法：把一段 ip 是否已经分配的状态，保存在一段二进制数字中（已分配为 1，未分配为 0）</li>
+<li>分配 ip 时把 ip 地址的信息记录到文件中</li>
+</ul>
+<h3 id="如何创建网络"><a class="header" href="#如何创建网络">如何创建网络？</a></h3>
+<p>创建网络：</p>
+<ul>
+<li>输入网络的网段、网关以及网络的名字</li>
+<li>创建 bridge 设备</li>
+<li>设置 bridge 设备的地址和路由</li>
+<li>启动 bridge 设备</li>
+<li>设置 iptabels 的 SNAT 规则</li>
+</ul>
+<p>删除网络：</p>
+<ul>
+<li>删除 bridge 设备</li>
+</ul>
+<h3 id="如何把容器连上网络"><a class="header" href="#如何把容器连上网络">如何把容器连上网络？</a></h3>
+<ul>
+<li>创建 veth</li>
+<li>挂载一端到 bridge 上</li>
+<li>挂载另一端到 network ns 中</li>
+<li>设置另一端的 ip</li>
+<li>设置 network ns 中的路由</li>
+<li>设置端口映射</li>
+</ul>
+<h3 id="如何容器之间跨主机通信"><a class="header" href="#如何容器之间跨主机通信">如何容器之间跨主机通信？</a></h3>
+<ul>
+<li>通过一致性 kv-store 分配 ip</li>
+<li>通过封包或者路由实现跨主机通信
+<ul>
+<li>封包：将请求包封装成宿主机直接的通信包，在宿主机解包后再发送到对应的容器
+<ul>
+<li>vxlan</li>
+<li>gre</li>
+</ul>
+</li>
+<li>路由：让宿主机网络知道容器的地址要怎么路由，需要网络设备的支持
+<ul>
+<li>路由器路由表</li>
+<li>Vlan</li>
+<li>VPC路由表</li>
+<li>macvlan：<strong>一块物理网卡虚拟成多块虚拟网卡</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="业界主流技术栈"><a class="header" href="#业界主流技术栈">业界主流技术栈</a></h2>
+<h3 id="runc"><a class="header" href="#runc">runC</a></h3>
+<p>runc 的目标是，构造到处都可以运行的标准容器</p>
+<ul>
+<li>由docker 的子项目 libcontainer 发展而来，托管于OCI（open container Initiative，2015年成立的组织）</li>
+<li>完全支持 Linux Namespace</li>
+<li>支持所有 Linux 所有原生安全特性（Selinux、prvot_root、capability等等）</li>
+<li>支持容器热迁移（CRIU项目）</li>
+<li>正式的容器标准以及实现</li>
+<li>OCI 标准
+<ul>
+<li>rootfs 一个文件夹， 代表容器的 root 文件系统</li>
+<li>config.json 包括容纳容器的配置数据</li>
+</ul>
+</li>
+</ul>
+<h4 id="容器配置里有什么"><a class="header" href="#容器配置里有什么">容器配置里有什么？</a></h4>
+<ul>
+<li>mounts：挂载点，源设备名或者文件名，目标挂载路径，等等</li>
+<li>process：比如工作目录，环境变量，启动命令，资源使用量等等。</li>
+<li>user：容器内的用户信息</li>
+<li>platform：容器运行的系统信息</li>
+<li>hook 钩子
+<ul>
+<li>prestart：在容器启动之后、用户进程启动之前执行，可以配置一些容器初始化环境。
+<ul>
+<li>典型的例如，nvidia container runtime，它在 runc 之上包了一层，把一个 prestart hook 传递给runc，这个 prestart hook 其实是一个叫做 nvidia-container-toolkit 的 cli 程序，这个cli 调用了 libnvidia-contaiener 来做一些初始化环境的工作。</li>
+</ul>
+</li>
+<li>poststart：在用户进程启动之后执行，例如提醒用户容器已经起来了。</li>
+<li>poststop：在容器进行停止后执行，可以用来做一些清理工作。</li>
+</ul>
+</li>
+</ul>
+<h4 id="runc-是怎么创建容器的"><a class="header" href="#runc-是怎么创建容器的">runc 是怎么创建容器的？</a></h4>
+<ol>
+<li>读取配置文件</li>
+<li>设置 rootfs</li>
+<li>使用factory 创建容器（不同系统不同的实现）</li>
+<li>创建初始化进程</li>
+<li>设置容器的输出管道</li>
+<li>启动 container.Start 启动物理的容器</li>
+<li>回调 init 方法重新初始化容器进程</li>
+<li>runC 父进程等待子进程，结束后退出</li>
+</ol>
+<h4 id="oci-标准还有什么东西"><a class="header" href="#oci-标准还有什么东西">OCI 标准还有什么东西？</a></h4>
+<p><a href="https://github.com/opencontainers/image-spec">image-spec</a>：定义了镜像保存的格式</p>
+<p><a href="https://github.com/opencontainers/distribution-spec">distribution-spec</a>：定义了镜像仓库的接口</p>
+<h3 id="docker-containerd"><a class="header" href="#docker-containerd">Docker containerd</a></h3>
+<ul>
+<li>作为 daemon 程序（守护进程）运行在 Linux 上，管理机器上所有容器的生命周期</li>
+<li>从 docker 项目中独立出来的，向更上层的平台暴露 gRPC API，例如 Swram、Kubernetes、Mesos等等</li>
+<li>containerd 负责一台机器的 镜像操作（pull / push）、容器操作（start / stop）、网络以及存储，不过对于容器具体的运行是由 runC 负责
+<ul>
+<li>支持 OCI 运行时</li>
+<li>支持镜像 pull / push</li>
+<li>容器运行时生命周期管理</li>
+<li>网络操作原语</li>
+<li>存储</li>
+</ul>
+</li>
+</ul>
+<p>Containerd 的架构：</p>
+<p><img src="../../images/自己动手写docker读书笔记/image-20211205151345214.png" alt="image-20211205151345214"></p>
+<h4 id="containerd-和-docker-之间的关系"><a class="header" href="#containerd-和-docker-之间的关系">containerd 和 docker 之间的关系？</a></h4>
+<ul>
+<li>docker 包含 containerd，除了containerd 的 功能之外，docker 还可以完成镜像构建的功能，以及 docker client 提供的 cli 工具</li>
+</ul>
+<h4 id="containerd和-ocirunc-之间的关系"><a class="header" href="#containerd和-ocirunc-之间的关系">containerd和 OCI、runc 之间的关系？</a></h4>
+<p>OCI 个标准化的容器规范，包括运行时规范和镜像规范 rune 是基于此规范的参考实现， Docker 贡献了 runc 主要代码。</p>
+<p>从技术枝上看 containerd 比 runc 的层次更高， containerd 可以使用 runc 启动容器，还可以下载镜像，管理网络。</p>
+<h3 id="cri-以及-shim-层"><a class="header" href="#cri-以及-shim-层">CRI 以及 shim 层</a></h3>
+<p>CRI 是 k8s（容器编排）这个项目定义的一组接口，可以让 kubelet 通过 CRI 接口进行容器操作。</p>
+<h4 id="cri-的接口定义有哪些"><a class="header" href="#cri-的接口定义有哪些">CRI 的接口定义有哪些？</a></h4>
+<p>CRI 的核心概念：PodSandbox 和 Container：</p>
+<ul>
+<li>pod 由一组 Container 构成，这些容器贡献相同的环境与资源，这个共同的环境被称为 PodSandbox</li>
+<li>不同的实现可以由不同的 PodSandbox，比如 docker 可以实现成一个 namespace，Hypervisor 可以实现成一个虚拟机。</li>
+</ul>
+<p>定义：<a href="https://github.com/kubernetes/cri-api/blob/master/pkg/apis/runtime/v1/api.proto">cri-api/api.proto at master · kubernetes/cri-api</a></p>
+<ul>
+<li>RuntimeService：Pod 、容器以及日志的操作</li>
+<li>ImageService：镜像的操作（不包括 build）</li>
+</ul>
+<h4 id="使用-cri-有什么好处"><a class="header" href="#使用-cri-有什么好处">使用 CRI 有什么好处？</a></h4>
+<ul>
+<li>解耦了 Pod 的实现与接口，开发 shim 时不需要了解 kubelet</li>
+<li>有利于 kubelet 的扩展</li>
+</ul>
+<p>CRI 的目的在于：</p>
+<ul>
+<li>提升 Kubernetes 可扩展性，让更多的容器运行时更容易集成到 Kubernetes 中。</li>
+<li>提升 Pod Feature 的更新迭代效率。</li>
+<li>构建易于维护的代码体系。</li>
+</ul>
+<p>CRI 不会做以下5件事。</p>
+<ul>
+<li>
+<p>建议如何与新的容器运行时集成，例如决定 Container Shim 应该在哪里实现。</p>
+</li>
+<li>
+<p>提供新接口的版本管理。</p>
+</li>
+<li>
+<p>提供 Windows container 支持。本接口不会在 Windows container 支持方面花费太多，但会尽量做到更加易于扩展来让 Windows container 特性更容易被添加进来。</p>
+</li>
+<li>
+<p>重新定义 Kubelet 的内部运行时相关接口。尽管会增加 Kubelet 可维护性，但这不是 CRI 的工作。</p>
+</li>
+<li>
+<p>提升 Kubelet 效率和性能。</p>
+</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../linux_container.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../docs/Machine_Learning/Model_Mesh_Serving.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../linux_container.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../docs/Machine_Learning/Model_Mesh_Serving.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../../mark-09e88c2c.min.js"></script>
+        <script src="../../../searcher-c2a407aa.js"></script>
+
+        <script src="../../../clipboard-1626706a.min.js"></script>
+        <script src="../../../highlight-abc7f01d.js"></script>
+        <script src="../../../book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
