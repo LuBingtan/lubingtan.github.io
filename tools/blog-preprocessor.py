@@ -53,7 +53,7 @@ if __name__ == '__main__':
         if 'Chapter' in item:
             set_default_cotent(item['Chapter'])
     # and now, we can just modify the content of the first chapter
-    files_group_by_date = md_files_with_date('docs/')
+    files_group_by_date = md_files_with_date('src/docs/')
     lines = []
     # get latest 10 dates
     for date in sorted(files_group_by_date.keys(), reverse=True)[:10]:

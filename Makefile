@@ -10,7 +10,8 @@ mdbook: $(LOCAL_BIN)
 	test -f $(LOCAL_BIN)/mdbook || wget $(MDBOOK_URL) -O - | tar xz -C $(LOCAL_BIN) mdbook
 
 gen-summary:
-	python3 tools/gen-summary.py  > ./SUMMARY.md
+	cd src && \
+	python3 ../tools/gen-summary.py  > ./SUMMARY.md
 
 build: mdbook gen-summary
 	$(LOCAL_BIN)/mdbook build -d ./book

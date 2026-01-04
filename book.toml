@@ -2,7 +2,6 @@
 title = "Bintan's Wiki"
 authors = ["lubingtan"]
 language = "en"
-src = "."
 
 [preprocessor.blog]
 command = "tools/blog-preprocessor.py"
