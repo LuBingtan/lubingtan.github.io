@@ -1,6 +1,5 @@
 # client-go list & watch 原理
 
-[toc]
 
 ListAndWatch设计到两个操作
 

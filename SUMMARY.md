@@ -11,8 +11,6 @@
   - [5_client-go list & watch 原理](./docs/Cloud_Native/Kubernetes/5_client-go%20list%20&%20watch%20原理.md)
   - [6_service相关](./docs/Cloud_Native/Kubernetes/6_service相关.md)
   - [cni详解](./docs/Cloud_Native/Kubernetes/cni详解.md)
-  - [contribute_record](./docs/Cloud_Native/Kubernetes/contribute_record.md)
-  - [deployment原理](./docs/Cloud_Native/Kubernetes/deployment原理.md)
   - [flowschema](./docs/Cloud_Native/Kubernetes/flowschema.md)
   - [k8s之pleg](./docs/Cloud_Native/Kubernetes/k8s之pleg.md)
   - [kubelet原理](./docs/Cloud_Native/Kubernetes/kubelet原理.md)

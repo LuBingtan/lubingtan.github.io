@@ -1,10 +1,10 @@
-# k8s scheduler 流程
+# k8s scheduler 源码分析
 
-[toc]
+## Scheduler 基本工作流程
 
-# 1. 配置初始化
+### 配置初始化
 
-## 三种配置源
+#### 三种配置源
 
 关键过程位于`pkg/scheduler/scheduler.go`
 
@@ -45,7 +45,7 @@
  ```
 
 
-## 默认配置
+#### 默认配置
 
 我们就直接看默认配置吧。
 
@@ -108,7 +108,7 @@
  ```
 
 
-## Plugins是什么
+#### Plugins是什么
 
 plugins就是为了给pod分配节点，而创建的各种算法插件。
 
@@ -138,9 +138,9 @@ plugins就是为了给pod分配节点，而创建的各种算法插件。
 
 `Pulgin`的`interface`定义位于`pkg/scheduler/framework/interface.go`，有上述提到的各种Plugin的接口定义
 
-# 2. 创建Scheduler
+### 创建Scheduler
 
-## 生成SchedulingQueue
+#### 生成SchedulingQueue
 
 SchedulingQueue接收了lessFn（也就是排序函数），在SchedulingQueue中会实现pod的排序。后面的NextPod也是调用了SchedulingQueue的Pop方法
 
@@ -157,7 +157,7 @@ SchedulingQueue接收了lessFn（也就是排序函数），在SchedulingQueue�
  ```
 
 
-## Framework接口
+#### Framework接口
 
 从profiles生成profile map，关键代码位于`pkg/scheduler/factory.go`
 
@@ -208,7 +208,7 @@ SchedulingQueue接收了lessFn（也就是排序函数），在SchedulingQueue�
 
 Framework接口的定义位于`pkg/scheduler/framework/interface.go`
 
-## 生成Plugins接口
+#### 生成Plugins接口
 
 关键过程位于`pkg/scheduler/framework/runtime/framework.go`
 
@@ -292,11 +292,11 @@ Framework接口的定义位于`pkg/scheduler/framework/interface.go`
 
 这样子Framework就拥有了各种plugins
 
-# 3. Scheduler执行过程
+### Scheduler执行过程
 
 主函数就是`scheduleOne`这个方法。其余过程就不看了，主要看下那些plugins是怎么执行的。
 
-## 创建了CycleState
+#### 创建了CycleState
 
  ```Go
  state := framework.NewCycleState()
@@ -315,7 +315,7 @@ Framework接口的定义位于`pkg/scheduler/framework/interface.go`
  ```
 
 
-## 执行调度过程
+#### 执行调度过程
 
  ```Go
  scheduleResult, err := sched.Algorithm.Schedule(schedulingCycleCtx, fwk, state, pod)
@@ -332,21 +332,21 @@ Framework接口的定义位于`pkg/scheduler/framework/interface.go`
  ```
 
 
-### 获取合适的节点
+##### 获取合适的节点
 
  ```Go
  feasibleNodes, diagnosis, err := g.findNodesThatFitPod(ctx, fwk, state, pod)
  ```
 
 
-#### PreFilter
+###### PreFilter
 
  ```Go
  s := fwk.RunPreFilterPlugins(ctx, state, pod)
  ```
 
 
-#### Filter
+###### Filter
 
 用plugin进行Filter 
 
@@ -362,23 +362,23 @@ Framework接口的定义位于`pkg/scheduler/framework/interface.go`
  ```
 
 
-### 优先节点
+##### 优先节点
 
-#### PreScore
+###### PreScore
 
  ```Go
  preScoreStatus := fwk.RunPreScorePlugins(ctx, state, pod, nodes)
  ```
 
 
-#### Score
+###### Score
 
  ```Go
  scoresMap, scoreStatus := fwk.RunScorePlugins(ctx, state, pod, nodes)
  ```
 
 
-### 选择节点
+##### 选择节点
 
 选择最高分的节点
 
@@ -387,46 +387,46 @@ Framework接口的定义位于`pkg/scheduler/framework/interface.go`
  ```
 
 
-### Bind之前
+##### Bind之前
 
-#### Assume
+###### Assume
 
  ```Go
  err = sched.assume(assumedPod, scheduleResult.SuggestedHost)
  ```
 
 
-#### Reserve
+###### Reserve
 
  ```Go
  sts := fwk.RunReservePluginsReserve(schedulingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost);
  ```
 
 
-#### Permit
+###### Permit
 
  ```Go
  runPermitStatus := fwk.RunPermitPlugins(schedulingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
  ```
 
 
-#### Unreserve
+###### Unreserve
 
  ```Go
  fwk.RunReservePluginsUnreserve(schedulingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
  ```
 
 
-### 异步执行Bind
+##### 异步执行Bind
 
-#### PreBind
+###### PreBind
 
  ```Go
  preBindStatus := fwk.RunPreBindPlugins(bindingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
  ```
 
 
-#### Bind
+###### Bind
 
  ```Go
  go func() {
@@ -437,7 +437,7 @@ Framework接口的定义位于`pkg/scheduler/framework/interface.go`
  ```
 
 
-#### PostBind
+###### PostBind
 
  ```Go
  fwk.RunPostBindPlugins(bindingCycleCtx, state, assumedPod, scheduleResult.SuggestedHost)
