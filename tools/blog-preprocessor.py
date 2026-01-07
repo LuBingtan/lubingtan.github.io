@@ -19,23 +19,37 @@ def md_files_with_date(root: str) -> list[str]:
         for filename in filenames:
             if filename.endswith('.md'):
                 full_path = os.path.join(dirpath, filename)
-                added_date = get_git_added_date(full_path)
-                if added_date not in md_files:
-                    md_files[added_date] = []
-                md_files[added_date].append(full_path)
+                updated_date = get_git_updated_date(full_path)
+                if updated_date not in md_files:
+                    md_files[updated_date] = []
+                md_files[updated_date].append(full_path)
     return md_files
 
-def get_git_added_date(file_path: str) -> str:
+def get_git_updated_date(file_path: str) -> str:
     import subprocess
     try:
         result = subprocess.run(
-            ['git', 'log', '--diff-filter=A', '--follow', '--format=%ad', '--date=short', '--', file_path],
+            ['git', 'log', '--diff-filter=M', '--follow', '--format=%ad', '--date=short', '--', file_path],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             check=True
         )
         date = result.stdout
+        # if date is empty, return the date that the file was created
+        if not date.strip():
+            result = subprocess.run(
+                ['git', 'log', '--diff-filter=A', '--follow', '--format=%ad', '--date=short', '--', file_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=True
+            )
+            date = result.stdout
+        # if date is still empty, return the current date
+        if not date.strip():
+            from datetime import datetime
+            date = datetime.now().strftime('%Y-%m-%d')
         return date
     except subprocess.CalledProcessError:
         return "Unknown Date"
@@ -68,10 +82,10 @@ if __name__ == '__main__':
     #     f.write("\n".join(all_files))
     book['items'].insert(0, {
         "Chapter": {
-            "name": "New Post",
+            "name": "Latest updates",
             "content": "\n".join(lines),
             "sub_items": [],
-            "path": "new_post.md",
+            "path": "latest_updates.md",
             "source_path": None,
             "parent_names": []
         }

@@ -15,3 +15,6 @@ gen-summary:
 
 build: mdbook gen-summary
 	$(LOCAL_BIN)/mdbook build -d ./book
+
+serve: mdbook gen-summary
+	$(LOCAL_BIN)/mdbook serve -d ./book
