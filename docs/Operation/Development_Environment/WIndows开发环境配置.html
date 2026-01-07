@@ -35,7 +35,7 @@
             const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../../searchindex-8c04166a.js";
+            window.path_to_searchindex_js = "../../../searchindex-789d98e5.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../../toc-c049c44a.js"></script>
@@ -180,16 +180,16 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="wsl"><a class="header" href="#wsl">WSL</a></h1>
-<h2 id="切换wsl版本"><a class="header" href="#切换wsl版本">切换wsl版本</a></h2>
+                        <h2 id="wsl"><a class="header" href="#wsl">WSL</a></h2>
+<h3 id="切换wsl版本"><a class="header" href="#切换wsl版本">切换wsl版本</a></h3>
 <p>管理员运行：</p>
 <p><code>wsl --set-version Ubuntu 2</code></p>
-<h2 id="wsl-无法访问windonws-host-上的服务"><a class="header" href="#wsl-无法访问windonws-host-上的服务">WSL 无法访问windonws host 上的服务</a></h2>
-<h3 id="networkmodenat"><a class="header" href="#networkmodenat">networkMode=NAT</a></h3>
+<h3 id="wsl-无法访问windonws-host-上的服务"><a class="header" href="#wsl-无法访问windonws-host-上的服务">WSL 无法访问windonws host 上的服务</a></h3>
+<h4 id="networkmodenat"><a class="header" href="#networkmodenat">networkMode=NAT</a></h4>
 <p>原因是 Windows 防火墙阻止了访问, 查看这个<a href="https://github.com/microsoft/WSL/issues/4585">issue</a></p>
 <pre><code class="language-sh">New-NetFirewallRule -DisplayName "WSL" -Direction Inbound  -InterfaceAlias "vEthernet (WSL)"  -Action Allow
 </code></pre>
-<h3 id="networkmodemirrored"><a class="header" href="#networkmodemirrored">networkMode=mirrored</a></h3>
+<h4 id="networkmodemirrored"><a class="header" href="#networkmodemirrored">networkMode=mirrored</a></h4>
 <p>另一种方法： https://zhuanlan.zhihu.com/p/15762609815
 把 network 模式设置为 mirrored</p>
 <p>同时最好打开 hostAddressLoopback，能够允许使用 IP 访问（否则只能用localhost或者127.0.0.1）</p>
@@ -199,27 +199,27 @@ networkingMode=Mirrored
 [experimental]
 hostAddressLoopback=true
 </code></pre>
-<h2 id="使用vpn代理时的问题"><a class="header" href="#使用vpn代理时的问题">使用VPN代理时的问题</a></h2>
+<h3 id="使用vpn代理时的问题"><a class="header" href="#使用vpn代理时的问题">使用VPN代理时的问题</a></h3>
 <blockquote class="blockquote-tag blockquote-tag-note">
 <p class="blockquote-tag-title"><svg viewbox="0 0 16 16" width="18" height="18"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
 <p>这里的vpn并不是平常用的 http/https/socks5 proxy，指的是一般公司里使用的、用来访问 private network 的代理</p>
 <p>如果需要在wsl中访问 host 上的proxy， 参考<a href="#wsl-无法访问windonws-host-上的服务">这里</a></p>
 </blockquote>
-<h3 id="wls2-启动不了"><a class="header" href="#wls2-启动不了">WLS2 启动不了</a></h3>
+<h4 id="wls2-启动不了"><a class="header" href="#wls2-启动不了">WLS2 启动不了</a></h4>
 <p>参考这个issue https://github.com/microsoft/WSL/issues/4177#issuecomment-508826708</p>
 <p>下载NoLsp： https://www.proxifier.com/tmp/Test20200228/NoLsp.exe</p>
 <p>然后<strong>管理员权限</strong>启动PowerShell，然后执行：</p>
 <p><code>.\NoLsp.exe c:\windows\system32\wsl.exe</code></p>
-<h3 id="wsl-内无法访问网络"><a class="header" href="#wsl-内无法访问网络">WSL 内无法访问网络</a></h3>
+<h4 id="wsl-内无法访问网络"><a class="header" href="#wsl-内无法访问网络">WSL 内无法访问网络</a></h4>
 <p>使用这个东西: <a href="https://github.com/sakai135/wsl-vpnkit">wsl-vpnkit</a></p>
-<h2 id="自定义wsl安装位置"><a class="header" href="#自定义wsl安装位置">自定义wsl安装位置</a></h2>
+<h3 id="自定义wsl安装位置"><a class="header" href="#自定义wsl安装位置">自定义wsl安装位置</a></h3>
 <p>参考：https://zhuanlan.zhihu.com/p/263089007：</p>
 <p>手动下载ubuntu：https://docs.microsoft.com/zh-cn/windows/wsl/install-manual</p>
 <p>把appx的后缀改为.zip，然后解压到想要安装WSL的目录下，我们可以得到一些文件</p>
 <p>双击红框框出的那个ubuntu.exe（其他发行版的话也有类似的程序）,等待一段时间就成功安装到当前目录啦~</p>
 <p>需要注意的是安装目录的磁盘不能开<strong>压缩内容以便节省磁盘空间</strong>选项，否则会报错<code>0xc03a001a</code></p>
 <p>可以右键<code>文件夹--&gt;属性--&gt;常规--&gt;高级</code>找到并关闭这个选项</p>
-<h2 id="wsl扩展硬盘大小"><a class="header" href="#wsl扩展硬盘大小">wsl扩展硬盘大小</a></h2>
+<h3 id="wsl扩展硬盘大小"><a class="header" href="#wsl扩展硬盘大小">wsl扩展硬盘大小</a></h3>
 <p>参考：https://www.jianshu.com/p/2348dc7e9aef</p>
 <h4 id="windows侧操作"><a class="header" href="#windows侧操作">windows侧操作</a></h4>
 <p>首先关闭wsl（ <code>wsl --shutdown </code>）</p>
@@ -243,7 +243,7 @@ sudo resize2fs /dev/sdb
 <p><img src="./WIndows开发环境配置.assets/image-20210428004219480.png" alt="img"></p>
 <p><img src="./WIndows开发环境配置.assets/image-20210428004238650-1767761085094-6.png" alt="img"></p>
 <p>成功！</p>
-<h2 id="wls2-ubuntu安装systemd"><a class="header" href="#wls2-ubuntu安装systemd">WLS2 Ubuntu安装systemd</a></h2>
+<h3 id="wls2-ubuntu安装systemd"><a class="header" href="#wls2-ubuntu安装systemd">WLS2 Ubuntu安装systemd</a></h3>
 <p>https://zhuanlan.zhihu.com/p/180195635</p>
 <p>安装</p>
 <p><code>sudo apt install -y fontconfig daemonize</code></p>
@@ -267,8 +267,8 @@ fi
 <pre><code class="language-bash">source /etc/profile
 systemctl -version
 </code></pre>
-<h1 id="windows-terminal"><a class="header" href="#windows-terminal">windows terminal</a></h1>
-<h2 id="windows-terminal设置"><a class="header" href="#windows-terminal设置">windows terminal设置</a></h2>
+<h2 id="windows-terminal"><a class="header" href="#windows-terminal">windows terminal</a></h2>
+<h3 id="windows-terminal设置"><a class="header" href="#windows-terminal设置">windows terminal设置</a></h3>
 <pre><code class="language-json">// This file was initially generated by Windows Terminal 1.3.2651.0
 // It should still be usable in newer versions, but newer versions might have additional
 // settings, help text, or changes that you will not see unless you clear this file
@@ -373,8 +373,8 @@ systemctl -version
     ]
 }
 </code></pre>
-<h1 id="useful-tools"><a class="header" href="#useful-tools">Useful tools</a></h1>
-<h2 id="alfred-平替"><a class="header" href="#alfred-平替">Alfred 平替</a></h2>
+<h2 id="useful-tools"><a class="header" href="#useful-tools">Useful tools</a></h2>
+<h3 id="alfred-平替"><a class="header" href="#alfred-平替">Alfred 平替</a></h3>
 <p><a href="https://github.com/Wox-launcher/Wox">Wox</a>: A cross-platform launcher that simply works</p>
 <p>基本可以满足需求:</p>
 <ul>
@@ -382,7 +382,7 @@ systemctl -version
 <li>剪切板历史以及搜索</li>
 <li>自定义快捷命令</li>
 </ul>
-<h2 id="自定义快捷键"><a class="header" href="#自定义快捷键">自定义快捷键</a></h2>
+<h3 id="自定义快捷键"><a class="header" href="#自定义快捷键">自定义快捷键</a></h3>
 <p><a href="https://github.com/microsoft/PowerToys">PowerToys</a>: Microsoft PowerToys is a collection of utilities that help you customize Windows and streamline everyday tasks</p>
 <p>可以满足：</p>
 <ul>
