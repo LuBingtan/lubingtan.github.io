@@ -154,6 +154,17 @@ source /etc/profile
 systemctl -version
 ```
 
+### CUDA on WSL
+
+Check out: [CUDA on WSL User Guide — CUDA on WSL 13.1 documentation](https://docs.nvidia.com/cuda/wsl-user-guide/index.html#getting-started-with-cuda-on-wsl-2). 
+
+> The [latest NVIDIA Windows GPU Driver](https://www.nvidia.com/Download/index.aspx?lang=en-us) will fully support WSL 2. With CUDA support in the driver, existing applications (compiled elsewhere on a Linux system for the same target GPU) can run unmodified within the WSL environment.
+
+It's easy:
+
+1. Install latest GPU driver on windows
+2. Install WSL 2 and make sure to have the latest WSL kernel
+
 ## windows terminal
 
 ### windows terminal设置
@@ -264,6 +275,9 @@ systemctl -version
 }
 ```
 
+## GPU Driver Upgrade
+
+Using the Nvidia APP in windows: [Download NVIDIA App for Gamers and Creators | NVIDIA](https://www.nvidia.com/en-eu/software/nvidia-app/)
 
 ## Useful tools
 ### Alfred 平替

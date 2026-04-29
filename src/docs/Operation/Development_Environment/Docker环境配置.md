@@ -127,3 +127,19 @@ Environment="http_proxy=http://192.168.32.1:7897"
 systemctl daemon-reload
 systemctl restart docker
 ```
+
+### docker cli 配置proxy
+
+`cat ~/.docker/config.json`:
+
+```json
+{
+ "proxies": {
+   "default": {
+     "httpProxy": "http://172.16.226.212:7897",
+     "httpsProxy": "http://172.16.226.212:7897",
+     "noProxy": "*.test.example.com,.example.org,127.0.0.0/8"
+   }
+ }
+}
+```
