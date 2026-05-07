@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 
+META_FILES = {'index.md', 'log.md'}
+
 class BookChapter:
     def __init__(self, root: Path):
         self.sub_chapters : list[BookChapter] = []
@@ -15,6 +17,8 @@ class BookChapter:
                 # if patah is a directory but no markdown file inside, skip it
                 if path.is_file():
                     if path.suffix != '.md':
+                        continue
+                    if path.name in META_FILES:
                         continue
                     else:
                         sub_chapter = BookChapter(path)

@@ -1,47 +1,89 @@
-# Repository Guidelines
+# Wiki Schema
 
-## Project Structure & Module Organization
-This repository is an `mdBook`-based wiki.
-- `src/`: book source files.
-- `src/docs/`: main documentation content (grouped by domain such as `Cloud_Native`, `Machine_Learning`, `Operation`).
-- `src/SUMMARY.md`: generated table of contents.
-- `tools/`: helper scripts (`gen-summary.py`, `blog-preprocessor.py`).
-- `book/`: generated output site.
-- `bin/`: local tool binaries and debug artifacts.
-- `.github/workflows/gh-pages.yml`: CI build and deploy workflow.
+This is the schema for an LLM-driven personal wiki. It defines how the LLM maintains and operates on the wiki.
 
-## Build, Test, and Development Commands
-Use `make` targets as the canonical interface:
-- `make mdbook`: downloads `mdbook` to `./bin` if missing.
-- `make gen-summary`: regenerates `src/SUMMARY.md` from `src/docs`.
-- `make build`: runs summary generation and builds static site into `./book`.
-- `make serve`: serves the book locally for preview.
+## Architecture
 
-Example local loop:
-```bash
-make build
-make serve
+Three layers:
+
+**Raw sources** (`raw/`) — curated source documents (articles, papers, web clippings). These are immutable — the LLM reads from them but never modifies them.
+
+**The wiki** (`src/docs/`) — LLM-maintained markdown files. Summaries, concept pages, notes, cross-references. The LLM owns this layer: creates pages, updates them when new sources arrive, maintains cross-references, and keeps everything consistent.
+
+**The schema** (this file, `AGENTS.md`) — tells the LLM how the wiki is structured, what conventions to follow, and what workflows to use when ingesting sources, answering questions, or maintaining the wiki. Co-evolve this with the LLM over time.
+
+## Directory Structure
+
+```
+raw/                          # Raw source documents (immutable, LLM reads only)
+src/docs/                     # Wiki pages (LLM-owned)
+src/docs/index.md             # Content index (LLM updates on every ingest)
+src/docs/log.md               # Chronological operation log (LLM appends to)
+src/docs/{category}/{page}.md # Wiki pages organized by domain
+src/SUMMARY.md                # Auto-generated mdBook ToC (do not edit manually)
+tools/gen-summary.py          # Generates SUMMARY.md from directory structure
 ```
 
-## Coding Style & Naming Conventions
-- Markdown: keep headings hierarchical, use concise section titles, and prefer relative links.
-- Python scripts in `tools/`: follow PEP 8 style (4-space indentation, `snake_case` names, clear function boundaries).
-- File and directory naming in docs: prefer descriptive names; existing mixed English/Chinese names are acceptable and should stay consistent with surrounding content.
-- Avoid manual edits to generated `src/SUMMARY.md`; regenerate via `make gen-summary`.
+## Operations
 
-## Testing Guidelines
-There is no dedicated unit test suite currently. Validation is build-based:
-- Run `make build` before opening a PR.
-- Confirm `make serve` renders pages and links correctly.
-- If editing `tools/*.py`, validate by regenerating summary and checking output diffs.
+### Ingest
 
-## Commit & Pull Request Guidelines
-Commit history favors short, imperative messages (for example: `fix blog preprocessor script`, `move docs to src dir`).
-- Keep subject lines concise and action-oriented.
-- Group related docs/script changes in one commit.
+When the user provides a new source (article, paper, podcast notes, etc.):
 
-For pull requests:
-- Include a short summary of content/script changes.
-- Link related issues when applicable.
-- Add screenshots for visible rendering/navigation changes.
-- Ensure CI (`make build` in GitHub Actions) passes.
+1. **Place the source** in `raw/` (or note its URL if web-based)
+2. **Read the source** and discuss key takeaways with the user
+3. **Write a summary page** in `src/docs/` under the appropriate category
+4. **Update `index.md`** — add the new page with link and one-line summary
+5. **Cross-reference** — update any existing pages that relate to the new content; add backlinks
+6. **Append to `log.md`** — record the ingest with date, type, and description
+7. **Regenerate ToC** — run `make gen-summary` to update `src/SUMMARY.md`
+
+A single source might touch 10-15 wiki pages as cross-references are added.
+
+### Query
+
+When the user asks a question:
+
+1. **Read `index.md`** first — it's the fastest way to find relevant pages
+2. **Read the relevant pages** and synthesize an answer with citations (links to wiki pages)
+3. **File good answers back** — if the answer is valuable and not already captured, create or update a wiki page with the synthesis. This way explorations compound in the knowledge base.
+
+### Lint
+
+Periodically health-check the wiki. Look for:
+
+- Contradictions between pages — flag them for the user
+- Stale claims that newer sources have superseded
+- Orphan pages with no inbound links
+- Important concepts mentioned but lacking their own page
+- Missing cross-references between related pages
+- Data gaps that could be filled with a web search or new sources
+
+Report findings to the user and offer to fix them.
+
+## Page Conventions
+
+- **Language**: Chinese-first (the wiki is primarily Chinese). English terms keep their original casing.
+- **Links**: Use relative links between wiki pages (e.g. `../Cloud_Native/Kubernetes/kubelet原理.md`)
+- **Headings**: Use `#` for page title, `##` for sections, `###` for subsections. Keep hierarchy clean.
+- **Frontmatter**: Not required. Add YAML frontmatter only when the page has metadata worth querying (tags, dates).
+- **File names**: Existing mixed Chinese/English names are acceptable. New pages should use descriptive names.
+- **Assets**: Images and attachments go in `src/docs/{category}/{page}.assets/` directories.
+
+## Index and Log
+
+**`index.md`** is content-oriented. Each page listed with a link, a one-line summary, and optionally metadata. Organized by category. The LLM updates it on every ingest and reads it first when answering queries.
+
+**`log.md`** is chronological and append-only. Each entry starts with `## [YYYY-MM-DD] type | description`. Types: `ingest`, `query`, `lint`, `update`. The log gives a timeline of the wiki's evolution.
+
+## Build and Publish
+
+The wiki is published as an mdBook static site:
+
+- `make build` — regenerates SUMMARY.md and builds the static site into `book/`
+- `make serve` — serves the book locally for preview
+- `make gen-summary` — regenerates `src/SUMMARY.md` from `src/docs/` directory structure
+
+CI (`.github/workflows/gh-pages.yml`) builds and deploys to GitHub Pages on push to main.
+
+**Important**: `index.md` and `log.md` are meta-files excluded from the mdBook ToC. Do not manually edit `src/SUMMARY.md` — it is auto-generated.
