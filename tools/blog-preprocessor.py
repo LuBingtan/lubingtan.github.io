@@ -13,11 +13,15 @@ def set_default_cotent(chapter : dict) -> None:
             if "Chapter" in item:
                 set_default_cotent(item["Chapter"])
 
+META_FILES = {'index.md', 'log.md'}
+
 def md_files_with_date(root: str) -> list[str]:
     md_files = {}
     for dirpath, dirnames, filenames in os.walk(root):
         for filename in filenames:
             if filename.endswith('.md'):
+                if filename in META_FILES:
+                    continue
                 full_path = os.path.join(dirpath, filename)
                 updated_date = get_git_updated_date(full_path)
                 if updated_date not in md_files:

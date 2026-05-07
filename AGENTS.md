@@ -6,7 +6,7 @@ This is the schema for an LLM-driven personal wiki. It defines how the LLM maint
 
 Three layers:
 
-**Raw sources** (`raw/`) — curated source documents (articles, papers, web clippings). These are immutable — the LLM reads from them but never modifies them.
+**Raw sources** (`raw/`) — curated source documents (articles, papers, web clippings). These are part of the git repo (commit them alongside wiki changes). The LLM reads from them but never modifies them.
 
 **The wiki** (`src/docs/`) — LLM-maintained markdown files. Summaries, concept pages, notes, cross-references. The LLM owns this layer: creates pages, updates them when new sources arrive, maintains cross-references, and keeps everything consistent.
 
