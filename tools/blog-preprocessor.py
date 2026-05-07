@@ -15,6 +15,24 @@ def set_default_cotent(chapter : dict) -> None:
 
 META_FILES = {'index.md', 'log.md'}
 
+def _read_title(filepath: str) -> str | None:
+    """Read the first H1 heading (# ) from a file, outside code fences."""
+    try:
+        with open(filepath) as f:
+            in_code_fence = False
+            for line in f:
+                stripped = line.strip()
+                if stripped.startswith('```') or stripped.startswith('~~~'):
+                    in_code_fence = not in_code_fence
+                    continue
+                if in_code_fence:
+                    continue
+                if stripped.startswith('# ') and not stripped.startswith('## '):
+                    return stripped[2:].strip()
+    except Exception:
+        pass
+    return None
+
 def md_files_with_date(root: str) -> list[str]:
     md_files = {}
     for dirpath, dirnames, filenames in os.walk(root):
@@ -79,7 +97,7 @@ if __name__ == '__main__':
         for file in sorted(files_group_by_date[date]):
             relative_path = os.path.relpath(file, 'src/')
             relative_path = relative_path.replace(' ', '%20')
-            name = os.path.splitext(os.path.basename(file))[0]
+            name = _read_title(file) or os.path.splitext(os.path.basename(file))[0]
             lines.append(f"> #### [{name}](./{relative_path})")
         lines.append("")  # add an empty line after each date group
     # with open('bin/debug_files.md', 'w', encoding='utf-8') as f:
