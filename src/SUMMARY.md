@@ -15,6 +15,7 @@
   - [k8s之pleg](./docs/Cloud_Native/Kubernetes/k8s之pleg.md)
   - [kubelet原理](./docs/Cloud_Native/Kubernetes/kubelet原理.md)
   - [kubernetes_ha](./docs/Cloud_Native/Kubernetes/kubernetes_ha.md)
+  - [kueue](./docs/Cloud_Native/Kubernetes/kueue.md)
   - [rbac](./docs/Cloud_Native/Kubernetes/rbac.md)
 - [Linux Container]()
   - [容器知识备忘录](./docs/Cloud_Native/Linux_Container/容器知识备忘录.md)
