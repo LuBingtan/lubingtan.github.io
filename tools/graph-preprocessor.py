@@ -12,14 +12,20 @@ from urllib.parse import quote
 DOCS_DIR = Path('src/docs')
 META_FILES = {'index.md', 'log.md'}
 
-CATEGORY_COLORS = {
-    'Cloud Native / Kubernetes': '#326ce5',
-    'Cloud Native / Linux Container': '#5b9bd5',
-    'Machine Learning / Inference': '#4caf50',
-    'Operation / Development Environment': '#ff9800',
-    'Operation / Linux': '#f44336',
-}
+PALETTE = [
+    '#326ce5', '#4caf50', '#ff9800', '#f44336', '#9c27b0',
+    '#00bcd4', '#ff5722', '#607d8b', '#8bc34a', '#e91e63',
+    '#3f51b5', '#009688', '#cddc39', '#795548', '#2196f3',
+]
 DEFAULT_COLOR = '#9e9e9e'
+
+
+def _assign_colors(categories):
+    """Assign colors to categories from the palette, cycling if needed."""
+    result = {}
+    for i, cat in enumerate(sorted(categories)):
+        result[cat] = PALETTE[i % len(PALETTE)]
+    return result
 
 
 def _read_title(filepath):
@@ -118,14 +124,15 @@ def _build_graph():
     for node in nodes.values():
         node['degree'] = degree[node['id']]
 
-    return list(nodes.values()), edges
+    return list(nodes.values()), edges, {n['category'] for n in nodes.values()}
 
 
-def _graph_html(nodes, edges):
+def _graph_html(nodes, edges, categories):
     """Generate the HTML/JS for the graph view page."""
     nodes_json = json.dumps(nodes, ensure_ascii=False)
     edges_json = json.dumps(edges, ensure_ascii=False)
-    colors_json = json.dumps(CATEGORY_COLORS, ensure_ascii=False)
+    colors = _assign_colors(categories)
+    colors_json = json.dumps(colors, ensure_ascii=False)
 
     return f'''# Graph View
 
@@ -310,12 +317,12 @@ if __name__ == '__main__':
 
     context, book = json.load(sys.stdin)
 
-    nodes, edges = _build_graph()
+    nodes, edges, categories = _build_graph()
 
     book['items'].insert(0, {
         'Chapter': {
             'name': 'Graph View',
-            'content': _graph_html(nodes, edges),
+            'content': _graph_html(nodes, edges, categories),
             'sub_items': [],
             'path': 'graph_view.md',
             'source_path': None,
