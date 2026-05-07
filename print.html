@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-23244ac5.js";
+            window.path_to_searchindex_js = "searchindex-f00bd26b.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-00ddf872.js"></script>
+        <script src="toc-708667cc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,7 +178,182 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="latest-updates"><a href="#latest-updates" class="header">Latest updates</a></h1>
+                        <h1 id="graph-view"><a class="header" href="#graph-view">Graph View</a></h1>
+<div id="graph-container" style="border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;background:#fafafa;"></div>
+
+<div id="graph-legend" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;"></div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+(function() {
+  const nodes = [{"id": "Machine_Learning/Inference/Model Mesh Serving: 一种可以大规模部署ML模型的解决方案", "name": "Model Mesh Serving: 一种可以大规模部署ML模型的解决方案", "category": "Machine Learning / Inference", "path": "docs/Machine_Learning/Inference/Model%20Mesh%20Serving%3A%20%E4%B8%80%E7%A7%8D%E5%8F%AF%E4%BB%A5%E5%A4%A7%E8%A7%84%E6%A8%A1%E9%83%A8%E7%BD%B2ML%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html", "degree": 0}, {"id": "Machine_Learning/Inference/vLLM Production Stack实战", "name": "vLLM Production Stack 实战", "category": "Machine Learning / Inference", "path": "docs/Machine_Learning/Inference/vLLM%20Production%20Stack%E5%AE%9E%E6%88%98.html", "degree": 0}, {"id": "Operation/Development_Environment/WIndows开发环境配置", "name": "WIndows开发环境配置", "category": "Operation / Development Environment", "path": "docs/Operation/Development_Environment/WIndows%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html", "degree": 0}, {"id": "Operation/Development_Environment/Docker环境配置", "name": "Docker环境配置", "category": "Operation / Development Environment", "path": "docs/Operation/Development_Environment/Docker%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE.html", "degree": 0}, {"id": "Operation/Linux/Bash以及命令行工具技巧集合", "name": "Bash以及命令行工具技巧集合", "category": "Operation / Linux", "path": "docs/Operation/Linux/Bash%E4%BB%A5%E5%8F%8A%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7%E9%9B%86%E5%90%88.html", "degree": 0}, {"id": "Cloud_Native/Linux_Container/容器知识备忘录", "name": "一份容器知识备忘录", "category": "Cloud Native / Linux Container", "path": "docs/Cloud_Native/Linux_Container/%E5%AE%B9%E5%99%A8%E7%9F%A5%E8%AF%86%E5%A4%87%E5%BF%98%E5%BD%95.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/2_kubernetes-api-server", "name": "2_kubernetes-api-server", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/2_kubernetes-api-server.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/1_kubernetes概念", "name": "**What** is Kubernetes", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/1_kubernetes%E6%A6%82%E5%BF%B5.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/kubernetes_ha", "name": "kubernetes_ha", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/kubernetes_ha.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/1-1_k8s工作负载", "name": "Pod", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/1-1_k8s%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD.html", "degree": 1}, {"id": "Cloud_Native/Kubernetes/cni详解", "name": "cni详解", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/cni%E8%AF%A6%E8%A7%A3.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/5_client-go list & watch 原理", "name": "client-go list & watch 原理", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/5_client-go%20list%20%26%20watch%20%E5%8E%9F%E7%90%86.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/kubelet原理", "name": "Kubelet 原理", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/kubelet%E5%8E%9F%E7%90%86.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/rbac", "name": "rbac", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/rbac.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/k8s之pleg", "name": "k8s之pleg", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/k8s%E4%B9%8Bpleg.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/kueue", "name": "Kueue: Kubernetes 原生作业队列管理器", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/kueue.html", "degree": 2}, {"id": "Cloud_Native/Kubernetes/6_service相关", "name": "What is Kubernetes Service", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/6_service%E7%9B%B8%E5%85%B3.html", "degree": 0}, {"id": "Cloud_Native/Kubernetes/4_kube-scheduler源码分析", "name": "k8s scheduler 源码分析", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/4_kube-scheduler%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.html", "degree": 1}, {"id": "Cloud_Native/Kubernetes/flowschema", "name": "flowschema", "category": "Cloud Native / Kubernetes", "path": "docs/Cloud_Native/Kubernetes/flowschema.html", "degree": 0}];
+  const edges = [{"source": "Cloud_Native/Kubernetes/kueue", "target": "Cloud_Native/Kubernetes/1-1_k8s工作负载"}, {"source": "Cloud_Native/Kubernetes/kueue", "target": "Cloud_Native/Kubernetes/4_kube-scheduler源码分析"}];
+  const colors = {"Cloud Native / Kubernetes": "#326ce5", "Cloud Native / Linux Container": "#5b9bd5", "Machine Learning / Inference": "#4caf50", "Operation / Development Environment": "#ff9800", "Operation / Linux": "#f44336"};
+  const defaultColor = '#9e9e9e';
+
+  const container = document.getElementById('graph-container');
+  const width = container.clientWidth || 800;
+  const height = 580;
+
+  // compute radius from degree
+  nodes.forEach(d => {
+    d.radius = Math.max(8, Math.min(28, 8 + d.degree * 2.5));
+    d.color = colors[d.category] || defaultColor;
+  });
+
+  const svg = d3.select('#graph-container')
+    .append('svg')
+    .attr('viewBox', [0, 0, width, height])
+    .attr('width', width)
+    .attr('height', height)
+    .attr('style', 'max-width:100%;height:auto;');
+
+  const zoomGroup = svg.append('g');
+
+  // arrow marker
+  svg.append('defs').selectAll('marker')
+    .data(['arrow'])
+    .join('marker')
+    .attr('id', 'arrow')
+    .attr('viewBox', '0 -5 10 10')
+    .attr('refX', 20)
+    .attr('refY', 0)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path')
+    .attr('d', 'M0,-5L10,0L0,5')
+    .attr('fill', '#bbb');
+
+  const simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(edges).id(d => d.id).distance(120))
+    .force('charge', d3.forceManyBody().strength(-400))
+    .force('center', d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(d => d.radius + 4));
+
+  const link = zoomGroup.append('g')
+    .attr('stroke', '#bbb')
+    .attr('stroke-opacity', 0.6)
+    .attr('stroke-width', 1.2)
+    .selectAll('line')
+    .data(edges)
+    .join('line')
+    .attr('marker-end', 'url(#arrow)');
+
+  const node = zoomGroup.append('g')
+    .selectAll('circle')
+    .data(nodes)
+    .join('circle')
+    .attr('r', d => d.radius)
+    .attr('fill', d => d.color)
+    .attr('stroke', '#fff')
+    .attr('stroke-width', 1.5)
+    .attr('cursor', 'pointer')
+    .on('click', (event, d) => {
+      window.location.href = './' + d.path;
+    });
+
+  const label = zoomGroup.append('g')
+    .selectAll('text')
+    .data(nodes)
+    .join('text')
+    .text(d => d.name.length > 12 ? d.name.slice(0, 12) + '…' : d.name)
+    .attr('font-size', 10)
+    .attr('text-anchor', 'middle')
+    .attr('dy', d => -d.radius - 4)
+    .attr('fill', '#333')
+    .attr('pointer-events', 'none');
+
+  // zoom and pan — keep node/text size readable at all zoom levels
+  const zoom = d3.zoom()
+    .scaleExtent([0.15, 4])
+    .on('zoom', (event) => {
+      zoomGroup.attr('transform', event.transform);
+      const k = event.transform.k;
+      node.attr('r', d => Math.max(3, d.radius / k));
+      node.attr('stroke-width', 1.5 / k);
+      label.attr('font-size', Math.max(3, 10 / k) + 'px');
+      label.attr('dy', d => (-d.radius / k) - 3);
+      link.attr('stroke-width', 1.2 / k);
+    });
+  svg.call(zoom);
+
+  // tooltip
+  const tooltip = d3.select('body').append('div')
+    .style('position', 'absolute')
+    .style('padding', '4px 10px')
+    .style('background', 'rgba(0,0,0,0.75)')
+    .style('color', '#fff')
+    .style('border-radius', '4px')
+    .style('font-size', '12px')
+    .style('pointer-events', 'none')
+    .style('opacity', 0)
+    .style('z-index', 9999);
+
+  node.on('mouseenter', (event, d) => {
+    tooltip.style('opacity', 1).text(d.name);
+  });
+  node.on('mousemove', (event) => {
+    tooltip.style('left', (event.pageX + 10) + 'px')
+           .style('top', (event.pageY - 20) + 'px');
+  });
+  node.on('mouseleave', () => {
+    tooltip.style('opacity', 0);
+  });
+
+  simulation.on('tick', () => {
+    link
+      .attr('x1', d => d.source.x)
+      .attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x)
+      .attr('y2', d => d.target.y);
+    node
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
+    label
+      .attr('x', d => d.x)
+      .attr('y', d => d.y);
+  });
+
+  node.call(d3.drag()
+    .on('start', (event, d) => {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    })
+    .on('drag', (event, d) => {
+      d.fx = event.x;
+      d.fy = event.y;
+    })
+    .on('end', (event, d) => {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }));
+
+  // legend
+  const legend = d3.select('#graph-legend');
+  const catEntries = Object.entries(colors);
+  catEntries.forEach(([cat, color]) => {
+    const item = legend.append('span')
+      .style('display', 'inline-flex')
+      .style('align-items', 'center')
+      .style('gap', '4px');
+    item.append('span')
+      .style('display', 'inline-block')
+      .style('width', '10px')
+      .style('height', '10px')
+      .style('border-radius', '50%')
+      .style('background', color);
+    item.append('span').text(cat);
+  });
+  if (catEntries.length === 0) {
+    legend.style('display', 'none');
+  }
+})();
+</script>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="latest-updates"><a href="#latest-updates" class="header">Latest updates</a></h1>
 <h2 id="2026-05-07"><a class="header" href="#2026-05-07">2026-05-07</a></h2>
 <blockquote>
 <h4 id="kueue-kubernetes-原生作业队列管理器"><a class="header" href="#kueue-kubernetes-原生作业队列管理器"><a href="#kueue-kubernetes-原生作业队列管理器-1">Kueue: Kubernetes 原生作业队列管理器</a></a></h4>
@@ -593,10 +768,10 @@ spec:
 <h2 id="what-is-kueue"><a class="header" href="#what-is-kueue">What is Kueue</a></h2>
 <p><a href="https://github.com/kubernetes-sigs/kueue">Kueue</a>（发音 “cue-ay”）是一个 Kubernetes 原生的<strong>作业队列管理器</strong>，属于 <code>kubernetes-sigs</code> 组织。它作为作业级别的资源管理者，决定：</p>
 <ul>
-<li>作业<strong>何时被允许启动</strong>（即 Pod 何时被创建），基于可用配额</li>
+<li>作业<strong>何时被允许启动</strong>（即 <a href="#pod-1">Pod</a> 何时被创建），基于可用配额</li>
 <li>作业<strong>何时应停止</strong>（即活跃 Pod 何时被删除）</li>
 </ul>
-<p>Kueue 在标准 Kubernetes 调度之上提供公平共享、抢占和多租户资源管理能力，适用于批处理工作负载场景。</p>
+<p>Kueue 在标准 Kubernetes 调度之上提供公平共享、抢占和多租户资源管理能力，与 <a href="#k8s-scheduler-源码分析-1">kube-scheduler</a> 互补：scheduler 负责 Pod 的节点放置，Kueue 负责作业的准入控制与排队。</p>
 <h2 id="核心概念"><a class="header" href="#核心概念">核心概念</a></h2>
 <h3 id="crd-资源"><a class="header" href="#crd-资源">CRD 资源</a></h3>
 <div class="table-wrapper">
