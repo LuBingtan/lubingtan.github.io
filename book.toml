@@ -5,6 +5,8 @@ language = "en"
 
 [preprocessor.blog]
 command = "tools/blog-preprocessor.py"
+[preprocessor.graph]
+command = "tools/graph-preprocessor.py"
 [build]
 create-missing = true
 [output.html]

@@ -4,10 +4,10 @@
 
 [Kueue](https://github.com/kubernetes-sigs/kueue)（发音 "cue-ay"）是一个 Kubernetes 原生的**作业队列管理器**，属于 `kubernetes-sigs` 组织。它作为作业级别的资源管理者，决定：
 
-- 作业**何时被允许启动**（即 Pod 何时被创建），基于可用配额
+- 作业**何时被允许启动**（即 [Pod](../Kubernetes/1-1_k8s工作负载.md) 何时被创建），基于可用配额
 - 作业**何时应停止**（即活跃 Pod 何时被删除）
 
-Kueue 在标准 Kubernetes 调度之上提供公平共享、抢占和多租户资源管理能力，适用于批处理工作负载场景。
+Kueue 在标准 Kubernetes 调度之上提供公平共享、抢占和多租户资源管理能力，与 [kube-scheduler](../Kubernetes/4_kube-scheduler源码分析.md) 互补：scheduler 负责 Pod 的节点放置，Kueue 负责作业的准入控制与排队。
 
 ## 核心概念
 
