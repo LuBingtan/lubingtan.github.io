@@ -18,6 +18,10 @@
 - [RBAC](./Cloud_Native/Kubernetes/rbac.md) — 基于角色的访问控制：用户创建、证书签名请求、权限绑定
 - [Kueue](./Cloud_Native/Kubernetes/kueue.md) — Kubernetes 原生作业队列管理器：配额管理、公平共享、抢占与多集群调度
 
+### CICD
+
+- [DevOps 理念与实践](./Cloud_Native/CICD/devops-thinking.md) — CI/CD pipeline 设计原则：Pipeline as Code、可复用性、性能与可靠性指标、开发环境可复现
+
 ### Linux Container
 
 - [容器知识备忘录](./Cloud_Native/Linux_Container/容器知识备忘录.md) — Linux Namespace、Cgroups、UnionFS 等容器核心技术总结

@@ -3,6 +3,8 @@
 
 # Cloud Native
 
+- [CICD]()
+  - [DevOps 理念与实践](./docs/Cloud_Native/CICD/devops-thinking.md)
 - [Kubernetes]()
   - [**What** is Kubernetes](./docs/Cloud_Native/Kubernetes/1_kubernetes概念.md)
   - [2_kubernetes-api-server](./docs/Cloud_Native/Kubernetes/2_kubernetes-api-server.md)
