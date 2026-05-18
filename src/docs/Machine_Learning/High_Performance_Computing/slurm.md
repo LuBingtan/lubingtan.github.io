@@ -144,7 +144,7 @@ Slurm 采用多 daemon 分布式架构：
 
 **系统拓扑：**
 
-<div class="mermaid">
+```mermaid
 graph TB
     subgraph "User Space"
         sbatch[sbatch]
@@ -190,7 +190,7 @@ graph TB
     slurmctld --> slurmd1
     slurmctld --> slurmd2
     slurmctld --> slurmdN
-</div>
+```
 
 ### 常用用户命令
 
@@ -226,7 +226,7 @@ Slurm 的核心架构模式是**可加载插件系统**。约 40 种插件类型
 
 ### 认证流程
 
-<div class="mermaid">
+```mermaid
 flowchart LR
     subgraph Client["User Command"]
         A["sbatch / srun / squeue"]
@@ -253,11 +253,11 @@ flowchart LR
     B -.->|"munge_decode()"| G
     A -.->|"JWT token"| H
     B -.->|"JWT verify"| H
-</div>
+```
 
 ### 计费数据模型
 
-<div class="mermaid">
+```mermaid
 graph TB
     Cluster[Cluster]
     Account[Account<br/>Bank Account]
@@ -272,7 +272,7 @@ graph TB
     Association -->|"assigned to"| QOS
     Association -->|"enforces"| AssocLimits[GrpTRES / MaxTRES<br/>MaxWall / Fairshare]
     QOS -->|"enforces"| QOSLimits[Group Limits / Preempt<br/>Priority Offset / Usage Factor]
-</div>
+```
 
 ## Job 生命周期
 
@@ -280,7 +280,7 @@ Slurm 中 job 有 12 种基础状态，加 15 种 state flag 进行细化标记�
 
 **基础状态转换：**
 
-<div class="mermaid">
+```mermaid
 stateDiagram-v2
     [*] --> PENDING : Job submitted
     PENDING --> RUNNING : Scheduler allocates & launches
@@ -309,7 +309,7 @@ stateDiagram-v2
     BOOT_FAIL --> [*]
     DEADLINE --> [*]
     OOM --> [*]
-</div>
+```
 
 **常用 State Flags：**
 - `COMPLETING` — job 已结束，正在执行 epilog
@@ -324,7 +324,7 @@ stateDiagram-v2
 
 **调度流程概览：**
 
-<div class="mermaid">
+```mermaid
 flowchart LR
     subgraph slurmctld["slurmctld Scheduling"]
         JS[job_scheduler.c<br/>Main Loop]
@@ -339,7 +339,7 @@ flowchart LR
     ORACLE -->|"resource availability"| SELECT
     SELECT -->|"job_test()<br/>resource fit"| NS
     NS -->|"select specific<br/>eligible nodes"| ALLOC
-</div>
+```
 
 ### 1. 多因子优先级计算
 
@@ -586,6 +586,3 @@ preempt_prio = (priority_tier_or_qos) << 16 | node_count
 
 - [Slurm 官方文档](https://slurm.schedmd.com/)
 - [Slurm GitHub](https://github.com/SchedMD/slurm)
-
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true, theme:'default'});</script>

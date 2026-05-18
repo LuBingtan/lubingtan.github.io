@@ -7,6 +7,8 @@ language = "en"
 command = "tools/blog-preprocessor.py"
 [preprocessor.graph]
 command = "tools/graph-preprocessor.py"
+[preprocessor.mermaid]
+command = "bin/mdbook-mermaid"
 [build]
 create-missing = true
 [output.html]
