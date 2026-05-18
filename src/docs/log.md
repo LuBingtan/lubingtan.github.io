@@ -1,5 +1,9 @@
 # Operation Log
 
+## [2026-05-08] update | Slurm — added Mermaid architecture diagrams
+
+Embedded 5 Mermaid diagrams: system topology (daemon communication), job lifecycle state machine, scheduling flow, authentication flow, and accounting data model (Cluster→Account→User→Association→QOS hierarchy).
+
 ## [2026-05-08] update | Slurm — expanded scheduling algorithms with detailed pseudocode
 
 Expanded the core scheduling algorithms section with: job lifecycle state machine (12 states + 15 flags), multifactor priority formula with fairshare math and decay loop, backfill algorithm with full pseudocode and time complexity analysis, cons_tres selection algorithm (job_test modes, future_run_test, topology-aware best-fit), and preemption algorithm (partition_prio/qos plugins, gang scheduling).

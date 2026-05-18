@@ -142,6 +142,56 @@ Slurm 采用多 daemon 分布式架构：
 | **slurmstepd** | 作业步 daemon——每个作业步在计算节点上启动，管理 I/O、cgroup 和信号传递 |
 | **sackd** | 认证缓存 daemon——缓存认证凭证以减少认证开销 |
 
+**系统拓扑：**
+
+<div class="mermaid">
+graph TB
+    subgraph "User Space"
+        sbatch[sbatch]
+        srun[srun]
+        squeue[squeue]
+        scontrol[scontrol]
+        sinfo[sinfo]
+        scancel[scancel]
+        sacct[sacct]
+        sacctmgr[sacctmgr]
+    end
+
+    subgraph "Management Node"
+        slurmctld[slurmctld<br/>Central Controller]
+        slurmdbd[slurmdbd<br/>Accounting Database]
+        slurmrestd[slurmrestd<br/>REST API]
+        sackd[sackd<br/>Auth Cache]
+    end
+
+    subgraph "Compute Nodes"
+        slurmd1[slurmd<br/>node1]
+        slurmd2[slurmd<br/>node2]
+        slurmdN[slurmd<br/>nodeN]
+    end
+
+    subgraph "Database Server"
+        mysql[(MySQL / MariaDB)]
+    end
+
+    sbatch --> slurmctld
+    srun --> slurmctld
+    squeue --> slurmctld
+    scontrol --> slurmctld
+    sinfo --> slurmctld
+    scancel --> slurmctld
+    sacct --> slurmdbd
+    sacctmgr --> slurmdbd
+    slurmrestd --> slurmctld
+    slurmrestd --> slurmdbd
+    slurmctld --> sackd
+    slurmctld --> slurmdbd
+    slurmdbd --> mysql
+    slurmctld --> slurmd1
+    slurmctld --> slurmd2
+    slurmctld --> slurmdN
+</div>
+
 ### 常用用户命令
 
 | 命令 | 功能 |
@@ -174,25 +224,92 @@ Slurm 的核心架构模式是**可加载插件系统**。约 40 种插件类型
 | **accounting_storage** (计费) | 计费数据持久化 | `mysql`、`slurmdbd` |
 | **jobcomp** (作业完成) | 作业完成日志 | `filetxt`、`elasticsearch`、`kafka`、`lua`、`mysql` |
 
+### 认证流程
+
+<div class="mermaid">
+flowchart LR
+    subgraph Client["User Command"]
+        A["sbatch / srun / squeue"]
+    end
+    subgraph Controller["slurmctld"]
+        B["auth plugin: Verify<br/>munge / jwt / slurm"]
+        C["Process Request<br/>job_mgr.c / scheduler"]
+        D["cred plugin: Create<br/>Job Credential"]
+    end
+    subgraph Node["slurmd"]
+        E["cred plugin: Verify<br/>Job Credential"]
+        F["slurmstepd<br/>Job Launch"]
+    end
+    subgraph AuthBackend["Auth Infrastructure"]
+        G["MUNGE Daemon<br/>munge.key shared secret"]
+        H["JWT Token<br/>HMAC or RSA signed"]
+    end
+    A -->|"1. Auth credential"| B
+    B -->|"2. Verified identity"| C
+    C -->|"3. Job allocated"| D
+    D -->|"4. Encrypted credential"| E
+    E -->|"5. Authorized"| F
+    A -.->|"munge_encode()"| G
+    B -.->|"munge_decode()"| G
+    A -.->|"JWT token"| H
+    B -.->|"JWT verify"| H
+</div>
+
+### 计费数据模型
+
+<div class="mermaid">
+graph TB
+    Cluster[Cluster]
+    Account[Account<br/>Bank Account]
+    User[User]
+    Association[Association<br/>user+acct+cluster+partition]
+    QOS[Quality of Service]
+    Cluster -->|"contains"| Account
+    Account -->|"contains"| User
+    Account -->|"part of"| Association
+    User -->|"part of"| Association
+    Cluster -->|"part of"| Association
+    Association -->|"assigned to"| QOS
+    Association -->|"enforces"| AssocLimits[GrpTRES / MaxTRES<br/>MaxWall / Fairshare]
+    QOS -->|"enforces"| QOSLimits[Group Limits / Preempt<br/>Priority Offset / Usage Factor]
+</div>
+
 ## Job 生命周期
 
 Slurm 中 job 有 12 种基础状态，加 15 种 state flag 进行细化标记。
 
 **基础状态转换：**
 
-```
-PENDING ──(scheduler allocates)──→ RUNNING ──(finishes)──→ COMPLETING → COMPLETED
-    │                                  │
-    ├──(dependency fails)──→ DEADLINE  ├──(timeout)──→ TIMEOUT
-    ├──(never started)─────→ CANCELLED ├──(scancel)──→ CANCELLED
-    └──(node fails)────────→ NODE_FAIL ├──(preempt)──→ PREEMPTED
-                                        ├──(node fail)──→ NODE_FAIL
-                                        ├──(boot fail)──→ BOOT_FAIL
-                                        ├──(OOM kill)────→ OOM
-                                        └──(suspend)────→ SUSPENDED
-
-REQUEST(STOPPED) + REQUEUE → back to PENDING (重新排队)
-```
+<div class="mermaid">
+stateDiagram-v2
+    [*] --> PENDING : Job submitted
+    PENDING --> RUNNING : Scheduler allocates & launches
+    PENDING --> CANCELLED : scancel before start
+    PENDING --> FAILED : Launch failure
+    RUNNING --> COMPLETING : Job processes exit
+    RUNNING --> CANCELLED : scancel / signal
+    RUNNING --> FAILED : Non-zero exit code
+    RUNNING --> TIMEOUT : Time limit reached
+    RUNNING --> NODE_FAIL : Node failure
+    RUNNING --> PREEMPTED : Preemption
+    RUNNING --> SUSPENDED : SIGSTOP
+    RUNNING --> BOOT_FAIL : Boot failure
+    RUNNING --> DEADLINE : Deadline exceeded
+    RUNNING --> OOM : Out of memory
+    SUSPENDED --> RUNNING : SIGCONT / Resume
+    COMPLETING --> COMPLETE : Epilog done, exit=0
+    COMPLETING --> FAILED : Epilog done, exit!=0
+    COMPLETING --> PENDING : Requeue (JOB_REQUEUE flag)
+    COMPLETE --> [*]
+    CANCELLED --> [*]
+    FAILED --> [*]
+    TIMEOUT --> [*]
+    NODE_FAIL --> [*]
+    PREEMPTED --> [*]
+    BOOT_FAIL --> [*]
+    DEADLINE --> [*]
+    OOM --> [*]
+</div>
 
 **常用 State Flags：**
 - `COMPLETING` — job 已结束，正在执行 epilog
@@ -204,6 +321,25 @@ REQUEST(STOPPED) + REQUEUE → back to PENDING (重新排队)
 短状态码：`PD`(PENDING), `R`(RUNNING), `CG`(COMPLETING), `CD`(COMPLETED), `CA`(CANCELLED), `F`(FAILED), `TO`(TIMEOUT), `NF`(NODE_FAIL), `PR`(PREEMPTED), `BF`(BOOT_FAIL), `DL`(DEADLINE), `OOM`(OOM), `S`(SUSPENDED)
 
 ## 核心调度算法
+
+**调度流程概览：**
+
+<div class="mermaid">
+flowchart LR
+    subgraph slurmctld["slurmctld Scheduling"]
+        JS[job_scheduler.c<br/>Main Loop]
+        SCHED[sched Plugin<br/>backfill / builtin]
+        ORACLE[Oracle<br/>End-time Estimation]
+        SELECT[select Plugin<br/>cons_tres / linear]
+        NS[node_scheduler.c<br/>Node Selection]
+        ALLOC[Allocate<br/>job_test --> job_start]
+    end
+    JS -->|"iterate pending<br/>by priority"| SCHED
+    SCHED -->|"backfill feasibility"| ORACLE
+    ORACLE -->|"resource availability"| SELECT
+    SELECT -->|"job_test()<br/>resource fit"| NS
+    NS -->|"select specific<br/>eligible nodes"| ALLOC
+</div>
 
 ### 1. 多因子优先级计算
 
@@ -450,3 +586,6 @@ preempt_prio = (priority_tier_or_qos) << 16 | node_count
 
 - [Slurm 官方文档](https://slurm.schedmd.com/)
 - [Slurm GitHub](https://github.com/SchedMD/slurm)
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default'});</script>
