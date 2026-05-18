@@ -35,7 +35,7 @@
             const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../../searchindex-4cfd87e3.js";
+            window.path_to_searchindex_js = "../../../searchindex-73846ab2.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../../toc-f55fcfe5.js"></script>
@@ -300,6 +300,55 @@ srun python /tmp/train.py
 </tbody>
 </table>
 </div>
+<p><strong>系统拓扑：</strong></p>
+<div class="mermaid">
+graph TB
+    subgraph "User Space"
+        sbatch[sbatch]
+        srun[srun]
+        squeue[squeue]
+        scontrol[scontrol]
+        sinfo[sinfo]
+        scancel[scancel]
+        sacct[sacct]
+        sacctmgr[sacctmgr]
+    end
+<pre><code>subgraph "Management Node"
+    slurmctld[slurmctld&lt;br/&gt;Central Controller]
+    slurmdbd[slurmdbd&lt;br/&gt;Accounting Database]
+    slurmrestd[slurmrestd&lt;br/&gt;REST API]
+    sackd[sackd&lt;br/&gt;Auth Cache]
+end
+
+subgraph "Compute Nodes"
+    slurmd1[slurmd&lt;br/&gt;node1]
+    slurmd2[slurmd&lt;br/&gt;node2]
+    slurmdN[slurmd&lt;br/&gt;nodeN]
+end
+
+subgraph "Database Server"
+    mysql[(MySQL / MariaDB)]
+end
+
+sbatch --&gt; slurmctld
+srun --&gt; slurmctld
+squeue --&gt; slurmctld
+scontrol --&gt; slurmctld
+sinfo --&gt; slurmctld
+scancel --&gt; slurmctld
+sacct --&gt; slurmdbd
+sacctmgr --&gt; slurmdbd
+slurmrestd --&gt; slurmctld
+slurmrestd --&gt; slurmdbd
+slurmctld --&gt; sackd
+slurmctld --&gt; slurmdbd
+slurmdbd --&gt; mysql
+slurmctld --&gt; slurmd1
+slurmctld --&gt; slurmd2
+slurmctld --&gt; slurmdN
+</code></pre>
+</div>
+
 <h3 id="常用用户命令"><a class="header" href="#常用用户命令">常用用户命令</a></h3>
 <div class="table-wrapper">
 <table>
@@ -340,21 +389,88 @@ srun python /tmp/train.py
 </tbody>
 </table>
 </div>
+<h3 id="认证流程"><a class="header" href="#认证流程">认证流程</a></h3>
+<div class="mermaid">
+flowchart LR
+    subgraph Client["User Command"]
+        A["sbatch / srun / squeue"]
+    end
+    subgraph Controller["slurmctld"]
+        B["auth plugin: Verify<br />munge / jwt / slurm"]
+        C["Process Request<br />job_mgr.c / scheduler"]
+        D["cred plugin: Create<br />Job Credential"]
+    end
+    subgraph Node["slurmd"]
+        E["cred plugin: Verify<br />Job Credential"]
+        F["slurmstepd<br />Job Launch"]
+    end
+    subgraph AuthBackend["Auth Infrastructure"]
+        G["MUNGE Daemon<br />munge.key shared secret"]
+        H["JWT Token<br />HMAC or RSA signed"]
+    end
+    A --&gt;|"1. Auth credential"| B
+    B --&gt;|"2. Verified identity"| C
+    C --&gt;|"3. Job allocated"| D
+    D --&gt;|"4. Encrypted credential"| E
+    E --&gt;|"5. Authorized"| F
+    A -.-&gt;|"munge_encode()"| G
+    B -.-&gt;|"munge_decode()"| G
+    A -.-&gt;|"JWT token"| H
+    B -.-&gt;|"JWT verify"| H
+</div>
+
+<h3 id="计费数据模型"><a class="header" href="#计费数据模型">计费数据模型</a></h3>
+<div class="mermaid">
+graph TB
+    Cluster[Cluster]
+    Account[Account<br />Bank Account]
+    User[User]
+    Association[Association<br />user+acct+cluster+partition]
+    QOS[Quality of Service]
+    Cluster --&gt;|"contains"| Account
+    Account --&gt;|"contains"| User
+    Account --&gt;|"part of"| Association
+    User --&gt;|"part of"| Association
+    Cluster --&gt;|"part of"| Association
+    Association --&gt;|"assigned to"| QOS
+    Association --&gt;|"enforces"| AssocLimits[GrpTRES / MaxTRES<br />MaxWall / Fairshare]
+    QOS --&gt;|"enforces"| QOSLimits[Group Limits / Preempt<br />Priority Offset / Usage Factor]
+</div>
+
 <h2 id="job-生命周期"><a class="header" href="#job-生命周期">Job 生命周期</a></h2>
 <p>Slurm 中 job 有 12 种基础状态，加 15 种 state flag 进行细化标记。</p>
 <p><strong>基础状态转换：</strong></p>
-<pre><code>PENDING ──(scheduler allocates)──→ RUNNING ──(finishes)──→ COMPLETING → COMPLETED
-    │                                  │
-    ├──(dependency fails)──→ DEADLINE  ├──(timeout)──→ TIMEOUT
-    ├──(never started)─────→ CANCELLED ├──(scancel)──→ CANCELLED
-    └──(node fails)────────→ NODE_FAIL ├──(preempt)──→ PREEMPTED
-                                        ├──(node fail)──→ NODE_FAIL
-                                        ├──(boot fail)──→ BOOT_FAIL
-                                        ├──(OOM kill)────→ OOM
-                                        └──(suspend)────→ SUSPENDED
+<div class="mermaid">
+stateDiagram-v2
+    [*] --&gt; PENDING : Job submitted
+    PENDING --&gt; RUNNING : Scheduler allocates &amp; launches
+    PENDING --&gt; CANCELLED : scancel before start
+    PENDING --&gt; FAILED : Launch failure
+    RUNNING --&gt; COMPLETING : Job processes exit
+    RUNNING --&gt; CANCELLED : scancel / signal
+    RUNNING --&gt; FAILED : Non-zero exit code
+    RUNNING --&gt; TIMEOUT : Time limit reached
+    RUNNING --&gt; NODE_FAIL : Node failure
+    RUNNING --&gt; PREEMPTED : Preemption
+    RUNNING --&gt; SUSPENDED : SIGSTOP
+    RUNNING --&gt; BOOT_FAIL : Boot failure
+    RUNNING --&gt; DEADLINE : Deadline exceeded
+    RUNNING --&gt; OOM : Out of memory
+    SUSPENDED --&gt; RUNNING : SIGCONT / Resume
+    COMPLETING --&gt; COMPLETE : Epilog done, exit=0
+    COMPLETING --&gt; FAILED : Epilog done, exit!=0
+    COMPLETING --&gt; PENDING : Requeue (JOB_REQUEUE flag)
+    COMPLETE --&gt; [*]
+    CANCELLED --&gt; [*]
+    FAILED --&gt; [*]
+    TIMEOUT --&gt; [*]
+    NODE_FAIL --&gt; [*]
+    PREEMPTED --&gt; [*]
+    BOOT_FAIL --&gt; [*]
+    DEADLINE --&gt; [*]
+    OOM --&gt; [*]
+</div>
 
-REQUEST(STOPPED) + REQUEUE → back to PENDING (重新排队)
-</code></pre>
 <p><strong>常用 State Flags：</strong></p>
 <ul>
 <li><code>COMPLETING</code> — job 已结束，正在执行 epilog</li>
@@ -365,6 +481,24 @@ REQUEST(STOPPED) + REQUEUE → back to PENDING (重新排队)
 </ul>
 <p>短状态码：<code>PD</code>(PENDING), <code>R</code>(RUNNING), <code>CG</code>(COMPLETING), <code>CD</code>(COMPLETED), <code>CA</code>(CANCELLED), <code>F</code>(FAILED), <code>TO</code>(TIMEOUT), <code>NF</code>(NODE_FAIL), <code>PR</code>(PREEMPTED), <code>BF</code>(BOOT_FAIL), <code>DL</code>(DEADLINE), <code>OOM</code>(OOM), <code>S</code>(SUSPENDED)</p>
 <h2 id="核心调度算法"><a class="header" href="#核心调度算法">核心调度算法</a></h2>
+<p><strong>调度流程概览：</strong></p>
+<div class="mermaid">
+flowchart LR
+    subgraph slurmctld["slurmctld Scheduling"]
+        JS[job_scheduler.c<br />Main Loop]
+        SCHED[sched Plugin<br />backfill / builtin]
+        ORACLE[Oracle<br />End-time Estimation]
+        SELECT[select Plugin<br />cons_tres / linear]
+        NS[node_scheduler.c<br />Node Selection]
+        ALLOC[Allocate<br />job_test --&gt; job_start]
+    end
+    JS --&gt;|"iterate pending<br />by priority"| SCHED
+    SCHED --&gt;|"backfill feasibility"| ORACLE
+    ORACLE --&gt;|"resource availability"| SELECT
+    SELECT --&gt;|"job_test()<br />resource fit"| NS
+    NS --&gt;|"select specific<br />eligible nodes"| ALLOC
+</div>
+
 <h3 id="1-多因子优先级计算"><a class="header" href="#1-多因子优先级计算">1. 多因子优先级计算</a></h3>
 <p><strong>Source:</strong> <code>priority/multifactor/priority_multifactor.c</code> (~2,318 lines), <code>fair_tree.c</code> (~440 lines)</p>
 <p><strong>精确公式：</strong></p>
@@ -621,6 +755,8 @@ loop:
 <li><a href="https://slurm.schedmd.com/">Slurm 官方文档</a></li>
 <li><a href="https://github.com/SchedMD/slurm">Slurm GitHub</a></li>
 </ul>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true, theme:'default'});</script>
 
                     </main>
 
