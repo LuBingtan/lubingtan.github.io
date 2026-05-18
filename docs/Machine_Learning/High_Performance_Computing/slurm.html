@@ -35,7 +35,7 @@
             const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../../searchindex-89fe4a6a.js";
+            window.path_to_searchindex_js = "../../../searchindex-505c637f.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../../toc-f55fcfe5.js"></script>
@@ -191,6 +191,97 @@
 <li><strong>队列仲裁</strong> — 通过管理待处理作业队列来仲裁资源冲突</li>
 </ol>
 <p>项目起源于 Lawrence Livermore National Laboratory (LLNL)，现由 SchedMD LLC 维护。仅在 Linux 下测试运行。语言为 C（附带 Perl、Lua、Python 用于扩展/测试），采用 GPLv2+ 许可证。</p>
+<h2 id="核心概念"><a class="header" href="#核心概念">核心概念</a></h2>
+<h3 id="作业job"><a class="header" href="#作业job">作业（Job）</a></h3>
+<p>一个 <strong>job</strong> = 一次<strong>资源分配请求</strong> + 在分配的资源上运行的程序。它是 Slurm 中资源分配和调度的基本单位。</p>
+<p><strong>示例</strong>：在共享 HPC 集群上训练模型，编写脚本 <code>train.sh</code>：</p>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --nodes=2           # 要2个节点
+#SBATCH --ntasks-per-node=4 # 每节点4个进程 (共8个GPU)
+#SBATCH --gpus=8            # 总共8块GPU
+#SBATCH --time=02:00:00     # 跑2小时
+#SBATCH --mem=32G           # 每节点32GB内存
+
+python train_model.py --epochs 100
+</code></pre>
+<p>提交：<code>sbatch train.sh</code>。Slurm 在集群中找到符合条件的节点，分配给你独占使用 2 小时，然后在上面执行脚本。从提交到运行结束，这一整个过程就是一个 job。</p>
+<p>关键理解：Slurm 调度的是**“谁、什么时候、在哪台机器上、用多少资源”**，而不是“哪个进程跑哪个 CPU 核心“——那是 Linux 内核调度器的事。</p>
+<h3 id="作业步job-step"><a class="header" href="#作业步job-step">作业步（Job Step）</a></h3>
+<p>一个 job 可以包含多个 <strong>step</strong>，每个 step 是 job 资源分配内的一组进程。Step 之间共享同一个 job 已分配的资源，不会重新排队。</p>
+<p><strong>场景 1：在 batch 脚本内</strong>（最常见）：</p>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --nodes=2
+#SBATCH --gpus=8
+
+# Step 0: 训练，用完所有8个GPU
+srun python train.py
+
+# Step 1: 评估，只用单节点单GPU
+srun --nodes=1 --ntasks=1 python eval.py
+</code></pre>
+<p><code>train.py</code> 和 <code>eval.py</code> 是两个独立的 step，在 <code>sacct</code> 中显示为 <code>1234.0</code> 和 <code>1234.1</code>。</p>
+<p><strong>场景 2：交互式</strong>（<code>salloc</code>）：</p>
+<pre><code class="language-bash">$ salloc --nodes=2 --gpus=8 --time=02:00:00
+salloc: Granted job allocation 1234
+
+$ srun python train.py       # Step 1234.0
+$ srun --gpus=2 python debug.py  # Step 1234.1
+$ exit                        # 释放整个 job
+</code></pre>
+<p>Job、step、进程的层级关系：</p>
+<pre><code>Job #1234 (一次 sbatch 提交)
+├── Step 0: python train.py    ← srun 启动
+├── Step 1: python eval.py     ← 共享同一分配
+└── Step 2: bash cleanup.sh
+</code></pre>
+<h3 id="文件分发"><a class="header" href="#文件分发">文件分发</a></h3>
+<p><strong>Slurm 不会自动上传脚本到计算节点。</strong> 脚本必须已经存在于所有计算节点的<strong>相同路径</strong>下。</p>
+<p>HPC 集群通过<strong>共享文件系统</strong>解决此问题：</p>
+<pre><code>管理节点                      计算节点
+/home/user/train.sh   ←NFS→   /home/user/train.sh (同一文件)
+/data/dataset/         ←Lustre→ /data/dataset/
+</code></pre>
+<p><code>sbatch</code> 只把脚本路径发给 slurmctld，slurmd 直接去本地路径执行——中间没有文件传输。</p>
+<p>如果没有共享文件系统，可以用 <code>sbcast</code> 手动广播：</p>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --nodes=4
+sbcast train.py /tmp/train.py
+srun python /tmp/train.py
+</code></pre>
+<p>与 K8s 的对比：K8s 把容器镜像分发到所有节点，Slurm 假设你有 POSIX 共享存储。这是 HPC 领域的特征——超算中心天然就有 Lustre/GPFS/NFS。</p>
+<h3 id="资源限制机制"><a class="header" href="#资源限制机制">资源限制机制</a></h3>
+<p>Slurm 通过 <strong>Linux cgroups</strong>（v1 或 v2）限制进程资源，有专门的插件体系：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>插件</th><th>功能</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>cgroup/v2（或 v1）</strong></td><td>核心约束：<code>memory.max</code>（硬内存上限）、<code>cpu.max</code>（CPU 带宽）、<code>cpuset</code>（核心绑定）</td></tr>
+<tr><td><strong>task/cgroup</strong></td><td>将作业进程放入正确的 cgroup</td></tr>
+<tr><td><strong>proctrack/cgroup</strong></td><td>通过 cgroup 追踪作业所有进程</td></tr>
+<tr><td><strong>jobacct_gather/cgroup</strong></td><td>采集资源使用统计（用于计费和公平共享）</td></tr>
+<tr><td><strong>SPANK + pam_slurm_adopt</strong></td><td>确保 SSH 登录等外部进程也归入正确 cgroup</td></tr>
+</tbody>
+</table>
+</div>
+<p>流程：slurmctld 决定分配 → slurmd 创建 cgroup 并设限 → slurmstepd 在约束内启动进程 → jobacct_gather 采集用量。</p>
+<h3 id="与-kueue-的对比"><a class="header" href="#与-kueue-的对比">与 Kueue 的对比</a></h3>
+<p>Slurm 和 <a href="../../Cloud_Native/Kubernetes/kueue.html">Kueue</a> 都是作业级调度器，但设计哲学不同：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th>Slurm</th><th>Kueue</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>运行环境</strong></td><td>HPC 集群（裸金属）</td><td>Kubernetes 集群</td></tr>
+<tr><td><strong>资源模型</strong></td><td>节点/CPU/内存/GPU</td><td>与 K8s 资源模型对齐（ResourceFlavor）</td></tr>
+<tr><td><strong>Job Step</strong></td><td>共享 job 已分配的资源，不重新排队</td><td>不支持 step 概念，每个 Workload 独立排队</td></tr>
+<tr><td><strong>文件分发</strong></td><td>依赖共享文件系统（NFS/Lustre）</td><td>容器镜像分发</td></tr>
+<tr><td><strong>抢占</strong></td><td>支持（QOS/partition 级别）</td><td>支持（Cohort 内公平共享/层级抢占）</td></tr>
+</tbody>
+</table>
+</div>
 <h2 id="架构"><a class="header" href="#架构">架构</a></h2>
 <h3 id="核心-daemon"><a class="header" href="#核心-daemon">核心 Daemon</a></h3>
 <p>Slurm 采用多 daemon 分布式架构：</p>
