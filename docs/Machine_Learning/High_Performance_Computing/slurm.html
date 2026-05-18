@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>client-go list &amp; watch 原理 - Bingtan&#x27;s Wiki</title>
+        <title>Slurm: HPC 集群工作负载管理器 - Bingtan&#x27;s Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -146,7 +146,7 @@
                         <a href="https://github.com/lubingtan/lubingtan.github.io" title="Git repository" aria-label="Git repository">
                             <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
-                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Cloud_Native/Kubernetes/5_client-go list &amp; watch 原理.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Machine_Learning/High_Performance_Computing/slurm.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -180,234 +180,138 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="client-go-list--watch-原理"><a class="header" href="#client-go-list--watch-原理">client-go list &amp; watch 原理</a></h1>
-<p>ListAndWatch设计到两个操作</p>
-<p>List和Watch</p>
-<p>List没啥好说的</p>
-<p>看看Watch：</p>
-<h1 id="watch原理"><a class="header" href="#watch原理">Watch原理</a></h1>
-<h2 id="概要"><a class="header" href="#概要">概要</a></h2>
-<p>kube-apiserver与etcd之间有个长连接（GRPC stream），对资源进行watch</p>
-<p>kube-apiserver与client-go之间有个长连接（websocket或Transfer-Encoding），作为etcd watch的代理</p>
-<h2 id="api-server"><a class="header" href="#api-server">API Server</a></h2>
-<h3 id="watch接口"><a class="header" href="#watch接口">Watch接口</a></h3>
-<p>在<code>staging/src/k8s.io/apiserver/pkg/endpoints/handlers/get.go</code>中，有个<code>ListResource</code>接口，其中实现了对资源的watch接口</p>
-<pre><code class="language-Go">if opts.Watch || forceWatch {
-  // 省略
-  // ......
-  metrics.RecordLongRunning(req, requestInfo, metrics.APIServerComponent, func() {
-    serveWatch(watcher, scope, outputMediaType, req, w, timeout)
-  })
-  return
-} 
-// 省略 
-</code></pre>
-<p>我们继续往下看<code>serveWatch</code>中发生了什么</p>
-<p>在<code>pkg/endpoints/handlers/watch.go</code>中有：</p>
-<pre><code class="language-Go">server := &amp;WatchServer{
-    Watching: watcher,
-    Scope:    scope,
-
-    UseTextFraming:  useTextFraming,
-    MediaType:       mediaType,
-    Framer:          framer,
-    Encoder:         encoder,
-    EmbeddedEncoder: embeddedEncoder,
-
-    Fixup: func(obj runtime.Object) runtime.Object {
-      result, err := transformObject(ctx, obj, options, mediaTypeOptions, scope, req)
-      if err != nil {
-        utilruntime.HandleError(fmt.Errorf("failed to transform object %v: %v", reflect.TypeOf(obj), err))
-        return obj
-      }
-      // When we are transformed to a table, use the table options as the state for whether we
-      // should print headers - on watch, we only want to print table headers on the first object
-      // and omit them on subsequent events.
-      if tableOptions, ok := options.(*metav1.TableOptions); ok {
-        tableOptions.NoHeaders = true
-      }
-      return result
-    },
-
-    TimeoutFactory: &amp;realTimeoutFactory{timeout},
-  }
-
-  server.ServeHTTP(w, req)
-</code></pre>
-<p>可见WatcheServer是实现watch接口的关键组件，在<code>ServeHTTP</code>方法中，出现了两个分支</p>
-<pre><code class="language-Go">if wsstream.IsWebSocketRequest(req) {
-    w.Header().Set("Content-Type", s.MediaType)
-    websocket.Handler(s.HandleWS).ServeHTTP(w, req)
-    return
-  }
-// ......省略
- // begin the stream
-  w.Header().Set("Content-Type", s.MediaType)
-  w.Header().Set("Transfer-Encoding", "chunked")
-  w.WriteHeader(http.StatusOK)
-  flusher.Flush()
-  // ......省略 
-</code></pre>
-<p>可见如果WatchServer同时实现了<code>websocket</code>接口以及http的<code>Transfer-Encoding</code>接口（分块传输编码，http长连接，单向的？）。</p>
-<p>而在传输数据的部分：</p>
-<pre><code class="language-Go">  ch := s.Watching.ResultChan()
-  done := req.Context().Done()
-
-  for {
-    select {
-    case &lt;-done:
-      return
-    case &lt;-timeoutCh:
-      return
-    case event, ok := &lt;-ch:
-      if !ok {
-        // End of results.
-        return
-      }
-// ......省略 
-</code></pre>
-<p>这里<code>s.Watching</code>就是对etcd的资源watch的接口，<code>s.Watching.ResultChan</code>是资源watch event。</p>
-<p><code>s.Watching</code>其实是一个<code>watch.Interface</code>对象，它是从哪里来的</p>
-<h3 id="watcher对象"><a class="header" href="#watcher对象">Watcher对象</a></h3>
-<p>一路追查</p>
-<p>位于<code>staging/src/k8s.io/apiserver/pkg/storage/etcd3/store.go</code>中的<code>Watch</code>以及<code>WatchList</code>接口创建了<code>watch.Interface</code>对象</p>
-<pre><code class="language-Go">// Watch implements storage.Interface.Watch.
-func (s *store) Watch(ctx context.Context, key string, opts storage.ListOptions) (watch.Interface, error) {
-  return s.watch(ctx, key, opts, false)
-}
-
-// WatchList implements storage.Interface.WatchList.
-func (s *store) WatchList(ctx context.Context, key string, opts storage.ListOptions) (watch.Interface, error) {
-  return s.watch(ctx, key, opts, true)
-}
-
-func (s *store) watch(ctx context.Context, key string, opts storage.ListOptions, recursive bool) (watch.Interface, error) {
-  rev, err := s.versioner.ParseResourceVersion(opts.ResourceVersion)
-  if err != nil {
-    return nil, err
-  }
-  key = path.Join(s.pathPrefix, key)
-  return s.watcher.Watch(ctx, key, int64(rev), recursive, opts.ProgressNotify, opts.Predicate)
-}
-</code></pre>
-<p>位于<code>staging/src/k8s.io/apiserver/pkg/storage/etcd3/watcher.go</code>的<code>startWatching</code>函数，调用了etcd client的<code>watch</code>接口，关键代码：</p>
-<pre><code class="language-Go">
-// startWatching does:
-// - get current objects if initialRev=0; set initialRev to current rev
-// - watch on given key and send events to process.
-func (wc *watchChan) startWatching(watchClosedCh chan struct{}) {
-  // 省略......
-  wch := wc.watcher.client.Watch(wc.ctx, wc.key, opts...)
-  // 省略......
-}
-</code></pre>
-<h2 id="client-go"><a class="header" href="#client-go">Client-Go</a></h2>
-<h3 id="创建sharedinformerfactory"><a class="header" href="#创建sharedinformerfactory">创建<code>SharedInformerFactory</code></a></h3>
-<pre><code class="language-Go">func NewFilteredSharedInformerFactory(client kubernetes.Interface, defaultResync time.Duration, namespace string, tweakListOptions internalinterfaces.TweakListOptionsFunc) SharedInformerFactory {
-  return NewSharedInformerFactoryWithOptions(client, defaultResync, WithNamespace(namespace), WithTweakListOptions(tweakListOptions))
-}
-</code></pre>
-<h3 id="创建podinformer"><a class="header" href="#创建podinformer">创建PodInformer</a></h3>
-<p>创建了SharedIndexInformer接口</p>
-<p>ListWatch结构保存了ListFunc和WatchFunc</p>
-<pre><code class="language-Go">func NewFilteredPodInformer(client kubernetes.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
-  return cache.NewSharedIndexInformer(
-    &amp;cache.ListWatch{
-      ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
-        if tweakListOptions != nil {
-          tweakListOptions(&amp;options)
-        }
-        return client.CoreV1().Pods(namespace).List(context.TODO(), options)
-      },
-      WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
-        if tweakListOptions != nil {
-          tweakListOptions(&amp;options)
-        }
-        return client.CoreV1().Pods(namespace).Watch(context.TODO(), options)
-      },
-    },
-    &amp;corev1.Pod{},
-    resyncPeriod,
-    indexers,
-  )
-}
-</code></pre>
-<h3 id="sharedindexinformer"><a class="header" href="#sharedindexinformer">SharedIndexInformer</a></h3>
-<p>SharedIndexInformer接口定义了诸如AddEventHandler、Run、HasSynced等方法</p>
-<p>结构体的一些关键成员：</p>
+                        <h1 id="slurm-hpc-集群工作负载管理器"><a class="header" href="#slurm-hpc-集群工作负载管理器">Slurm: HPC 集群工作负载管理器</a></h1>
+<h2 id="what-is-slurm"><a class="header" href="#what-is-slurm">What is Slurm</a></h2>
+<p><a href="https://slurm.schedmd.com/">Slurm</a>（Simple Linux Utility for Resource Management）是一个开源的集群资源管理和作业调度系统，是全球顶级超算和 HPC 集群的首选工作负载管理器。</p>
+<p>Slurm 常与 <a href="../High_Performance_Computing/ompi架构介绍.html">Open MPI</a> 搭配使用于 HPC 场景，负责资源分配和作业调度。</p>
+<p>Slurm 提供三个核心功能：</p>
+<ol>
+<li><strong>资源分配</strong> — 为用户分配计算节点的独占/非独占访问权限（按时间段）</li>
+<li><strong>作业框架</strong> — 提供在已分配节点上启动、执行和监控作业（通常是并行作业）的完整框架</li>
+<li><strong>队列仲裁</strong> — 通过管理待处理作业队列来仲裁资源冲突</li>
+</ol>
+<p>项目起源于 Lawrence Livermore National Laboratory (LLNL)，现由 SchedMD LLC 维护。仅在 Linux 下测试运行。语言为 C（附带 Perl、Lua、Python 用于扩展/测试），采用 GPLv2+ 许可证。</p>
+<h2 id="架构"><a class="header" href="#架构">架构</a></h2>
+<h3 id="核心-daemon"><a class="header" href="#核心-daemon">核心 Daemon</a></h3>
+<p>Slurm 采用多 daemon 分布式架构：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Daemon</th><th>功能</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>slurmctld</strong></td><td>中央控制器——Slurm 的大脑。管理作业、节点、分区、预留和调度决策。每个集群一个（含热备），代码量约 85k 行 C</td></tr>
+<tr><td><strong>slurmd</strong></td><td>节点 daemon——运行在每个计算节点上。执行和监控作业，管理 prolog/epilog，本地资源管控</td></tr>
+<tr><td><strong>slurmdbd</strong></td><td>数据库 daemon——将计费和作业历史数据存入 MySQL，作为集中式计费层</td></tr>
+<tr><td><strong>slurmrestd</strong></td><td>REST API daemon——提供 RESTful HTTP API（OpenAPI），支持 JSON/YAML 序列化</td></tr>
+<tr><td><strong>slurmstepd</strong></td><td>作业步 daemon——每个作业步在计算节点上启动，管理 I/O、cgroup 和信号传递</td></tr>
+<tr><td><strong>sackd</strong></td><td>认证缓存 daemon——缓存认证凭证以减少认证开销</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="常用用户命令"><a class="header" href="#常用用户命令">常用用户命令</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>命令</th><th>功能</th></tr>
+</thead>
+<tbody>
+<tr><td><code>sbatch</code></td><td>提交批处理作业脚本</td></tr>
+<tr><td><code>srun</code></td><td>提交并启动作业步（交互式或在分配内）</td></tr>
+<tr><td><code>salloc</code></td><td>为交互式会话分配资源</td></tr>
+<tr><td><code>scancel</code></td><td>取消作业或作业步</td></tr>
+<tr><td><code>squeue</code></td><td>查看作业队列状态</td></tr>
+<tr><td><code>sinfo</code></td><td>查看节点和分区状态</td></tr>
+<tr><td><code>scontrol</code></td><td>管理控制接口（作业/节点/分区/预留管理）</td></tr>
+<tr><td><code>sacct</code></td><td>查看已完成作业的计费数据</td></tr>
+<tr><td><code>sacctmgr</code></td><td>管理计费数据库（账户、用户、QOS）</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="插件架构"><a class="header" href="#插件架构">插件架构</a></h3>
+<p>Slurm 的核心架构模式是<strong>可加载插件系统</strong>。约 40 种插件类型，每种有多个实现。插件接口定义在 <code>src/interfaces/</code>，实现位于 <code>src/plugins/&lt;type&gt;/&lt;implementation&gt;/</code>。</p>
+<p>关键插件类别：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>插件类型</th><th>功能</th><th>主要实现</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>sched</strong> (调度器)</td><td>作业调度算法</td><td><code>backfill</code>（保守回填，约 5k LOC）、<code>builtin</code></td></tr>
+<tr><td><strong>select</strong> (资源选择)</td><td>资源到作业的匹配</td><td><code>cons_tres</code>（可消耗 TRES，约 11.5k LOC）、<code>linear</code>（整节点）</td></tr>
+<tr><td><strong>priority</strong> (优先级)</td><td>作业优先级计算</td><td><code>multifactor</code>（多因子加权）、<code>basic</code></td></tr>
+<tr><td><strong>auth</strong> (认证)</td><td>认证机制</td><td><code>munge</code>、<code>jwt</code></td></tr>
+<tr><td><strong>gres</strong> (通用资源)</td><td>通用资源管理</td><td><code>gpu</code>、<code>mps</code>、<code>nic</code>、<code>shard</code></td></tr>
+<tr><td><strong>topology</strong> (拓扑)</td><td>网络拓扑感知</td><td><code>block</code>、<code>flat</code>、<code>ring</code>、<code>tree</code>、<code>torus3d</code></td></tr>
+<tr><td><strong>mpi</strong> (MPI 启动)</td><td>并行作业启动</td><td><code>pmi2</code>、<code>pmix</code>、<code>cray_shasta</code></td></tr>
+<tr><td><strong>accounting_storage</strong> (计费)</td><td>计费数据持久化</td><td><code>mysql</code>、<code>slurmdbd</code></td></tr>
+<tr><td><strong>jobcomp</strong> (作业完成)</td><td>作业完成日志</td><td><code>filetxt</code>、<code>elasticsearch</code>、<code>kafka</code>、<code>lua</code>、<code>mysql</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="核心调度算法"><a class="header" href="#核心调度算法">核心调度算法</a></h2>
+<h3 id="多因子优先级"><a class="header" href="#多因子优先级">多因子优先级</a></h3>
+<p><code>priority/multifactor</code> 插件将作业优先级计算为多个因子的加权和：</p>
 <ul>
-<li>
-<p><strong>processor</strong>：实现了对object的watch</p>
-</li>
-<li>
-<p><strong>indexer</strong>：一个本地缓存，保存list &amp; watch得到的结构体，当object被删掉时，本地缓存也会删掉</p>
-</li>
-<li>
-<p><strong>listerWatcher</strong>：制定了对哪个对象类型进行list &amp; watch</p>
-</li>
+<li><strong>Age</strong>（排队时间）</li>
+<li><strong>Fair-share</strong>（基于历史资源使用 vs 配置份额）</li>
+<li><strong>Job size</strong>（请求的资源量）</li>
+<li><strong>Partition</strong> 优先级偏移</li>
+<li><strong>QOS</strong> 优先级</li>
+<li><strong>Site factor</strong>（管理员自定义）</li>
 </ul>
-<pre><code class="language-Go">func NewSharedIndexInformer(lw ListerWatcher, exampleObject runtime.Object, defaultEventHandlerResyncPeriod time.Duration, indexers Indexers) SharedIndexInformer {
-  realClock := &amp;clock.RealClock{}
-  sharedIndexInformer := &amp;sharedIndexInformer{
-    processor:                       &amp;sharedProcessor{clock: realClock},
-    indexer:                         NewIndexer(DeletionHandlingMetaNamespaceKeyFunc, indexers),
-    listerWatcher:                   lw,
-    objectType:                      exampleObject,
-    resyncCheckPeriod:               defaultEventHandlerResyncPeriod,
-    defaultEventHandlerResyncPeriod: defaultEventHandlerResyncPeriod,
-    cacheMutationDetector:           NewCacheMutationDetector(fmt.Sprintf("%T", exampleObject)),
-    clock:                           realClock,
-  }
-  return sharedIndexInformer
-}
-</code></pre>
-<h3 id="sharedindexinformerrun过程"><a class="header" href="#sharedindexinformerrun过程">SharedIndexInformer::Run过程</a></h3>
+<h3 id="保守回填-backfill"><a class="header" href="#保守回填-backfill">保守回填 (Backfill)</a></h3>
+<p>回填调度器 (<code>sched/backfill</code>) 实现保守回填算法。核心思想：如果启动低优先级作业不会延迟任何高优先级作业的预计开始时间，则立即启动它。这在不违反优先级顺序的前提下最大化集群利用率。</p>
+<p>调度流程：</p>
 <ol>
-<li>
-<p>创建一个Controller（包含了FINO Queue，ListWatcher），将SharedIndexInformer的HandleDeltas方法注入给Controller的Process</p>
-</li>
-<li>
-<p>Controller Run， processor Run</p>
-</li>
+<li><code>job_scheduler.c</code> 主循环调用 sched 插件</li>
+<li>回填调度器通过 <strong>oracle</strong> 估算作业结束时间和资源可用性</li>
+<li>调用 <code>node_scheduler.c</code> 和 <code>select/cons_tres</code> 检查资源分配可行性 (<code>job_test()</code>)</li>
+<li>为不会阻塞高优先级作业的低优先级作业临时提升有效优先级</li>
 </ol>
-<h3 id="controller"><a class="header" href="#controller">Controller</a></h3>
-<p>Controller其实就是负责对资源的list &amp; watch，每当获取到一个object就调用一下Process</p>
-<p>Controller中的几个重要成员</p>
-<ol>
-<li>
-<p><strong>FIFO Queue</strong>：Controller会对Queue进行轮询，当有新的object pop出来时，就调用Process方法。</p>
-</li>
-<li>
-<p><strong>Reflector</strong>：真正调用ListWatcher的地方，Reflector有个Store成员，其实就是Controller的<code>FIFO Queue</code>。在<code>Reflector::Run</code>房中法中，首先进行List把所有object保存到store中，然后调用ListWatcher的watch方法，当收到event时，就对store进行update.这里应该就是所谓的<strong>二级缓存</strong>，watch得到的event先保存在一个ratelimit queue中，然后再对store进行更新。</p>
-</li>
-</ol>
-<h3 id="sharedprocessor"><a class="header" href="#sharedprocessor">sharedProcessor</a></h3>
-<p>sharedProcessor添加了一个processorListener结构，processorListener包含了HandlerFunc</p>
-<p>具体嗲用handlerFunc的过程：</p>
-<ol>
-<li>
-<p>在Informer的HandleDeltas方法中，调用了sharedProcessor的distribute方法对每个object进行处理</p>
-</li>
-<li>
-<p>在distribute方法中调用了listener的add方法, add 方法中将object传给一个channel</p>
-</li>
-<li>
-<p>在add方法中，会传给nextCh成员</p>
-</li>
-<li>
-<p>在run方法中，接受nextCh，并调用handler</p>
-</li>
-</ol>
+<h3 id="consumable-tres-cons_tres"><a class="header" href="#consumable-tres-cons_tres">CONsumable TRES (cons_tres)</a></h3>
+<p><code>select/cons_tres</code> 插件以细粒度管理资源分配——精确到单个 CPU、内存字节、GPU 等。每节点跟踪资源使用情况，通过 <code>job_test()</code> 判断作业是否适合可用资源。</p>
+<h2 id="关键依赖"><a class="header" href="#关键依赖">关键依赖</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>依赖</th><th>用途</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>MUNGE</strong></td><td>认证凭据服务</td></tr>
+<tr><td><strong>MySQL/MariaDB</strong></td><td>计费数据库后端</td></tr>
+<tr><td><strong>hwloc</strong></td><td>硬件拓扑发现（CPU、NUMA、缓存层级）</td></tr>
+<tr><td><strong>Lua</strong></td><td>可脚本化的作业提交过滤器</td></tr>
+<tr><td><strong>PMIx / UCX</strong></td><td>并行作业启动和高性能通信</td></tr>
+<tr><td><strong>NVML / RSMI / oneAPI</strong></td><td>GPU 管理（NVIDIA / AMD / Intel）</td></tr>
+<tr><td><strong>libjwt</strong></td><td>JWT 认证</td></tr>
+<tr><td><strong>cgroup</strong></td><td>资源容器（cgroup v1/v2）</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="项目状态"><a class="header" href="#项目状态">项目状态</a></h2>
+<ul>
+<li><strong>当前版本</strong>: 26.11.0-0rc1（预发布）</li>
+<li><strong>发布模式</strong>: YY.MM 版本方案，每年两次大版本（4-5 月和 10-11 月）</li>
+<li><strong>构建系统</strong>: GNU Autotools，RPM/DEB 分包（约 20 个子包）</li>
+<li><strong>测试框架</strong>: Pytest（集成测试）、Expect（遗留集成测试）、Check（C 单元测试）</li>
+<li><strong>代码量</strong>: slurmctld 约 85k 行，单文件最大约 19.8k 行，总计约 3,300+ 次提交（2026 年）</li>
+</ul>
+<h2 id="参考"><a class="header" href="#参考">参考</a></h2>
+<ul>
+<li><a href="https://slurm.schedmd.com/">Slurm 官方文档</a></li>
+<li><a href="https://github.com/SchedMD/slurm">Slurm GitHub</a></li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/6_service相关.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../../docs/Machine_Learning/High_Performance_Computing/ompi架构介绍.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/cni详解.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../../inference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -417,11 +321,11 @@ func (wc *watchChan) startWatching(watchClosedCh chan struct{}) {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/6_service相关.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../../docs/Machine_Learning/High_Performance_Computing/ompi架构介绍.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/cni详解.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../../inference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
