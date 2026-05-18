@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-73846ab2.js";
+            window.path_to_searchindex_js = "searchindex-0af5ca3e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-f55fcfe5.js"></script>
@@ -356,6 +356,7 @@
 <h1 id="latest-updates"><a href="#latest-updates" class="header">Latest updates</a></h1>
 <h2 id="2026-05-18"><a class="header" href="#2026-05-18">2026-05-18</a></h2>
 <p>2026-05-18
+2026-05-18
 2026-05-18</p>
 <blockquote>
 <h4 id="slurm-hpc-集群工作负载管理器"><a class="header" href="#slurm-hpc-集群工作负载管理器"><a href="#slurm-hpc-集群工作负载管理器-1">Slurm: HPC 集群工作负载管理器</a></a></h4>
@@ -2808,8 +2809,7 @@ srun python /tmp/train.py
 </table>
 </div>
 <p><strong>系统拓扑：</strong></p>
-<div class="mermaid">
-graph TB
+<pre class="mermaid">graph TB
     subgraph "User Space"
         sbatch[sbatch]
         srun[srun]
@@ -2820,41 +2820,41 @@ graph TB
         sacct[sacct]
         sacctmgr[sacctmgr]
     end
-<pre><code>subgraph "Management Node"
-    slurmctld[slurmctld&lt;br/&gt;Central Controller]
-    slurmdbd[slurmdbd&lt;br/&gt;Accounting Database]
-    slurmrestd[slurmrestd&lt;br/&gt;REST API]
-    sackd[sackd&lt;br/&gt;Auth Cache]
-end
 
-subgraph "Compute Nodes"
-    slurmd1[slurmd&lt;br/&gt;node1]
-    slurmd2[slurmd&lt;br/&gt;node2]
-    slurmdN[slurmd&lt;br/&gt;nodeN]
-end
+    subgraph "Management Node"
+        slurmctld[slurmctld&lt;br/&gt;Central Controller]
+        slurmdbd[slurmdbd&lt;br/&gt;Accounting Database]
+        slurmrestd[slurmrestd&lt;br/&gt;REST API]
+        sackd[sackd&lt;br/&gt;Auth Cache]
+    end
 
-subgraph "Database Server"
-    mysql[(MySQL / MariaDB)]
-end
+    subgraph "Compute Nodes"
+        slurmd1[slurmd&lt;br/&gt;node1]
+        slurmd2[slurmd&lt;br/&gt;node2]
+        slurmdN[slurmd&lt;br/&gt;nodeN]
+    end
 
-sbatch --&gt; slurmctld
-srun --&gt; slurmctld
-squeue --&gt; slurmctld
-scontrol --&gt; slurmctld
-sinfo --&gt; slurmctld
-scancel --&gt; slurmctld
-sacct --&gt; slurmdbd
-sacctmgr --&gt; slurmdbd
-slurmrestd --&gt; slurmctld
-slurmrestd --&gt; slurmdbd
-slurmctld --&gt; sackd
-slurmctld --&gt; slurmdbd
-slurmdbd --&gt; mysql
-slurmctld --&gt; slurmd1
-slurmctld --&gt; slurmd2
-slurmctld --&gt; slurmdN
-</code></pre>
-</div>
+    subgraph "Database Server"
+        mysql[(MySQL / MariaDB)]
+    end
+
+    sbatch --&gt; slurmctld
+    srun --&gt; slurmctld
+    squeue --&gt; slurmctld
+    scontrol --&gt; slurmctld
+    sinfo --&gt; slurmctld
+    scancel --&gt; slurmctld
+    sacct --&gt; slurmdbd
+    sacctmgr --&gt; slurmdbd
+    slurmrestd --&gt; slurmctld
+    slurmrestd --&gt; slurmdbd
+    slurmctld --&gt; sackd
+    slurmctld --&gt; slurmdbd
+    slurmdbd --&gt; mysql
+    slurmctld --&gt; slurmd1
+    slurmctld --&gt; slurmd2
+    slurmctld --&gt; slurmdN
+</pre>
 
 <h3 id="常用用户命令"><a class="header" href="#常用用户命令">常用用户命令</a></h3>
 <div class="table-wrapper">
@@ -2897,23 +2897,22 @@ slurmctld --&gt; slurmdN
 </table>
 </div>
 <h3 id="认证流程"><a class="header" href="#认证流程">认证流程</a></h3>
-<div class="mermaid">
-flowchart LR
+<pre class="mermaid">flowchart LR
     subgraph Client["User Command"]
         A["sbatch / srun / squeue"]
     end
     subgraph Controller["slurmctld"]
-        B["auth plugin: Verify<br />munge / jwt / slurm"]
-        C["Process Request<br />job_mgr.c / scheduler"]
-        D["cred plugin: Create<br />Job Credential"]
+        B["auth plugin: Verify&lt;br/&gt;munge / jwt / slurm"]
+        C["Process Request&lt;br/&gt;job_mgr.c / scheduler"]
+        D["cred plugin: Create&lt;br/&gt;Job Credential"]
     end
     subgraph Node["slurmd"]
-        E["cred plugin: Verify<br />Job Credential"]
-        F["slurmstepd<br />Job Launch"]
+        E["cred plugin: Verify&lt;br/&gt;Job Credential"]
+        F["slurmstepd&lt;br/&gt;Job Launch"]
     end
     subgraph AuthBackend["Auth Infrastructure"]
-        G["MUNGE Daemon<br />munge.key shared secret"]
-        H["JWT Token<br />HMAC or RSA signed"]
+        G["MUNGE Daemon&lt;br/&gt;munge.key shared secret"]
+        H["JWT Token&lt;br/&gt;HMAC or RSA signed"]
     end
     A --&gt;|"1. Auth credential"| B
     B --&gt;|"2. Verified identity"| C
@@ -2924,15 +2923,14 @@ flowchart LR
     B -.-&gt;|"munge_decode()"| G
     A -.-&gt;|"JWT token"| H
     B -.-&gt;|"JWT verify"| H
-</div>
+</pre>
 
 <h3 id="计费数据模型"><a class="header" href="#计费数据模型">计费数据模型</a></h3>
-<div class="mermaid">
-graph TB
+<pre class="mermaid">graph TB
     Cluster[Cluster]
-    Account[Account<br />Bank Account]
+    Account[Account&lt;br/&gt;Bank Account]
     User[User]
-    Association[Association<br />user+acct+cluster+partition]
+    Association[Association&lt;br/&gt;user+acct+cluster+partition]
     QOS[Quality of Service]
     Cluster --&gt;|"contains"| Account
     Account --&gt;|"contains"| User
@@ -2940,15 +2938,14 @@ graph TB
     User --&gt;|"part of"| Association
     Cluster --&gt;|"part of"| Association
     Association --&gt;|"assigned to"| QOS
-    Association --&gt;|"enforces"| AssocLimits[GrpTRES / MaxTRES<br />MaxWall / Fairshare]
-    QOS --&gt;|"enforces"| QOSLimits[Group Limits / Preempt<br />Priority Offset / Usage Factor]
-</div>
+    Association --&gt;|"enforces"| AssocLimits[GrpTRES / MaxTRES&lt;br/&gt;MaxWall / Fairshare]
+    QOS --&gt;|"enforces"| QOSLimits[Group Limits / Preempt&lt;br/&gt;Priority Offset / Usage Factor]
+</pre>
 
 <h2 id="job-生命周期"><a class="header" href="#job-生命周期">Job 生命周期</a></h2>
 <p>Slurm 中 job 有 12 种基础状态，加 15 种 state flag 进行细化标记。</p>
 <p><strong>基础状态转换：</strong></p>
-<div class="mermaid">
-stateDiagram-v2
+<pre class="mermaid">stateDiagram-v2
     [*] --&gt; PENDING : Job submitted
     PENDING --&gt; RUNNING : Scheduler allocates &amp; launches
     PENDING --&gt; CANCELLED : scancel before start
@@ -2976,7 +2973,7 @@ stateDiagram-v2
     BOOT_FAIL --&gt; [*]
     DEADLINE --&gt; [*]
     OOM --&gt; [*]
-</div>
+</pre>
 
 <p><strong>常用 State Flags：</strong></p>
 <ul>
@@ -2989,22 +2986,21 @@ stateDiagram-v2
 <p>短状态码：<code>PD</code>(PENDING), <code>R</code>(RUNNING), <code>CG</code>(COMPLETING), <code>CD</code>(COMPLETED), <code>CA</code>(CANCELLED), <code>F</code>(FAILED), <code>TO</code>(TIMEOUT), <code>NF</code>(NODE_FAIL), <code>PR</code>(PREEMPTED), <code>BF</code>(BOOT_FAIL), <code>DL</code>(DEADLINE), <code>OOM</code>(OOM), <code>S</code>(SUSPENDED)</p>
 <h2 id="核心调度算法"><a class="header" href="#核心调度算法">核心调度算法</a></h2>
 <p><strong>调度流程概览：</strong></p>
-<div class="mermaid">
-flowchart LR
+<pre class="mermaid">flowchart LR
     subgraph slurmctld["slurmctld Scheduling"]
-        JS[job_scheduler.c<br />Main Loop]
-        SCHED[sched Plugin<br />backfill / builtin]
-        ORACLE[Oracle<br />End-time Estimation]
-        SELECT[select Plugin<br />cons_tres / linear]
-        NS[node_scheduler.c<br />Node Selection]
-        ALLOC[Allocate<br />job_test --&gt; job_start]
+        JS[job_scheduler.c&lt;br/&gt;Main Loop]
+        SCHED[sched Plugin&lt;br/&gt;backfill / builtin]
+        ORACLE[Oracle&lt;br/&gt;End-time Estimation]
+        SELECT[select Plugin&lt;br/&gt;cons_tres / linear]
+        NS[node_scheduler.c&lt;br/&gt;Node Selection]
+        ALLOC[Allocate&lt;br/&gt;job_test --&gt; job_start]
     end
-    JS --&gt;|"iterate pending<br />by priority"| SCHED
+    JS --&gt;|"iterate pending&lt;br/&gt;by priority"| SCHED
     SCHED --&gt;|"backfill feasibility"| ORACLE
     ORACLE --&gt;|"resource availability"| SELECT
-    SELECT --&gt;|"job_test()<br />resource fit"| NS
-    NS --&gt;|"select specific<br />eligible nodes"| ALLOC
-</div>
+    SELECT --&gt;|"job_test()&lt;br/&gt;resource fit"| NS
+    NS --&gt;|"select specific&lt;br/&gt;eligible nodes"| ALLOC
+</pre>
 
 <h3 id="1-多因子优先级计算"><a class="header" href="#1-多因子优先级计算">1. 多因子优先级计算</a></h3>
 <p><strong>Source:</strong> <code>priority/multifactor/priority_multifactor.c</code> (~2,318 lines), <code>fair_tree.c</code> (~440 lines)</p>
@@ -3262,8 +3258,6 @@ loop:
 <li><a href="https://slurm.schedmd.com/">Slurm 官方文档</a></li>
 <li><a href="https://github.com/SchedMD/slurm">Slurm GitHub</a></li>
 </ul>
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true, theme:'default'});</script>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="inference"><a class="header" href="#inference">Inference</a></h1>
 <div style="break-before: page; page-break-before: always;"></div>
