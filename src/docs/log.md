@@ -1,5 +1,9 @@
 # Operation Log
 
+## [2026-05-08] update | Slurm — expanded scheduling algorithms with detailed pseudocode
+
+Expanded the core scheduling algorithms section with: job lifecycle state machine (12 states + 15 flags), multifactor priority formula with fairshare math and decay loop, backfill algorithm with full pseudocode and time complexity analysis, cons_tres selection algorithm (job_test modes, future_run_test, topology-aware best-fit), and preemption algorithm (partition_prio/qos plugins, gang scheduling).
+
 ## [2026-05-08] update | Slurm — added job/step concepts, cgroup limits, file distribution
 
 Expanded slurm.md with detailed explanations of job vs job step (with sbatch/srun/salloc examples), Linux cgroups resource limiting mechanism, shared filesystem and sbcast for file distribution, and a comparison table with Kueue.
