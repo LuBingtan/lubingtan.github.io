@@ -1,5 +1,9 @@
 # Operation Log
 
+## [2026-05-08] update | Slurm — added job/step concepts, cgroup limits, file distribution
+
+Expanded slurm.md with detailed explanations of job vs job step (with sbatch/srun/salloc examples), Linux cgroups resource limiting mechanism, shared filesystem and sbcast for file distribution, and a comparison table with Kueue.
+
 ## [2026-05-08] ingest | Slurm Workload Manager
 
 Processed raw/RESEARCH-slurm.md — comprehensive research on Slurm, the HPC cluster workload manager. Created slurm.md under Machine_Learning/High_Performance_Computing covering daemon architecture, plugin system, scheduling algorithms (backfill, multifactor priority, cons_tres), user commands, and project state.

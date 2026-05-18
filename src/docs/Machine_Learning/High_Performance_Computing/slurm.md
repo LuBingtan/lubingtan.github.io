@@ -13,6 +13,120 @@ Slurm 提供三个核心功能：
 
 项目起源于 Lawrence Livermore National Laboratory (LLNL)，现由 SchedMD LLC 维护。仅在 Linux 下测试运行。语言为 C（附带 Perl、Lua、Python 用于扩展/测试），采用 GPLv2+ 许可证。
 
+## 核心概念
+
+### 作业（Job）
+
+一个 **job** = 一次**资源分配请求** + 在分配的资源上运行的程序。它是 Slurm 中资源分配和调度的基本单位。
+
+**示例**：在共享 HPC 集群上训练模型，编写脚本 `train.sh`：
+
+```bash
+#!/bin/bash
+#SBATCH --nodes=2           # 要2个节点
+#SBATCH --ntasks-per-node=4 # 每节点4个进程 (共8个GPU)
+#SBATCH --gpus=8            # 总共8块GPU
+#SBATCH --time=02:00:00     # 跑2小时
+#SBATCH --mem=32G           # 每节点32GB内存
+
+python train_model.py --epochs 100
+```
+
+提交：`sbatch train.sh`。Slurm 在集群中找到符合条件的节点，分配给你独占使用 2 小时，然后在上面执行脚本。从提交到运行结束，这一整个过程就是一个 job。
+
+关键理解：Slurm 调度的是**"谁、什么时候、在哪台机器上、用多少资源"**，而不是"哪个进程跑哪个 CPU 核心"——那是 Linux 内核调度器的事。
+
+### 作业步（Job Step）
+
+一个 job 可以包含多个 **step**，每个 step 是 job 资源分配内的一组进程。Step 之间共享同一个 job 已分配的资源，不会重新排队。
+
+**场景 1：在 batch 脚本内**（最常见）：
+
+```bash
+#!/bin/bash
+#SBATCH --nodes=2
+#SBATCH --gpus=8
+
+# Step 0: 训练，用完所有8个GPU
+srun python train.py
+
+# Step 1: 评估，只用单节点单GPU
+srun --nodes=1 --ntasks=1 python eval.py
+```
+
+`train.py` 和 `eval.py` 是两个独立的 step，在 `sacct` 中显示为 `1234.0` 和 `1234.1`。
+
+**场景 2：交互式**（`salloc`）：
+
+```bash
+$ salloc --nodes=2 --gpus=8 --time=02:00:00
+salloc: Granted job allocation 1234
+
+$ srun python train.py       # Step 1234.0
+$ srun --gpus=2 python debug.py  # Step 1234.1
+$ exit                        # 释放整个 job
+```
+
+Job、step、进程的层级关系：
+
+```
+Job #1234 (一次 sbatch 提交)
+├── Step 0: python train.py    ← srun 启动
+├── Step 1: python eval.py     ← 共享同一分配
+└── Step 2: bash cleanup.sh
+```
+
+### 文件分发
+
+**Slurm 不会自动上传脚本到计算节点。** 脚本必须已经存在于所有计算节点的**相同路径**下。
+
+HPC 集群通过**共享文件系统**解决此问题：
+
+```
+管理节点                      计算节点
+/home/user/train.sh   ←NFS→   /home/user/train.sh (同一文件)
+/data/dataset/         ←Lustre→ /data/dataset/
+```
+
+`sbatch` 只把脚本路径发给 slurmctld，slurmd 直接去本地路径执行——中间没有文件传输。
+
+如果没有共享文件系统，可以用 `sbcast` 手动广播：
+
+```bash
+#!/bin/bash
+#SBATCH --nodes=4
+sbcast train.py /tmp/train.py
+srun python /tmp/train.py
+```
+
+与 K8s 的对比：K8s 把容器镜像分发到所有节点，Slurm 假设你有 POSIX 共享存储。这是 HPC 领域的特征——超算中心天然就有 Lustre/GPFS/NFS。
+
+### 资源限制机制
+
+Slurm 通过 **Linux cgroups**（v1 或 v2）限制进程资源，有专门的插件体系：
+
+| 插件 | 功能 |
+|---|---|
+| **cgroup/v2（或 v1）** | 核心约束：`memory.max`（硬内存上限）、`cpu.max`（CPU 带宽）、`cpuset`（核心绑定） |
+| **task/cgroup** | 将作业进程放入正确的 cgroup |
+| **proctrack/cgroup** | 通过 cgroup 追踪作业所有进程 |
+| **jobacct_gather/cgroup** | 采集资源使用统计（用于计费和公平共享） |
+| **SPANK + pam_slurm_adopt** | 确保 SSH 登录等外部进程也归入正确 cgroup |
+
+流程：slurmctld 决定分配 → slurmd 创建 cgroup 并设限 → slurmstepd 在约束内启动进程 → jobacct_gather 采集用量。
+
+### 与 Kueue 的对比
+
+Slurm 和 [Kueue](../../Cloud_Native/Kubernetes/kueue.md) 都是作业级调度器，但设计哲学不同：
+
+| | Slurm | Kueue |
+|---|---|---|
+| **运行环境** | HPC 集群（裸金属） | Kubernetes 集群 |
+| **资源模型** | 节点/CPU/内存/GPU | 与 K8s 资源模型对齐（ResourceFlavor） |
+| **Job Step** | 共享 job 已分配的资源，不重新排队 | 不支持 step 概念，每个 Workload 独立排队 |
+| **文件分发** | 依赖共享文件系统（NFS/Lustre） | 容器镜像分发 |
+| **抢占** | 支持（QOS/partition 级别） | 支持（Cohort 内公平共享/层级抢占） |
+
 ## 架构
 
 ### 核心 Daemon

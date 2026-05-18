@@ -31,7 +31,7 @@
 ### High Performance Computing
 
 - [ompi架构介绍](./Machine_Learning/High_Performance_Computing/ompi架构介绍.md) — Open MPI 架构介绍
-- [Slurm](./Machine_Learning/High_Performance_Computing/slurm.md) — HPC 集群工作负载管理器：资源分配、作业调度、回填算法与插件架构
+- [Slurm](./Machine_Learning/High_Performance_Computing/slurm.md) — HPC 集群工作负载管理器：job/step 概念、cgroup 资源限制、回填调度、插件架构、与 Kueue 对比
 
 ### Inference
 
