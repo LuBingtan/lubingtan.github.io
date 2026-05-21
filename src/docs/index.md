@@ -1,5 +1,9 @@
 # Wiki Index
 
+## Distributed Systems
+
+- [Apache Mesos](./Distributed_Systems/mesos.md) — 分布式系统内核：两级调度、DRF 分配器、Offer 资源供应、框架化多租户、与 Slurm/Kueue 对比
+
 ## Cloud Native
 
 ### Kubernetes
