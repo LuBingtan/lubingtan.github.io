@@ -8,6 +8,7 @@
 - [Kubernetes]()
   - [**What** is Kubernetes](./docs/Cloud_Native/Kubernetes/1_kubernetes概念.md)
   - [2_kubernetes-api-server](./docs/Cloud_Native/Kubernetes/2_kubernetes-api-server.md)
+  - [Cluster API: 声明式集群生命周期管理](./docs/Cloud_Native/Kubernetes/cluster-api.md)
   - [Kubelet 原理](./docs/Cloud_Native/Kubernetes/kubelet原理.md)
   - [Kueue: Kubernetes 原生作业队列管理器](./docs/Cloud_Native/Kubernetes/kueue.md)
   - [Pod](./docs/Cloud_Native/Kubernetes/1-1_k8s工作负载.md)
