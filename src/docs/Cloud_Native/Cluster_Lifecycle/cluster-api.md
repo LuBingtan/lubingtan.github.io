@@ -260,18 +260,185 @@ func (r *MinimalClusterReconciler) reconcileDelete(ctx context.Context, c *infra
 }
 ```
 
-### 3. 与 CAPI 的交互点
+### 3. 定义 InfrastructureMachine CRD
+
+```go
+// api/v1alpha1/minimalmachine_types.go
+package v1alpha1
+
+import (
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+type MinimalMachineSpec struct {
+    InstanceType string `json:"instanceType,omitempty"`
+}
+
+type MinimalMachineStatus struct {
+    Ready      bool     `json:"ready"`
+    Addresses  []string `json:"addresses,omitempty"`
+    ProviderID string   `json:"providerID,omitempty"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+type MinimalMachine struct {
+    metav1.TypeMeta   `json:",inline"`
+    metav1.ObjectMeta `json:"metadata,omitempty"`
+    Spec   MinimalMachineSpec   `json:"spec,omitempty"`
+    Status MinimalMachineStatus `json:"status,omitempty"`
+}
+```
+
+### 4. 实现 InfrastructureMachine Reconciler
+
+```go
+// internal/controller/minimalmachine_controller.go
+package controller
+
+import (
+    "context"
+    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+    clusterv1 "sigs.k8s.io/cluster-api/api/v1beta2"
+    "sigs.k8s.io/cluster-api/util"
+    infrav1 "mycompany.io/capi-minimal/api/v1alpha1"
+)
+
+func (r *MinimalMachineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+    minimalMachine := &infrav1.MinimalMachine{}
+    if err := r.Get(ctx, req.NamespacedName, minimalMachine); err != nil {
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+    machine, err := util.GetOwnerMachine(ctx, r.Client, minimalMachine.ObjectMeta)
+    if err != nil {
+        return ctrl.Result{}, err
+    }
+    if !minimalMachine.DeletionTimestamp.IsZero() {
+        controllerutil.RemoveFinalizer(minimalMachine, "minimalmachine.infrastructure.cluster.x-k8s.io")
+        return ctrl.Result{}, nil
+    }
+    controllerutil.AddFinalizer(minimalMachine, "minimalmachine.infrastructure.cluster.x-k8s.io")
+    if !minimalMachine.Status.Ready {
+        minimalMachine.Status.ProviderID = "minimal://" + machine.Name
+        minimalMachine.Status.Addresses = []string{"10.0.1." + machine.Name}
+        minimalMachine.Status.Ready = true
+    }
+    if minimalMachine.Status.Ready {
+        machine.Spec.ProviderID = &minimalMachine.Status.ProviderID
+    }
+    return ctrl.Result{}, r.Status().Update(ctx, minimalMachine)
+}
+```
+
+### 5. 定义 ControlPlane CRD
+
+```go
+// api/v1alpha1/minimalcontrolplane_types.go
+package v1alpha1
+
+import (
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+type MinimalControlPlaneSpec struct {
+    Replicas int `json:"replicas"`
+}
+
+type MinimalControlPlaneStatus struct {
+    Ready              bool   `json:"ready"`
+    Replicas           int    `json:"replicas"`
+    ReadyReplicas      int    `json:"readyReplicas"`
+    Initialized        bool   `json:"initialized"`
+    ControlPlaneReady  bool   `json:"controlPlaneReady"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+type MinimalControlPlane struct {
+    metav1.TypeMeta   `json:",inline"`
+    metav1.ObjectMeta `json:"metadata,omitempty"`
+    Spec   MinimalControlPlaneSpec   `json:"spec,omitempty"`
+    Status MinimalControlPlaneStatus `json:"status,omitempty"`
+}
+```
+
+### 6. 实现 ControlPlane Reconciler
+
+```go
+// internal/controller/minimalcontrolplane_controller.go
+package controller
+
+import (
+    "context"
+    "fmt"
+
+    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+    clusterv1 "sigs.k8s.io/cluster-api/api/v1beta2"
+    "sigs.k8s.io/cluster-api/util"
+    "sigs.k8s.io/cluster-api/util/conditions"
+    infrav1 "mycompany.io/capi-minimal/api/v1alpha1"
+    corev1 "k8s.io/api/core/v1"
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+func (r *MinimalControlPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+    mcp := &infrav1.MinimalControlPlane{}
+    if err := r.Get(ctx, req.NamespacedName, mcp); err != nil {
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+    cluster, err := util.GetOwnerCluster(ctx, r.Client, mcp.ObjectMeta)
+    if err != nil {
+        return ctrl.Result{}, err
+    }
+    if !mcp.DeletionTimestamp.IsZero() {
+        // 删除所有 control plane Machine
+        controllerutil.RemoveFinalizer(mcp, "minimalcontrolplane.controlplane.cluster.x-k8s.io")
+        return ctrl.Result{}, nil
+    }
+    controllerutil.AddFinalizer(mcp, "minimalcontrolplane.controlplane.cluster.x-k8s.io")
+
+    // 为每个 replica 创建 CAPI Machine 对象
+    for i := 0; i < mcp.Spec.Replicas; i++ {
+        machine := &clusterv1.Machine{
+            ObjectMeta: metav1.ObjectMeta{
+                Name:      fmt.Sprintf("%s-%d", mcp.Name, i),
+                Namespace: mcp.Namespace,
+                OwnerReferences: []metav1.OwnerReference{
+                    *metav1.NewControllerRef(mcp, infrav1.GroupVersion.WithKind("MinimalControlPlane")),
+                },
+            },
+            Spec: clusterv1.MachineSpec{
+                ClusterName: cluster.Name,
+            },
+        }
+        if err := r.Create(ctx, machine); err != nil {
+            return ctrl.Result{}, err
+        }
+    }
+
+    mcp.Status.ReadyReplicas = mcp.Spec.Replicas
+    mcp.Status.Replicas = mcp.Spec.Replicas
+
+    // 标记 Cluster 的 ControlPlaneReady condition
+    conditions.MarkTrue(cluster, clusterv1.ControlPlaneReadyCondition)
+    mcp.Status.Ready = true
+    return ctrl.Result{}, r.Status().Update(ctx, mcp)
+}
+```
+
+### 7. 与 CAPI 的交互点
 
 Provider 通过以下标准字段与 CAPI 交互：
 
-| 交互 | InfrastructureCluster | InfrastructureMachine |
-|---|---|---|
-| **就绪标记** | `spec.controlPlaneEndpoint` + `status.ready=true` | `status.ready=true` |
-| **地址** | — | `status.addresses` (node IP/hostname) |
-| **失败** | `status.failureReason` / `failureMessage` | 同上 |
-| **OwnerRef** | 指向 Cluster | 指向 Machine |
+| 交互 | InfrastructureCluster | InfrastructureMachine | ControlPlane |
+|---|---|---|---|
+| **就绪标记** | `spec.controlPlaneEndpoint` + `status.ready=true` | `status.ready=true` | `status.ready=true` |
+| **地址** | — | `status.addresses` | — |
+| **失败** | `status.failureReason` / `failureMessage` | 同上 | 同上 |
+| **OwnerRef** | 指向 Cluster | 指向 Machine | 指向 Cluster |
+| **副本管理** | — | — | 创建 control plane Machine，管理扩缩/升级 |
 
-### 4. 部署使用
+### 8. 部署使用
 
 ```bash
 # 1. 以 Docker provider 为例建管理集群
@@ -290,7 +457,7 @@ kubectl apply -f my-cluster.yaml
 clusterctl get kubeconfig my-cluster > my-cluster.kubeconfig
 ```
 
-### 5. Provider 注册
+### 9. Provider 注册
 
 Provider 通过 `config/` 目录的 manifest 注册自身：
 
