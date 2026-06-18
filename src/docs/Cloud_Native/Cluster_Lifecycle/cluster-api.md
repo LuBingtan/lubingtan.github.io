@@ -12,23 +12,33 @@
 
 ### 资源层级
 
-```
-Cluster
-  |
-  +-- ClusterClass (可选，托管拓扑)
-  |
-  +-- InfrastructureCluster (provider 负责，如 AWSCluster)
-  |
-  +-- ControlPlane (如 KubeadmControlPlane)
-  |     +-- Machine (control plane 节点)
-  |           +-- BootstrapConfig (如 KubeadmConfig)
-  |           +-- InfrastructureMachine (如 AWSMachine)
-  |
-  +-- MachineDeployment (worker 节点)
-  |     +-- MachineSet
-  |           +-- Machine
-  |
-  +-- MachinePool (autoscaling worker)
+```mermaid
+graph TB
+    subgraph "User Facing"
+        CC[ClusterClass]
+        C[Cluster]
+    end
+
+    subgraph "Core CAPI Resources"
+        C --> |has| MD[MachineDeployment]
+        C --> |has| MP[MachinePool]
+        C --> |has| MS[MachineSet]
+        MD --> |manages| MS
+        MS --> |manages| M[Machine]
+        MP --> |manages| M
+    end
+
+    subgraph "Provider Resources"
+        C --> |references| IC[InfrastructureCluster]
+        C --> |references| CP[ControlPlane]
+        CP --> |manages| M
+        M --> |references| IM[InfrastructureMachine]
+        M --> |references| BC[BootstrapConfig]
+    end
+
+    subgraph "Add-ons"
+        C --> |references| CRS[ClusterResourceSet]
+    end
 ```
 
 ### 核心 CRD
@@ -52,6 +62,64 @@ CAPI 本身不管基础设施——它通过 **Provider 契约** 把工作委托
 | **Bootstrap** | 生成节点加入集群的配置 | `kubeadm` |
 | **Control Plane** | 管理控制平面（HA/扩缩/升级） | `kubeadm` |
 
+### Provider 契约
+
+```mermaid
+graph LR
+    subgraph "Cluster API Core"
+        CC[Cluster Controller]
+        MC[Machine Controller]
+        TC[Topology Controller]
+    end
+
+    subgraph "Provider Contract"
+        IC[InfrastructureCluster]
+        CP[ControlPlane]
+        IM[InfrastructureMachine]
+        BC[BootstrapConfig]
+    end
+
+    subgraph "Infrastructure Providers"
+        AWS[AWS]
+        AZURE[Azure]
+        GCP[GCP]
+        DOCKER[Docker]
+    end
+
+    subgraph "Built-in Providers"
+        KCP[KubeadmControlPlane]
+        KC[KubeadmConfig]
+    end
+
+    CC --> IC
+    CC --> CP
+    MC --> IM
+    MC --> BC
+    TC --> CC
+    IC --> AWS
+    IC --> AZURE
+    IC --> GCP
+    IC --> DOCKER
+    CP --> KCP
+    BC --> KC
+```
+
+### Machine 生命周期
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: Machine created
+    Pending --> Provisioning: BootstrapConfig & InfraMachine exist
+    Provisioning --> Provisioned: InfraMachine ready
+    Provisioned --> Running: Node detected (NodeRef set)
+    Running --> Running: Periodic sync
+    Running --> Deleting: Machine marked for deletion
+    Deleting --> Deleting: Node draining
+    Deleting --> Deleting: Delete InfraMachine
+    Deleting --> Deleting: Delete BootstrapConfig
+    Deleting --> [*]: Machine deleted
+```
+
 ## 架构
 
 **Controller Manager** (`main.go`) — 单一二进制，用 controller-runtime 注册所有 reconciler 和 webhook。
@@ -59,6 +127,38 @@ CAPI 本身不管基础设施——它通过 **Provider 契约** 把工作委托
 **`clusterctl`** — CLI 工具：`init`（初始化管理集群）、`generate cluster`（生成 YAML）、`move`（迁移）、`upgrade`（升级 provider）。
 
 **Provider 契约** — 定义在 `internal/contract/`，通过 unstructured object 来与 provider CRD 交互，无需 Go 类型依赖。
+
+### 集群创建流程
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CC as Cluster Controller
+    participant IC as InfraCluster Provider
+    participant KCP as KubeadmControlPlane
+    participant MC as Machine Controller
+    participant IM as InfraMachine Provider
+    participant BC as Bootstrap Provider
+
+    User->>CC: Create Cluster (InfraClusterRef + ControlPlaneRef)
+    CC->>IC: Create InfrastructureCluster
+    IC-->>CC: Ready, endpoint set
+    CC->>CC: InfrastructureReady
+    User->>KCP: Create KubeadmControlPlane
+    KCP->>MC: Create control plane Machines
+    MC->>BC: Create BootstrapConfig
+    MC->>IM: Create InfrastructureMachine
+    IM-->>MC: Ready (ProviderID set)
+    BC-->>MC: Bootstrap data ready
+    MC->>MC: Machine provisioned
+    IM->>IM: VM boots, kubeadm join
+    MC->>MC: Node appears, set NodeRef
+    CC->>CC: ControlPlaneInitialized
+    User->>MD: Create MachineDeployment (workers)
+    MD->>MS: Create MachineSet
+    MS->>MC: Create worker Machines
+    CC->>CC: All conditions met, Cluster Available
+```
 
 ## Customized Provider 最简示例
 
@@ -205,18 +305,6 @@ spec:
   fetchConfig:
     url: https://github.com/mycompany/cluster-api-provider-minimal/releases/v0.1.0/infrastructure-components.yaml
 ```
-
-## 与 Kueue 对比
-
-| | Cluster API | Kueue |
-|---|---|---|
-| **层面** | 集群生命周期管理 | 集群内作业调度 |
-| **关注点** | 集群的创建/升级/删除 | 作业的排队/准入/抢占 |
-| **CRD** | Cluster, Machine, MachineDeployment | Workload, ClusterQueue, LocalQueue |
-| **Provider** | 基础设施 provider (AWS, Azure...) | 作业类型集成 (Job, Ray, MPI...) |
-| **控制器模式** | 标准的 controller-runtime reconciler | 同 |
-
-两者可以叠加使用：CAPI 创建集群 → Kueue 在该集群上管理批处理作业。
 
 ## 参考
 

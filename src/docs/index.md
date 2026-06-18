@@ -20,8 +20,11 @@
 - [Kubelet 原理](./Cloud_Native/Kubernetes/kubelet原理.md) — kubelet 创建 Pod 的完整流程：syncLoop、PLEG、容器运行时
 - [Kubernetes 高可用](./Cloud_Native/Kubernetes/kubernetes_ha.md) — stacked etcd 与 external etcd 两种 HA 拓扑方案
 - [RBAC](./Cloud_Native/Kubernetes/rbac.md) — 基于角色的访问控制：用户创建、证书签名请求、权限绑定
-- [Cluster API](./Cloud_Native/Kubernetes/cluster-api.md) — 声明式集群生命周期管理：provider 契约、Machine/ClusterClass、自定义 provider 示例
 - [Kueue](./Cloud_Native/Kubernetes/kueue.md) — Kubernetes 原生作业队列管理器：配额管理、公平共享、抢占与多集群调度
+
+### Cluster Lifecycle
+
+- [Cluster API](./Cloud_Native/Cluster_Lifecycle/cluster-api.md) — 声明式集群生命周期管理：provider 契约、资源层级、集群创建流程、自定义 provider 示例
 
 ### CICD
 
