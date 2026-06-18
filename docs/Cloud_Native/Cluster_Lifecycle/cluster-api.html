@@ -35,7 +35,7 @@
             const path_to_root = "../../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../../searchindex-75a95130.js";
+            window.path_to_searchindex_js = "../../../searchindex-ea90caac.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../../../toc-e03181c2.js"></script>
@@ -428,22 +428,177 @@ func (r *MinimalClusterReconciler) reconcileDelete(ctx context.Context, c *infra
     return ctrl.Result{}, nil
 }
 </code></pre>
-<h3 id="3-与-capi-的交互点"><a class="header" href="#3-与-capi-的交互点">3. 与 CAPI 的交互点</a></h3>
+<h3 id="3-定义-infrastructuremachine-crd"><a class="header" href="#3-定义-infrastructuremachine-crd">3. 定义 InfrastructureMachine CRD</a></h3>
+<pre><code class="language-go">// api/v1alpha1/minimalmachine_types.go
+package v1alpha1
+
+import (
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+type MinimalMachineSpec struct {
+    InstanceType string `json:"instanceType,omitempty"`
+}
+
+type MinimalMachineStatus struct {
+    Ready      bool     `json:"ready"`
+    Addresses  []string `json:"addresses,omitempty"`
+    ProviderID string   `json:"providerID,omitempty"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+type MinimalMachine struct {
+    metav1.TypeMeta   `json:",inline"`
+    metav1.ObjectMeta `json:"metadata,omitempty"`
+    Spec   MinimalMachineSpec   `json:"spec,omitempty"`
+    Status MinimalMachineStatus `json:"status,omitempty"`
+}
+</code></pre>
+<h3 id="4-实现-infrastructuremachine-reconciler"><a class="header" href="#4-实现-infrastructuremachine-reconciler">4. 实现 InfrastructureMachine Reconciler</a></h3>
+<pre><code class="language-go">// internal/controller/minimalmachine_controller.go
+package controller
+
+import (
+    "context"
+    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+    clusterv1 "sigs.k8s.io/cluster-api/api/v1beta2"
+    "sigs.k8s.io/cluster-api/util"
+    infrav1 "mycompany.io/capi-minimal/api/v1alpha1"
+)
+
+func (r *MinimalMachineReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+    minimalMachine := &amp;infrav1.MinimalMachine{}
+    if err := r.Get(ctx, req.NamespacedName, minimalMachine); err != nil {
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+    machine, err := util.GetOwnerMachine(ctx, r.Client, minimalMachine.ObjectMeta)
+    if err != nil {
+        return ctrl.Result{}, err
+    }
+    if !minimalMachine.DeletionTimestamp.IsZero() {
+        controllerutil.RemoveFinalizer(minimalMachine, "minimalmachine.infrastructure.cluster.x-k8s.io")
+        return ctrl.Result{}, nil
+    }
+    controllerutil.AddFinalizer(minimalMachine, "minimalmachine.infrastructure.cluster.x-k8s.io")
+    if !minimalMachine.Status.Ready {
+        minimalMachine.Status.ProviderID = "minimal://" + machine.Name
+        minimalMachine.Status.Addresses = []string{"10.0.1." + machine.Name}
+        minimalMachine.Status.Ready = true
+    }
+    if minimalMachine.Status.Ready {
+        machine.Spec.ProviderID = &amp;minimalMachine.Status.ProviderID
+    }
+    return ctrl.Result{}, r.Status().Update(ctx, minimalMachine)
+}
+</code></pre>
+<h3 id="5-定义-controlplane-crd"><a class="header" href="#5-定义-controlplane-crd">5. 定义 ControlPlane CRD</a></h3>
+<pre><code class="language-go">// api/v1alpha1/minimalcontrolplane_types.go
+package v1alpha1
+
+import (
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+type MinimalControlPlaneSpec struct {
+    Replicas int `json:"replicas"`
+}
+
+type MinimalControlPlaneStatus struct {
+    Ready              bool   `json:"ready"`
+    Replicas           int    `json:"replicas"`
+    ReadyReplicas      int    `json:"readyReplicas"`
+    Initialized        bool   `json:"initialized"`
+    ControlPlaneReady  bool   `json:"controlPlaneReady"`
+}
+
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+type MinimalControlPlane struct {
+    metav1.TypeMeta   `json:",inline"`
+    metav1.ObjectMeta `json:"metadata,omitempty"`
+    Spec   MinimalControlPlaneSpec   `json:"spec,omitempty"`
+    Status MinimalControlPlaneStatus `json:"status,omitempty"`
+}
+</code></pre>
+<h3 id="6-实现-controlplane-reconciler"><a class="header" href="#6-实现-controlplane-reconciler">6. 实现 ControlPlane Reconciler</a></h3>
+<pre><code class="language-go">// internal/controller/minimalcontrolplane_controller.go
+package controller
+
+import (
+    "context"
+    "fmt"
+
+    "sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+    clusterv1 "sigs.k8s.io/cluster-api/api/v1beta2"
+    "sigs.k8s.io/cluster-api/util"
+    "sigs.k8s.io/cluster-api/util/conditions"
+    infrav1 "mycompany.io/capi-minimal/api/v1alpha1"
+    corev1 "k8s.io/api/core/v1"
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+func (r *MinimalControlPlaneReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+    mcp := &amp;infrav1.MinimalControlPlane{}
+    if err := r.Get(ctx, req.NamespacedName, mcp); err != nil {
+        return ctrl.Result{}, client.IgnoreNotFound(err)
+    }
+    cluster, err := util.GetOwnerCluster(ctx, r.Client, mcp.ObjectMeta)
+    if err != nil {
+        return ctrl.Result{}, err
+    }
+    if !mcp.DeletionTimestamp.IsZero() {
+        // 删除所有 control plane Machine
+        controllerutil.RemoveFinalizer(mcp, "minimalcontrolplane.controlplane.cluster.x-k8s.io")
+        return ctrl.Result{}, nil
+    }
+    controllerutil.AddFinalizer(mcp, "minimalcontrolplane.controlplane.cluster.x-k8s.io")
+
+    // 为每个 replica 创建 CAPI Machine 对象
+    for i := 0; i &lt; mcp.Spec.Replicas; i++ {
+        machine := &amp;clusterv1.Machine{
+            ObjectMeta: metav1.ObjectMeta{
+                Name:      fmt.Sprintf("%s-%d", mcp.Name, i),
+                Namespace: mcp.Namespace,
+                OwnerReferences: []metav1.OwnerReference{
+                    *metav1.NewControllerRef(mcp, infrav1.GroupVersion.WithKind("MinimalControlPlane")),
+                },
+            },
+            Spec: clusterv1.MachineSpec{
+                ClusterName: cluster.Name,
+            },
+        }
+        if err := r.Create(ctx, machine); err != nil {
+            return ctrl.Result{}, err
+        }
+    }
+
+    mcp.Status.ReadyReplicas = mcp.Spec.Replicas
+    mcp.Status.Replicas = mcp.Spec.Replicas
+
+    // 标记 Cluster 的 ControlPlaneReady condition
+    conditions.MarkTrue(cluster, clusterv1.ControlPlaneReadyCondition)
+    mcp.Status.Ready = true
+    return ctrl.Result{}, r.Status().Update(ctx, mcp)
+}
+</code></pre>
+<h3 id="7-与-capi-的交互点"><a class="header" href="#7-与-capi-的交互点">7. 与 CAPI 的交互点</a></h3>
 <p>Provider 通过以下标准字段与 CAPI 交互：</p>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>交互</th><th>InfrastructureCluster</th><th>InfrastructureMachine</th></tr>
+<tr><th>交互</th><th>InfrastructureCluster</th><th>InfrastructureMachine</th><th>ControlPlane</th></tr>
 </thead>
 <tbody>
-<tr><td><strong>就绪标记</strong></td><td><code>spec.controlPlaneEndpoint</code> + <code>status.ready=true</code></td><td><code>status.ready=true</code></td></tr>
-<tr><td><strong>地址</strong></td><td>—</td><td><code>status.addresses</code> (node IP/hostname)</td></tr>
-<tr><td><strong>失败</strong></td><td><code>status.failureReason</code> / <code>failureMessage</code></td><td>同上</td></tr>
-<tr><td><strong>OwnerRef</strong></td><td>指向 Cluster</td><td>指向 Machine</td></tr>
+<tr><td><strong>就绪标记</strong></td><td><code>spec.controlPlaneEndpoint</code> + <code>status.ready=true</code></td><td><code>status.ready=true</code></td><td><code>status.ready=true</code></td></tr>
+<tr><td><strong>地址</strong></td><td>—</td><td><code>status.addresses</code></td><td>—</td></tr>
+<tr><td><strong>失败</strong></td><td><code>status.failureReason</code> / <code>failureMessage</code></td><td>同上</td><td>同上</td></tr>
+<tr><td><strong>OwnerRef</strong></td><td>指向 Cluster</td><td>指向 Machine</td><td>指向 Cluster</td></tr>
+<tr><td><strong>副本管理</strong></td><td>—</td><td>—</td><td>创建 control plane Machine，管理扩缩/升级</td></tr>
 </tbody>
 </table>
 </div>
-<h3 id="4-部署使用"><a class="header" href="#4-部署使用">4. 部署使用</a></h3>
+<h3 id="8-部署使用"><a class="header" href="#8-部署使用">8. 部署使用</a></h3>
 <pre><code class="language-bash"># 1. 以 Docker provider 为例建管理集群
 clusterctl init --infrastructure docker
 
@@ -459,7 +614,7 @@ kubectl apply -f my-cluster.yaml
 # 4. 获取 kubeconfig
 clusterctl get kubeconfig my-cluster &gt; my-cluster.kubeconfig
 </code></pre>
-<h3 id="5-provider-注册"><a class="header" href="#5-provider-注册">5. Provider 注册</a></h3>
+<h3 id="9-provider-注册"><a class="header" href="#9-provider-注册">9. Provider 注册</a></h3>
 <p>Provider 通过 <code>config/</code> 目录的 manifest 注册自身：</p>
 <pre><code class="language-yaml"># Provider 的 ClusterResourceSet —— 告诉 CAPI 如何找到这个 provider
 apiVersion: clusterctl.cluster.x-k8s.io/v1alpha3
