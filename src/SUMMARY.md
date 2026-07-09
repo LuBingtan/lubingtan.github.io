@@ -3,7 +3,8 @@
 
 # Cloud Native
 
-- [Agent Sandbox: K8s 原生沙箱执行环境](./docs/Cloud_Native/agent-sandbox.md)
+- [AI Infrastructure]()
+  - [Agent Sandbox: K8s 原生沙箱执行环境](./docs/Cloud_Native/AI_Infrastructure/agent-sandbox.md)
 - [CICD]()
   - [DevOps 理念与实践](./docs/Cloud_Native/CICD/devops-thinking.md)
 - [Cluster Lifecycle]()

@@ -22,9 +22,9 @@
 - [RBAC](./Cloud_Native/Kubernetes/rbac.md) — 基于角色的访问控制：用户创建、证书签名请求、权限绑定
 - [Kueue](./Cloud_Native/Kubernetes/kueue.md) — Kubernetes 原生作业队列管理器：配额管理、公平共享、抢占与多集群调度
 
-### Sandbox
+### AI Infrastructure
 
-- [Agent Sandbox](./Cloud_Native/agent-sandbox.md) — K8s 原生沙箱执行环境：WarmPool 预热池、SandboxClaim 生命周期、7 层安全隔离、Router 请求路由
+- [Agent Sandbox](./Cloud_Native/AI_Infrastructure/agent-sandbox.md) — K8s 原生沙箱执行环境：WarmPool 预热池、SandboxClaim 生命周期、7 层安全隔离、Router 请求路由与认证
 
 ### Cluster Lifecycle
 
