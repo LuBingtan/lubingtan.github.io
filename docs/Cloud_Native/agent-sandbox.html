@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Kueue: Kubernetes 原生作业队列管理器 - Bingtan&#x27;s Wiki</title>
+        <title>Agent Sandbox: K8s 原生沙箱执行环境 - Bingtan&#x27;s Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -12,33 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../../favicon-de23e50b.svg">
-        <link rel="shortcut icon" href="../../../favicon-8114d1fc.png">
-        <link rel="stylesheet" href="../../../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../../../css/general-2459343d.css">
-        <link rel="stylesheet" href="../../../css/chrome-ae938929.css">
-        <link rel="stylesheet" href="../../../css/print-9e4910d8.css" media="print">
+        <link rel="icon" href="../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../../fonts/fonts-9644e21d.css">
+        <link rel="stylesheet" href="../../fonts/fonts-9644e21d.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="mdbook-highlight-css" href="../../../highlight-493f70e1.css">
-        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../../tomorrow-night-4c0ae647.css">
-        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../../ayu-highlight-3fdfc3ac.css">
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "../../../";
+            const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../../searchindex-85b9a074.js";
+            window.path_to_searchindex_js = "../../searchindex-85b9a074.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../../toc-c1f5b37d.js"></script>
+        <script src="../../toc-c1f5b37d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -105,7 +105,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
             </noscript>
             <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -140,13 +140,13 @@
                     <h1 class="menu-title">Bingtan&#x27;s Wiki</h1>
 
                     <div class="right-buttons">
-                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
                         <a href="https://github.com/lubingtan/lubingtan.github.io" title="Git repository" aria-label="Git repository">
                             <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
-                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Cloud_Native/Kubernetes/kueue.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Cloud_Native/agent-sandbox.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -180,98 +180,329 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="kueue-kubernetes-原生作业队列管理器"><a class="header" href="#kueue-kubernetes-原生作业队列管理器">Kueue: Kubernetes 原生作业队列管理器</a></h1>
-<h2 id="what-is-kueue"><a class="header" href="#what-is-kueue">What is Kueue</a></h2>
-<p><a href="https://github.com/kubernetes-sigs/kueue">Kueue</a>（发音 “cue-ay”）是一个 Kubernetes 原生的<strong>作业队列管理器</strong>，属于 <code>kubernetes-sigs</code> 组织。它作为作业级别的资源管理者，决定：</p>
+                        <h1 id="agent-sandbox-k8s-原生沙箱执行环境"><a class="header" href="#agent-sandbox-k8s-原生沙箱执行环境">Agent Sandbox: K8s 原生沙箱执行环境</a></h1>
+<h2 id="what-is-agent-sandbox"><a class="header" href="#what-is-agent-sandbox">What is Agent Sandbox</a></h2>
+<p><a href="https://github.com/kubernetes-sigs/agent-sandbox">Agent Sandbox</a> 是一个 Kubernetes SIG Apps 子项目，提供了一套 CRD 和 controller 来管理<strong>隔离的、有状态的、单例</strong>工作负载。核心场景是 <strong>AI Agent runtime</strong>：在强隔离环境中执行 LLM 生成的不受信任代码。</p>
+<p>两层架构：</p>
 <ul>
-<li>作业<strong>何时被允许启动</strong>（即 <a href="../Kubernetes/1-1_k8s工作负载.html">Pod</a> 何时被创建），基于可用配额</li>
-<li>作业<strong>何时应停止</strong>（即活跃 Pod 何时被删除）</li>
+<li><strong>Core</strong> (<code>agents.x-k8s.io/v1beta1</code>)：<code>Sandbox</code> CRD —— 声明式定义单 Pod 沙箱，含稳定 hostname、持久存储、pause/resume、定时过期</li>
+<li><strong>Extensions</strong> (<code>extensions.agents.x-k8s.io/v1beta1</code>)：<code>SandboxTemplate</code>（可复用蓝图）、<code>SandboxWarmPool</code>（预热池）、<code>SandboxClaim</code>（用户侧抽象）</li>
 </ul>
-<p>Kueue 在标准 Kubernetes 调度之上提供公平共享、抢占和多租户资源管理能力，与 <a href="../Kubernetes/4_kube-scheduler源码分析.html">kube-scheduler</a> 互补：scheduler 负责 Pod 的节点放置，Kueue 负责作业的准入控制与排队。</p>
-<h2 id="核心概念"><a class="header" href="#核心概念">核心概念</a></h2>
-<h3 id="crd-资源"><a class="header" href="#crd-资源">CRD 资源</a></h3>
+<p>配套的 <strong>sandbox-router</strong>（Go 反向代理）通过 <code>X-Sandbox-*</code> HTTP header 将客户端请求路由到沙箱 Pod。</p>
+<ul>
+<li>Go 1.26，Apache 2.0</li>
+</ul>
+<h2 id="架构"><a class="header" href="#架构">架构</a></h2>
+<pre class="mermaid">flowchart TB
+    subgraph User["User"]
+        CLI["kubectl"]
+        SDK["Go/Python SDK"]
+    end
+
+    subgraph Controllers["Controller Manager"]
+        SBR["Sandbox Reconciler"]
+        SWPR["WarmPool Reconciler"]
+        SBCR["Claim Reconciler"]
+        Q["In-Memory Queue\n(FIFO + NodeSpread)"]
+    end
+
+    subgraph Runtime["Data Plane"]
+        ROUTER["Sandbox Router\n(Reverse Proxy)"]
+        POD["Sandbox Pod\n(gVisor/Kata/runc)"]
+        PVC[("PVC")]
+        NP["NetworkPolicy\n(per Template)"]
+    end
+
+    CLI --&gt;|creates| SBCR
+    SWPR --&gt;|pre-warms N| SBR
+    SBR --&gt;|creates| POD
+    SBR --&gt;|creates| PVC
+    SBCR --&gt;|adopts from| Q
+    Q --&gt;|tracks warm| POD
+    ROUTER --&gt;|X-Sandbox-ID routing| POD
+    NP --&gt;|isolates| POD
+</pre>
+
+<h2 id="资源模型"><a class="header" href="#资源模型">资源模型</a></h2>
 <div class="table-wrapper">
 <table>
 <thead>
-<tr><th>资源</th><th>作用</th></tr>
+<tr><th>CRD</th><th>级别</th><th>功能</th></tr>
 </thead>
 <tbody>
-<tr><td><strong>Workload</strong></td><td>基本工作单元，包含 PodSet、队列名、优先级、准入状态</td></tr>
-<tr><td><strong>ClusterQueue</strong></td><td>集群级别的资源配额定义，支持多种 ResourceFlavor、配额借用、Cohort</td></tr>
-<tr><td><strong>LocalQueue</strong></td><td>命名空间级别的队列，指向某个 ClusterQueue，作业提交到 LocalQueue</td></tr>
-<tr><td><strong>ResourceFlavor</strong></td><td>定义资源的“口味“（如 spot vs on-demand、GPU 类型），关联节点标签和污点</td></tr>
-<tr><td><strong>Cohort</strong></td><td>一组可以互相借用资源的 ClusterQueue</td></tr>
-<tr><td><strong>AdmissionCheck</strong></td><td>供内外部组件对工作负载准入进行把关的机制（如 provisioning 请求、MultiKueue 检查）</td></tr>
-<tr><td><strong>WorkloadPriorityClass</strong></td><td>定义工作负载的优先级</td></tr>
+<tr><td><strong>SandboxTemplate</strong></td><td>模板</td><td>定义 Pod 蓝图（镜像、资源、runtimeClass）+ NetworkPolicy</td></tr>
+<tr><td><strong>SandboxWarmPool</strong></td><td>池（1:N）</td><td>维护 N 个预创建、预调度的 Sandbox，低延迟领取</td></tr>
+<tr><td><strong>Sandbox</strong></td><td>单例（1:1）</td><td>对应一个 Pod + PVC + Headless Service</td></tr>
+<tr><td><strong>SandboxClaim</strong></td><td>用户请求</td><td>从 Warm Pool 领取 Sandbox，或冷创建</td></tr>
 </tbody>
 </table>
 </div>
-<h3 id="架构层次"><a class="header" href="#架构层次">架构层次</a></h3>
-<p>Kueue 的架构分为三层：</p>
-<p><strong>控制器层</strong> (<code>pkg/controller/</code>) — 基于 controller-runtime，负责所有 CRD 的生命周期管理。包括核心控制器（Workload、ClusterQueue、LocalQueue 等）和作业框架（GenericJob 接口，支持集成任意作业类型）。</p>
-<p><strong>调度器层</strong> (<code>pkg/scheduler/</code>) — Kueue 的核心，负责：</p>
+<p>资源关系：</p>
+<pre><code>SandboxWarmPool (spec.replicas=N)
+  ├── Sandbox-A ── Pod-A + PVC-A + SVC-A
+  ├── Sandbox-B ── Pod-B + PVC-B + SVC-B
+  └── Sandbox-N ── Pod-N + PVC-N + SVC-N
+
+SandboxClaim ──领取──→ Sandbox-A (OwnerRef 改为 Claim, 从 Pool 移除)
+
+Claim 删除 → GC 级联删 Sandbox → Pod/PVC/SVC
+</code></pre>
+<h2 id="sandboxclaim-生命周期"><a class="header" href="#sandboxclaim-生命周期">SandboxClaim 生命周期</a></h2>
+<pre class="mermaid">stateDiagram-v2
+    [*] --&gt; PreWarm: WarmPool creates N Sandboxes
+    PreWarm --&gt; Queued: Pod Ready, enqueued
+    Queued --&gt; Adopted: Claim pops from queue
+    Queued --&gt; Stale: Template hash changed
+    Stale --&gt; [*]: Deleted by WarmPool controller
+    Adopted --&gt; Running: Claim active
+    Adopted --&gt; ColdStart: Queue empty, created from template
+    ColdStart --&gt; Running: Claim active
+    Running --&gt; Deleted: Expired (ShutdownPolicy=Delete)
+    Running --&gt; SandboxDeleted: Expired (ShutdownPolicy=Retain)
+    Running --&gt; Deleted: Claim manually deleted
+</pre>
+
+<p>当 Claim 被删除时，controller 不做任何清理——直接 return nil。Kubernetes GC 沿 OwnerRef 链条级联删除：Claim → Sandbox → Pod/PVC/SVC。</p>
+<p><strong>Sandbox Pod 不会回到预热池。</strong> WarmPool controller 独立监测 <code>current_replicas &lt; spec.replicas</code>，创建新的 Sandbox 补充。这是单向流动：</p>
+<pre><code>Pool → (adopt) → Claim → (expire/delete) → GC destroys
+  ↑                                              |
+  └───── Pool controller creates replacement ────┘
+</code></pre>
+<h3 id="shutdownpolicy"><a class="header" href="#shutdownpolicy">ShutdownPolicy</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>策略</th><th>行为</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Delete</code> / <code>DeleteForeground</code></td><td>Claim 过期 → 删除 Claim → GC 级联</td></tr>
+<tr><td><code>Retain</code>（默认）</td><td>Claim 过期 → 仅删除 Sandbox，Claim 保留可供检查</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="warm-pool-的工作原理"><a class="header" href="#warm-pool-的工作原理">Warm Pool 的工作原理</a></h2>
+<p>Warm Pool 是该项目的核心性能优化。它维护一个预创建、预调度的 Sandbox 池子，消除 Pod 调度、镜像拉取、PVC 绑定的延迟。</p>
+<p><strong>Controller 协调流程：</strong></p>
+<ol>
+<li>WarmPool controller 监听到 <code>spec.replicas=N</code></li>
+<li>创建 N 个 Sandbox（所有权归 Warm Pool）</li>
+<li>每个 Sandbox 创建对应的 Pod</li>
+<li>Pod Ready 后，key 加入内存 FIFO 队列</li>
+<li>Claim 到达时，从队列中领取（NodeSpread 策略——选择该节点剩余最多的）</li>
+<li>池子中移除已领取的 Sandbox，创建新的补充</li>
+</ol>
+<p><strong>领取过程（<code>adoptSandboxFromCandidates</code>）：</strong></p>
 <ul>
-<li>查找待调度的工作负载</li>
-<li>为每个 PodSet 选择合适的 ResourceFlavor（FlavorAssigner）</li>
-<li>处理抢占逻辑（Preemptor），支持公平共享、层级抢占、Cohort 内抢占等策略</li>
+<li>清空原 OwnerReferences</li>
+<li>设置 <code>controllerRef</code> 指向 Claim</li>
+<li>移除 Warm Pool 的 label</li>
+<li>注入 Claim 指定的 env/volume</li>
 </ul>
-<p><strong>缓存层</strong> (<code>pkg/cache/</code>) — 内存状态跟踪，包括 ClusterQueue 缓存（资源使用、flavor、TAS 拓扑感知调度状态）和队列管理器（队列层级、不可准入工作负载跟踪）。</p>
-<h2 id="支持的作业类型"><a class="header" href="#支持的作业类型">支持的作业类型</a></h2>
-<p>Kueue 通过 job framework 提供可扩展的作业集成，内置支持：</p>
+<p><strong>Claim 删除时</strong>：</p>
 <ul>
-<li>Kubernetes Batch/Job 和 CronJob</li>
-<li>JobSet (<code>sigs.k8s.io/jobset</code>) — 批处理作业集</li>
-<li>LeaderWorkerSet (<code>sigs.k8s.io/lws</code>) — Leader-Worker 模式</li>
-<li>Ray — RayJob、RayCluster、RayService</li>
-<li>Kubeflow — 训练作业（Training Operator、Trainer v2）</li>
-<li>MPI Job</li>
-<li>Spark Application</li>
-<li>Deployment / StatefulSet（serving 类工作负载）</li>
-<li>AppWrapper</li>
-<li>普通 Pod 和 Pod Group</li>
+<li>Controller 返回 nil（不清理）</li>
+<li>K8s GC 按 OwnerRef 级联删除</li>
+<li>Sandbox 不回池子</li>
 </ul>
-<h2 id="关键特性"><a class="header" href="#关键特性">关键特性</a></h2>
-<h3 id="资源管理"><a class="header" href="#资源管理">资源管理</a></h3>
+<p><strong>两种更新策略</strong>：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>策略</th><th>行为</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Recreate</code></td><td>删除所有预热 Sandbox，重新创建</td></tr>
+<tr><td><code>OnReplenish</code></td><td>自然消耗后逐步替换为新模板</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="安全隔离机制"><a class="header" href="#安全隔离机制">安全隔离机制</a></h2>
+<p>Agent Sandbox 实现了<strong>纵深防御</strong>，多层防护组合保障安全：</p>
+<h3 id="1-运行时隔离"><a class="header" href="#1-运行时隔离">1. 运行时隔离</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Runtime</th><th>隔离级别</th><th>机制</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>gVisor</strong></td><td>内核级</td><td>用户态内核拦截 syscall，每个沙箱独立内核边界</td></tr>
+<tr><td><strong>Kata Containers</strong></td><td>硬件虚拟化</td><td>每个 Pod 运行在轻量 VM 内（Firecracker/QEMU/Hyper-V）</td></tr>
+<tr><td><strong>runc</strong></td><td>容器级</td><td>仅 Linux namespace + cgroup，隔离最弱</td></tr>
+</tbody>
+</table>
+</div>
+<p>Pod 级安全上下文：<code>runAsNonRoot</code>, <code>allowPrivilegeEscalation: false</code>, <code>capabilities.drop: ["ALL"]</code>, <code>seccompProfile: RuntimeDefault</code></p>
+<h3 id="2-serviceaccount-隔离"><a class="header" href="#2-serviceaccount-隔离">2. ServiceAccount 隔离</a></h3>
+<p>默认 <code>automountServiceAccountToken = false</code>。即使沙箱被攻破，也无法通过 SA token 访问 K8s API Server，阻止集群级提权。</p>
+<h3 id="3-网络隔离networkpolicy"><a class="header" href="#3-网络隔离networkpolicy">3. 网络隔离（NetworkPolicy）</a></h3>
+<p>SandboxTemplate controller 为每个 Template 创建<strong>共享 NetworkPolicy</strong>：</p>
 <ul>
-<li><strong>多租户公平共享</strong>：通过 ClusterQueue 和 Cohort 实现租户间的资源隔离与共享</li>
-<li><strong>资源配额借用</strong>：同一 Cohort 内的 ClusterQueue 可以互相借用未使用的配额</li>
-<li><strong>抢占</strong>：支持多种抢占策略，高优先级工作负载可抢占低优先级资源</li>
-<li><strong>ResourceFlavor</strong>：同一资源（如 GPU）可以有多种“口味“，工作负载可指定偏好</li>
-</ul>
-<h3 id="拓扑感知调度-tas"><a class="header" href="#拓扑感知调度-tas">拓扑感知调度 (TAS)</a></h3>
-<p>支持基于节点拓扑的多维度调度决策，确保工作负载在合适的拓扑域中运行。</p>
-<h3 id="multikueue"><a class="header" href="#multikueue">MultiKueue</a></h3>
-<p>多集群作业分发能力，是 2026 年的重点方向。支持跨集群工作负载调度、准入约束和弹性 RayJob 等。</p>
-<h3 id="admissioncheck-机制"><a class="header" href="#admissioncheck-机制">AdmissionCheck 机制</a></h3>
-<p>允许外部组件（如集群弹性伸缩、MultiKueue）对工作负载准入进行额外检查，实现可扩展的准入控制。</p>
-<h3 id="配套工具"><a class="header" href="#配套工具">配套工具</a></h3>
+<li><strong>Ingress</strong>：仅 sandbox-router 可以连接沙箱</li>
+<li><strong>Egress（Secure by Default）</strong>：
 <ul>
-<li><strong>kueuectl</strong> — <code>kubectl kueue</code> 插件，管理 Kueue 资源</li>
-<li><strong>kueueviz</strong> — Web 可视化仪表板，展示集群状态</li>
+<li>允许公网（<code>0.0.0.0/0</code>）</li>
+<li>阻止内网（<code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>）</li>
+<li>阻止 link-local（<code>169.254.0.0/16</code>，防止访问云 metadata server）</li>
+<li>阻止沙箱之间互访</li>
 </ul>
-<h2 id="关键依赖"><a class="header" href="#关键依赖">关键依赖</a></h2>
+</li>
+</ul>
+<p>效果：沙箱只能通过 router 被访问，不能访问集群内部服务、metadata server、或彼此。</p>
+<h3 id="4-自动过期"><a class="header" href="#4-自动过期">4. 自动过期</a></h3>
+<p>Sandbox 有 TTL。超时后按 ShutdownPolicy 自动回收，防止长期存在的沙箱积累攻击面。</p>
+<h3 id="5-资源限制"><a class="header" href="#5-资源限制">5. 资源限制</a></h3>
+<p>Template 中可配置 CPU/memory limits，通过 cgroup 强制实施，防止单沙箱消耗过量节点资源。</p>
+<h3 id="6-持久存储"><a class="header" href="#6-持久存储">6. 持久存储</a></h3>
+<p>每个 Sandbox 绑定独立 PVC。Sandbox 销毁时 PVC 被级联删除，数据不残留。</p>
+<h2 id="sandbox-router"><a class="header" href="#sandbox-router">Sandbox Router</a></h2>
+<h3 id="它是什么"><a class="header" href="#它是什么">它是什么</a></h3>
+<p>Sandbox Router 是一个<strong>独立的 Go 反向代理</strong>（<code>sandbox-router/</code> 目录），不运行在 controller manager 中，而是单独部署为一个 Deployment + Service。它的作用是在客户端和沙箱 Pod 之间建立安全的请求路由。</p>
+<p><strong>为什么需要它？</strong> Warm Pool 中的沙箱 Pod 是不可区分的——它们有相同的镜像、相同的配置。用户不能直接知道哪个 Pod 属于他。Router 通过 HTTP header 携带的路由信息，将请求精准代理到正确的 Pod。</p>
+<h3 id="路由解析优先级"><a class="header" href="#路由解析优先级">路由解析优先级</a></h3>
+<p>Router 解析目标沙箱时有三级优先级：</p>
+<ol>
+<li><strong><code>X-Sandbox-Pod-IP</code></strong>（显式覆盖）— 客户端直接指定 Pod IP，经过 SSRF 校验后直连。最低延迟，但需要调用方知道 IP。</li>
+<li><strong>Pod IP Cache</strong>（<code>X-Sandbox-UID</code>）— 通过 UID 查缓存中的 Pod IP。这是 KEP fast path，避免 DNS 查询延迟。</li>
+<li><strong>DNS 解析</strong>（fallback）— 构造 DNS 名 <code>http://&lt;ID&gt;.&lt;NS&gt;.svc.&lt;cluster&gt;:&lt;port&gt;</code> 通过集群 DNS 解析。最通用但最慢。</li>
+</ol>
+<h3 id="pod-ip-cachekep-fast-path"><a class="header" href="#pod-ip-cachekep-fast-path">Pod IP Cache（KEP Fast Path）</a></h3>
+<p>Router 维护一个本地 Pod IP 缓存，通过 K8s informer 监听 Pod 事件来实时更新：</p>
 <ul>
-<li><code>controller-runtime</code> — Kubernetes 控制器框架</li>
-<li>Kubernetes 1.29+</li>
-<li>Prometheus — 监控指标</li>
-<li>cert-manager — Webhook 证书管理</li>
-<li>Ginkgo/Gomega — 测试框架</li>
+<li><strong>写入</strong>：当 Pod 变为 Ready 且有 Sandbox UID label 时，缓存 Pod IP</li>
+<li><strong>查找</strong>：<code>X-Sandbox-UID</code> → <code>Pod IP</code>，O(1) 查询</li>
+<li><strong>失效</strong>：Pod 被删除或 IP 变化时，从缓存中移除</li>
+<li><strong>Dial 失败时主动失效</strong>：如果缓存命中的 IP 无法连接，缓存条目被主动清除并回退到 DNS</li>
 </ul>
+<p>这使得路由延迟接近 IP 直连，同时保持 DNS 的容错性。</p>
+<h3 id="请求处理流程"><a class="header" href="#请求处理流程">请求处理流程</a></h3>
+<pre class="mermaid">sequenceDiagram
+    participant U as Client
+    participant R as Sandbox Router
+    participant A as Authorizer (TokenReview)
+    participant Cache as Pod IP Cache
+    participant DNS as Cluster DNS
+    participant P as Sandbox Pod
+
+    U-&gt;&gt;R: GET /api/run&lt;br/&gt;X-Sandbox-ID: my-sandbox&lt;br/&gt;X-Sandbox-Port: 8888&lt;br/&gt;Authorization: Bearer TOKEN
+
+    R-&gt;&gt;R: Parse headers&lt;br/&gt;Validate DNS-1123 &amp; port range&lt;br/&gt;Reject loopback/link-local IPs
+
+    R-&gt;&gt;A: TokenReview(TOKEN)
+    A--&gt;&gt;R: allow / deny
+
+    alt X-Sandbox-Pod-IP is set
+        R-&gt;&gt;R: Validate IP (SSRF check)
+        R-&gt;&gt;P: Dial IP:port directly
+    else Cache enabled &amp; X-Sandbox-UID present
+        R-&gt;&gt;Cache: Lookup by UID
+        alt Cache Hit
+            Cache--&gt;&gt;R: Live Pod IP
+            R-&gt;&gt;P: Dial cached Pod IP:port
+        else Cache Miss
+            R-&gt;&gt;DNS: Resolve my-sandbox.default.svc.cluster.local
+            DNS--&gt;&gt;R: Pod IP
+            R-&gt;&gt;P: Dial resolved IP:port
+        end
+    else DNS-only fallback
+        R-&gt;&gt;DNS: Resolve via cluster DNS
+        DNS--&gt;&gt;R: Pod IP
+        R-&gt;&gt;P: Dial IP:port
+    end
+
+    Note over R,P: Dial failure → retry with exponential backoff&lt;br/&gt;Cache-sourced failure → invalidate cache entry
+
+    R-&gt;&gt;R: Strip Authorization header&lt;br/&gt;Strip X-Forwarded-For, set real client IP&lt;br/&gt;Set X-Forwarded-{Host,Proto,For}
+    R-&gt;&gt;P: Reverse-proxied HTTP request
+    P--&gt;&gt;R: HTTP response
+    R--&gt;&gt;U: Forwarded response
+</pre>
+
+<h3 id="认证与授权"><a class="header" href="#认证与授权">认证与授权</a></h3>
+<p>Router 的认证通过可插拔的 <code>Authorizer</code> 接口实现，启动时选择实现，每个请求调用一次。</p>
+<p><strong>两种实现：</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>实现</th><th>行为</th><th>适用场景</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>AllowAll</strong></td><td>所有请求放行（默认）</td><td>开发环境、Router 前置已有 Envoy/Gateway 处理认证</td></tr>
+<tr><td><strong>TokenReviewAuthorizer</strong></td><td>通过 K8s TokenReview API 验证 Bearer token</td><td>生产环境，K8s 原生认证</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="tokenreview-认证流程"><a class="header" href="#tokenreview-认证流程">TokenReview 认证流程</a></h4>
+<pre><code>Client ──BearerToken──→ Router ──SHA-256(token)──→ LRU Cache (30s TTL, 2048 entries)
+                              │                         │
+                              │ cache miss              │ cache hit
+                              ↓                         ↓
+                         K8s TokenReview API       return cached decision
+                              │
+                    ┌─────────┴─────────┐
+                    ↓                   ↓
+              authenticated       unauthenticated
+                    ↓                   ↓
+               200 allow            401 deny
+</code></pre>
+<p><strong>缓存安全</strong>：缓存存储 <code>SHA-256(token)</code> 哈希而非原始 token——即使内存 dump 泄露缓存也无法获取 session。</p>
+<p><strong>认证步骤</strong>：</p>
+<ol>
+<li>从 <code>Authorization: Bearer TOKEN</code> 头提取 token</li>
+<li>SHA-256(token) 作为 LRU 缓存 key</li>
+<li>Cache hit → 直接返回决策，零 API 调用</li>
+<li>Cache miss → 调 K8s TokenReview API：
+<ul>
+<li><code>authenticated=false</code> → <code>ErrUnauthenticated</code> (401)</li>
+<li>API 失败 → 缓存 <code>1/3 TTL</code>（最少 1s），防止打爆 apiserver</li>
+<li><code>authenticated=true</code> → 缓存决策 30s TTL</li>
+</ul>
+</li>
+<li>认证成功 → 请求放行</li>
+</ol>
+<p><strong>身份来源</strong>：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>来源</th><th>提取方式</th><th>优先级</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>mTLS</strong> 客户端证书</td><td>TLS 握手提取</td><td>SPIFFE URI → DNS SAN → Subject CN</td></tr>
+<tr><td><strong>Bearer Token</strong></td><td><code>Authorization</code> header</td><td>TokenReview 验证</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong><code>RequireToken</code> 模式</strong>：<code>false</code>（默认，无 token 也放行，过渡期） / <code>true</code>（无 token → 401）</p>
+<p><strong>当前限制（v1）</strong>：只做<strong>认证</strong>不做<strong>授权</strong>——任何已认证用户可访问任意沙箱。per-sandbox owner identity 授权由后续 KEP 引入。</p>
+<h3 id="安全头处理"><a class="header" href="#安全头处理">安全头处理</a></h3>
+<p>Router 在转发前对关键 header 做安全处理：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Header</th><th>处理方式</th><th>原因</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Authorization</strong></td><td>入站消费后<strong>剥离</strong>，不转发</td><td>防止沙箱获取调用者 K8s token 冒充访问 API Server</td></tr>
+<tr><td><strong>X-Forwarded-For</strong></td><td>入站时剥离，出站时设为实际客户端 IP</td><td>防止客户端伪造 IP</td></tr>
+<tr><td><strong>X-Forwarded-Host/Proto</strong></td><td>基于实际请求设置</td><td>沙箱可正确判断原始请求的协议和主机</td></tr>
+<tr><td><strong>Origin</strong>（WebSocket）</td><td>剥离</td><td>防止 CSRF origin 不匹配</td></tr>
+</tbody>
+</table>
+</div>
+<p>核心原则：Router 已验证的身份信息<strong>不传递</strong>给沙箱。沙箱只知道“有人请求了它“，不知道“是谁“。</p>
 <h2 id="参考"><a class="header" href="#参考">参考</a></h2>
 <ul>
-<li><a href="https://github.com/kubernetes-sigs/kueue">Kueue GitHub</a></li>
-<li><a href="https://kueue.sigs.k8s.io/">Kueue 官方文档</a></li>
+<li><a href="https://github.com/kubernetes-sigs/agent-sandbox">Agent Sandbox GitHub</a></li>
 </ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/kubelet原理.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../latest_updates.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/1-1_k8s工作负载.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../cicd.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -281,11 +512,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/kubelet原理.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../latest_updates.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/1-1_k8s工作负载.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../cicd.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
@@ -305,19 +536,19 @@
         </script>
 
 
-        <script src="../../../elasticlunr-ef4e11c1.min.js"></script>
-        <script src="../../../mark-09e88c2c.min.js"></script>
-        <script src="../../../searcher-c2a407aa.js"></script>
+        <script src="../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../mark-09e88c2c.min.js"></script>
+        <script src="../../searcher-c2a407aa.js"></script>
 
-        <script src="../../../clipboard-1626706a.min.js"></script>
-        <script src="../../../highlight-abc7f01d.js"></script>
-        <script src="../../../book-a0b12cfe.js"></script>
+        <script src="../../clipboard-1626706a.min.js"></script>
+        <script src="../../highlight-abc7f01d.js"></script>
+        <script src="../../book-a0b12cfe.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../../../theme/giscus-edff37af.js"></script>
-        <script src="../../../theme/goatcounter-6da6732a.js"></script>
-        <script src="../../../theme/mermaid-init-1bb4d447.js"></script>
-        <script src="../../../theme/mermaid-eefea253.min.js"></script>
+        <script src="../../theme/giscus-edff37af.js"></script>
+        <script src="../../theme/goatcounter-6da6732a.js"></script>
+        <script src="../../theme/mermaid-init-1bb4d447.js"></script>
+        <script src="../../theme/mermaid-eefea253.min.js"></script>
 
 
 
