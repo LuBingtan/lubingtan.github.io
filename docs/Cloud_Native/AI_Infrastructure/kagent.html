@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>kubernetes_ha - Bingtan&#x27;s Wiki</title>
+        <title>kagent: K8s 原生 AI Agent 框架 - Bingtan&#x27;s Wiki</title>
 
 
         <!-- Custom HTML head -->
@@ -146,7 +146,7 @@
                         <a href="https://github.com/lubingtan/lubingtan.github.io" title="Git repository" aria-label="Git repository">
                             <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
                         </a>
-                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Cloud_Native/Kubernetes/kubernetes_ha.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/lubingtan/lubingtan.github.io/edit/main/src/docs/Cloud_Native/AI_Infrastructure/kagent.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -180,25 +180,206 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/#external-etcd-topology</p>
-<h2 id="stacked-etcd-topology"><a class="header" href="#stacked-etcd-topology">Stacked etcd topology</a></h2>
-<p>This topology couples the control planes and etcd members on the same nodes. It is simpler to set up than a cluster with external etcd nodes, and simpler to manage for replication.</p>
-<p>However, a stacked cluster runs the risk of failed coupling. If one node goes down, both an etcd member and a control plane instance are lost, and redundancy is compromised. You can mitigate this risk by adding more control plane nodes.</p>
-<p><img src="kubernetes_ha.assets/kubeadm-ha-topology-stacked-etcd.svg" alt="Stacked etcd topology"></p>
-<h2 id="external-etcd-topology"><a class="header" href="#external-etcd-topology">External etcd topology</a></h2>
-<p>This topology decouples the control plane and etcd member. It therefore provides an HA setup where losing a control plane instance or an etcd member has less impact and does not affect the cluster redundancy as much as the stacked HA topology.</p>
-<p>However, this topology requires twice the number of hosts as the stacked HA topology. A minimum of three hosts for control plane nodes and three hosts for etcd nodes are required for an HA cluster with this topology.</p>
-<p><img src="kubernetes_ha.assets/kubeadm-ha-topology-external-etcd.svg" alt="External etcd topology"></p>
+                        <h1 id="kagent-k8s-原生-ai-agent-框架"><a class="header" href="#kagent-k8s-原生-ai-agent-框架">kagent: K8s 原生 AI Agent 框架</a></h1>
+<h2 id="what-is-kagent"><a class="header" href="#what-is-kagent">What is kagent</a></h2>
+<p><a href="https://github.com/kagent-dev/kagent">kagent</a> 是一个 CNCF 项目，提供了一个 Kubernetes 原生框架用于构建、部署和管理 AI agent。它把 K8s 变成 agentic AI 工作负载的编排层——用声明式 CRD 描述 agent，controller 自动部署 runtime，用户通过 CLI/Web UI/API 与 agent 交互。</p>
+<ul>
+<li>Go（controller/CLI/ADK）、Python（agent runtime）、TypeScript（UI）</li>
+<li>Apache 2.0，最新 v0.10.0-beta6</li>
+<li>CNCF sandbox 阶段</li>
+</ul>
+<p><strong>支持的 LLM Provider</strong>：OpenAI、Anthropic、AWS Bedrock、Gemini、Ollama、Azure OpenAI、SAP AI Core</p>
+<p><strong>支持的 Agent 框架</strong>：Google ADK、LangGraph、CrewAI、OpenAI Agents SDK</p>
+<h2 id="核心概念"><a class="header" href="#核心概念">核心概念</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>CRD</th><th>功能</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Agent</strong></td><td>核心资源——定义一个 AI agent：system prompt、工具集、LLM 模型配置。分<strong>声明式</strong>（CRD 完整描述）和 <strong>BYO</strong>（自带容器镜像，走 A2A 协议）两种</td></tr>
+<tr><td><strong>ModelConfig</strong></td><td>LLM provider + model 配置（provider、model name、API key reference、temperature 等参数）</td></tr>
+<tr><td><strong>RemoteMCPServer</strong></td><td>引用外部 MCP server（HTTP/SSE 协议），让 agent 可以调用外部工具</td></tr>
+<tr><td><strong>SandboxAgent</strong></td><td>在 Agent Substrate 沙箱 VM 中运行的 agent，隔离执行不受信任代码</td></tr>
+<tr><td><strong>AgentHarness</strong></td><td>为沙箱 agent 提供可复用的测试/评估框架</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="架构"><a class="header" href="#架构">架构</a></h2>
+<pre class="mermaid">flowchart TB
+    subgraph User["User"]
+        CLI["kagent CLI (TUI)"]
+        WEB["Web UI (Next.js)"]
+        KUBECTL["kubectl / Helm"]
+    end
+
+    subgraph Control["Control Plane (Go)"]
+        CTRL["Controller Manager"]
+        HTTP["HTTP Server (:8083)"]
+        A2A["A2A Handler Mux"]
+        AGT["Agent Controller"]
+        TR["ADK API Translator"]
+    end
+
+    subgraph Runtime["Agent Runtimes"]
+        PY["Python ADK\n(Google ADK-based)"]
+        GO["Go ADK"]
+        BYO["BYO Container\n(:8080, A2A)"]
+    end
+
+    subgraph Tools["Tool Ecosystem"]
+        MCP["MCP Servers\n(istio, k8s, helm,\nprometheus, grafana...)"]
+        REMOTE["Remote MCP\n(HTTP/SSE)"]
+    end
+
+    KUBECTL --&gt; K8S_API[("K8s API")]
+    CLI --&gt; HTTP
+    WEB --&gt; HTTP
+    K8S_API --&gt; CTRL
+    AGT --&gt; TR
+    TR --&gt; PY
+    TR --&gt; GO
+    A2A --&gt; Runtime
+    PY --&gt; MCP
+    PY --&gt; REMOTE
+    GO --&gt; MCP
+</pre>
+
+<p><strong>三层设计</strong>：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>层</th><th>组件</th><th>作用</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>控制面</strong>（Go）</td><td>Controller Manager + HTTP Server + A2A Handler Mux</td><td>监听 CRD 变更、协调资源、提供 API、路由 A2A 请求</td></tr>
+<tr><td><strong>数据层</strong></td><td>PostgreSQL + pgvector + K8s API Server</td><td>持久化 session/任务状态、向量搜索 agent memory</td></tr>
+<tr><td><strong>运行时</strong></td><td>Python ADK / Go ADK / BYO 容器</td><td>执行 agent 逻辑、调用 LLM、访问 MCP 工具</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="核心组件"><a class="header" href="#核心组件">核心组件</a></h2>
+<h3 id="agent-controller最重要"><a class="header" href="#agent-controller最重要">Agent Controller（最重要）</a></h3>
+<p>Agent Controller 是整个系统的核心——它把 Agent CRD 翻译为 K8s 原生资源：</p>
+<pre><code>Agent CRD ──→ Agent Controller ──→ Deployment + Service + Secret + ConfigMap
+                (ADK API Translator)
+</code></pre>
+<p><strong>翻译过程</strong>：</p>
+<ol>
+<li>读取 Agent CRD —— 获取 system prompt、工具列表、ModelConfig 引用</li>
+<li>ADK Translator 构建 manifest（Python/Go 两种 runtime）</li>
+<li>注入 ModelConfig 的环境变量和 API key（从 Secret 读取）</li>
+<li>为每个 MCP 工具注入地址和认证信息</li>
+<li>创建 Deployment（带 readiness probe）+ Service</li>
+<li>注册到 A2A Handler Mux，使该 agent 可通过 A2A 协议被其他 agent 发现和调用</li>
+</ol>
+<h3 id="a2a-handler-mux"><a class="header" href="#a2a-handler-mux">A2A Handler Mux</a></h3>
+<p>基于 K8s Informer 的 agent 注册和 A2A 请求路由：</p>
+<ul>
+<li>通过 Informer 实时监听 Agent CRD 的创建/更新/删除</li>
+<li>每个 agent 注册时协商协议版本（A2A v0.3.0 / v1.0）</li>
+<li>收到 A2A 请求时，根据 agent 名称路由到对应的 agent Pod</li>
+<li>支持 agent-to-agent 通信——一个 agent 可以作为另一个 agent 的“工具“</li>
+</ul>
+<h3 id="adk-api-translator"><a class="header" href="#adk-api-translator">ADK API Translator</a></h3>
+<p>CRD → 运行时 manifest 的翻译层：</p>
+<pre><code class="language-go">// 简化的翻译流程
+func BuildManifest(agent Agent) Manifest {
+    m := Manifest{}
+    m.Deployment = buildDeployment(agent.Spec.Runtime, agent.Spec.ModelConfig)
+    m.ConfigMap = buildConfigMap(agent.Spec.SystemPrompt, agent.Spec.Tools)
+    m.Secret = buildSecret(agent.Spec.ModelConfig.APIKeyRef)
+    m.Service = buildService(agent.Name, 8080)
+    // 为 agent card 生成 A2A 能力声明
+    m.AgentCard = buildAgentCard(agent.Spec.Skills, agent.Spec.Tools)
+    return m
+}
+</code></pre>
+<h3 id="python-adk-runtime"><a class="header" href="#python-adk-runtime">Python ADK Runtime</a></h3>
+<p>基于 Google ADK 的 agent 运行环境：</p>
+<ul>
+<li>接收 controller 生成的 manifest</li>
+<li>通过 ADK 框架调用 LLM（LiteLLM 作为统一接口）</li>
+<li>内嵌 MCP client 连接工具服务器</li>
+<li>通过 A2A executor 暴露 agent-to-agent 接口</li>
+</ul>
+<h3 id="mcp-工具生态"><a class="header" href="#mcp-工具生态">MCP 工具生态</a></h3>
+<p>kagent 预置了丰富的 MCP server 用于 K8s 运维场景：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>MCP Server</th><th>功能</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>istio-mcp</strong></td><td>Istio 流量管理、故障注入、可观测性配置</td></tr>
+<tr><td><strong>k8s-mcp</strong></td><td>kubectl 操作、资源查询、Pod 管理</td></tr>
+<tr><td><strong>helm-mcp</strong></td><td>Helm chart 安装、升级、回滚</td></tr>
+<tr><td><strong>argo-mcp</strong></td><td>Argo CD/Rollouts 管理</td></tr>
+<tr><td><strong>prometheus-mcp</strong></td><td>PromQL 查询、告警规则管理</td></tr>
+<tr><td><strong>grafana-mcp</strong></td><td>Dashboard 管理、数据源配置</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="用户体验"><a class="header" href="#用户体验">用户体验</a></h2>
+<h3 id="声明式创建-agent"><a class="header" href="#声明式创建-agent">声明式创建 Agent</a></h3>
+<pre><code class="language-yaml">apiVersion: kagent.dev/v1alpha2
+kind: Agent
+metadata:
+  name: k8s-troubleshooter
+spec:
+  modelConfig:
+    provider: anthropic
+    model: claude-sonnet-4-6
+  systemPrompt: |
+    You are a Kubernetes troubleshooting expert. You have access to
+    kubectl, helm, and prometheus tools to diagnose cluster issues.
+  tools:
+    - k8s-mcp-server
+    - helm-mcp-server
+    - prometheus-mcp-server
+</code></pre>
+<h3 id="clitui-交互式聊天"><a class="header" href="#clitui-交互式聊天">CLI（TUI 交互式聊天）</a></h3>
+<pre><code class="language-bash"># 列出所有 agent
+kagent agent list
+
+# 与 agent 对话（TUI 界面）
+kagent agent chat k8s-troubleshooter
+
+# 管理 MCP server
+kagent mcp list
+kagent mcp install prometheus
+</code></pre>
+<h3 id="web-ui"><a class="header" href="#web-ui">Web UI</a></h3>
+<p>Next.js 构建的 Web 界面，提供 agent 的创建、管理、对话的可视化操作。</p>
+<h2 id="与其他项目的关系"><a class="header" href="#与其他项目的关系">与其他项目的关系</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>项目</th><th>关系</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Agent Sandbox</strong></td><td>kagent 集成 Agent Substrate 为 SandboxAgent，提供沙箱隔离执行</td></tr>
+<tr><td><strong>Google ADK</strong></td><td>Python agent runtime 基于 Google ADK 框架</td></tr>
+<tr><td><strong>A2A Protocol</strong></td><td>Agent 间通信标准，BYO agent 的互操作接口</td></tr>
+<tr><td><strong>MCP Protocol</strong></td><td>Agent 调用外部工具的标准协议</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="参考"><a class="header" href="#参考">参考</a></h2>
+<ul>
+<li><a href="https://github.com/kagent-dev/kagent">kagent GitHub</a></li>
+<li><a href="https://kagent.dev">kagent Documentation</a></li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/k8s之pleg.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../../../docs/Cloud_Native/AI_Infrastructure/agent-sandbox.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/rbac.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../../../cicd.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -208,11 +389,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../../docs/Cloud_Native/Kubernetes/k8s之pleg.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../../../docs/Cloud_Native/AI_Infrastructure/agent-sandbox.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../../../docs/Cloud_Native/Kubernetes/rbac.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../../../cicd.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
