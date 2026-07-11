@@ -25,6 +25,7 @@
 ### AI Infrastructure
 
 - [Agent Sandbox](./Cloud_Native/AI_Infrastructure/agent-sandbox.md) — K8s 原生沙箱执行环境：WarmPool 预热池、SandboxClaim 生命周期、7 层安全隔离、Router 请求路由与认证
+- [kagent](./Cloud_Native/AI_Infrastructure/kagent.md) — CNCF K8s 原生 AI Agent 框架：声明式 CRD、Agent Controller、A2A Handler Mux、MCP 工具生态、ADK Runtime
 
 ### Cluster Lifecycle
 
