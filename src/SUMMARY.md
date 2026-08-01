@@ -5,6 +5,7 @@
 
 - [AI Infrastructure]()
   - [Agent Sandbox: K8s 原生沙箱执行环境](./docs/Cloud_Native/AI_Infrastructure/agent-sandbox.md)
+  - [Agent Substrate: 高密度 Agent 沙箱 Runtime](./docs/Cloud_Native/AI_Infrastructure/agent-substrate.md)
   - [kagent: K8s 原生 AI Agent 框架](./docs/Cloud_Native/AI_Infrastructure/kagent.md)
 - [CICD]()
   - [DevOps 理念与实践](./docs/Cloud_Native/CICD/devops-thinking.md)
