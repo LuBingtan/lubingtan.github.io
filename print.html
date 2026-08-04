@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b16a8744.js";
+            window.path_to_searchindex_js = "searchindex-11e98291.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-5d8e2b68.js"></script>
@@ -354,7 +354,7 @@
 </script>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="latest-updates"><a href="#latest-updates" class="header">Latest updates</a></h1>
-<h2 id="2026-08-01"><a class="header" href="#2026-08-01">2026-08-01</a></h2>
+<h2 id="2026-08-04"><a class="header" href="#2026-08-04">2026-08-04</a></h2>
 <blockquote>
 <h4 id="agent-substrate-高密度-agent-沙箱-runtime"><a class="header" href="#agent-substrate-高密度-agent-沙箱-runtime"><a href="#agent-substrate-高密度-agent-沙箱-runtime-1">Agent Substrate: 高密度 Agent 沙箱 Runtime</a></a></h4>
 </blockquote>
@@ -1060,6 +1060,141 @@ Substrate: Actor 无资源声明    → 调度器找空闲 Worker     → 运行
 </div>
 <h3 id="workflow-engine"><a class="header" href="#workflow-engine">Workflow Engine</a></h3>
 <p>所有多步 actor 操作都实现为<strong>幂等步骤序列</strong>，由通用 workflow 引擎执行。关键可靠性模式：如果服务器在操作中途崩溃，客户端只需重试相同 RPC，每步的 <code>IsComplete()</code> 检查会跳过已完成的工作——“Client-Driven Forward Recovery”。</p>
+<h2 id="demo-详解-claude-code-multiplex"><a class="header" href="#demo-详解-claude-code-multiplex">Demo 详解: claude-code-multiplex</a></h2>
+<p>这个 demo 用 2 个 worker 承载 3 个 AI agent，是理解 Substrate 全部底层原理的最佳入口。</p>
+<h3 id="demo-结构"><a class="header" href="#demo-结构">Demo 结构</a></h3>
+<pre><code>WorkerPool: 2 个 gVisor worker Pod
+ActorTemplates × 3: agent-luna, agent-mars, agent-orion
+  └── 同一 workload 镜像，不同 TASK prompt
+  └── 每 45s 调用一次 claude --print，其余时间 sleep
+</code></pre>
+<p>三个 agent 的 workload 就是一个 shell 脚本循环：</p>
+<pre><code class="language-bash">while true; do
+  claude --print "${TASK}"           # 调用 Claude API 执行 LLM 推理
+  sleep "${INTERVAL_SECONDS}"        # 空闲 45s
+done
+</code></pre>
+<p>任何一个 agent 在 <code>sleep</code> 的空闲窗口内都会被 Substrate 自动 suspend（checkpoint 到 GCS），worker 释放给其他 agent。3 个 agent 竞争 2 个 worker，至少有一个时刻处于 suspend 状态。</p>
+<h3 id="完整生命周期走读"><a class="header" href="#完整生命周期走读">完整生命周期走读</a></h3>
+<p>以 <code>agent-luna</code> 为例，从冷启动到第三次 resume：</p>
+<pre><code>时间轴
+  │
+  ├─ T0: 部署 WorkerPool(2) + 3 个 ActorTemplate
+  │     atecontroller 创建 2 个 Worker Pod，注入 ateom-gvisor sidecar (gVisor 13 capability)
+  │     ActorTemplate 触发 Golden Snapshot 创建（冷启动 checkpoint）
+  │
+  ├─ T1: 首次访问 agent-luna
+  │     Client → atenet DNS → Router → 解析 Host header 提取 (agent-luna, namespace)
+  │     │
+  │     ├─ Router ext_proc: parking lot admit（有空闲 worker，直通）
+  │     ├─ Router → ateapi: ResumeActor(agent-luna)
+  │     ├─ ateapi: 分布式锁 → 调度器随机选 worker-1 → 乐观锁认领 worker-1
+  │     ├─ ateapi → atelet(node-1): Restore(Golden Snapshot)
+  │     ├─ atelet: 从 GCS 拉取 Golden Snapshot（稀疏 zstd）
+  │     ├─ atelet → ateom: RestoreWorkload
+  │     ├─ ateom: runsc restore（恢复进程树：bash + sleep 状态 + 内存计数器）
+  │     ├─ ateom → atunnel: 就绪，监听 :443
+  │     ├─ ateapi ← atelet: worker-1 pod IP
+  │     └─ Router: Envoy ORIGINAL_DST → worker-1:443 (mTLS) → atunnel → actor :80
+  │
+  │     此时 bash 进程从 suspend 点恢复，继续执行 sleep 后续。
+  │     agent-luna 占据 worker-1，执行 claude --print，返回结果，进入 sleep 45s。
+  │
+  ├─ T2: agent-luna 在 sleep 中，agent-mars 被访问
+  │     Router → ateapi: ResumeActor(agent-mars)
+  │     ateapi 调度器: worker-1 被占用 → 选 worker-2 → 恢复 agent-mars
+  │     agent-mars 占据 worker-2。两个 worker 都被占用，agent-orion 处于 suspended。
+  │
+  ├─ T3: agent-luna sleep 超时，Substrate 自动 Suspend
+  │     ateapi → ateom: SuspendActor
+  │     ateom: runsc checkpoint → 进程树 + rootfs delta + DurableDir 快照
+  │     atelet: 稀疏 zstd 压缩 → 流式上传 GCS（Last Snapshot）
+  │     worker-1 释放（assignment = nil），回到调度池
+  │     agent-luna 状态: SUSPENDED（零资源消耗）
+  │
+  ├─ T4: agent-orion 被访问
+  │     Router → ateapi: ResumeActor(agent-orion)
+  │     调度器: worker-1 空闲 → 恢复 agent-orion 到 worker-1
+  │
+  └─ T5: agent-luna sleep 结束，45s 后有新请求到达
+        Router → ateapi: ResumeActor(agent-luna)
+        调度器: 两个 worker 都忙 → parking lot 等待
+        500ms 后 agent-mars 进入 sleep → Suspend → worker-2 释放
+        调度器选中 worker-2 → 恢复 agent-luna 的 Last Snapshot
+        bash 进程继续 sleep 后的代码 → claude --print → 返回结果
+</code></pre>
+<h3 id="涉及的全部原理"><a class="header" href="#涉及的全部原理">涉及的全部原理</a></h3>
+<h4 id="双层状态模型-1"><a class="header" href="#双层状态模型-1">双层状态模型</a></h4>
+<p>WorkerPool(2) → Worker Pod 由 K8s 管理（低频，分钟级）；actor 的 RUNNING/SUSPENDED 状态由 Redis 管理（高频，秒级）。这避免了百万 actor 的状态写爆 etcd。</p>
+<h4 id="worker-pod-权限"><a class="header" href="#worker-pod-权限">Worker Pod 权限</a></h4>
+<p>ateom-gvisor sidecar 以 <code>runAsUser:0, drop ALL + 13 capability</code> 运行，在 Pod 内 exec <code>runsc</code> 创建 gVisor sandbox。</p>
+<h4 id="绕过-k8s-容器栈"><a class="header" href="#绕过-k8s-容器栈">绕过 K8s 容器栈</a></h4>
+<p><code>runsc</code> 由 ateom 直接 exec，不经过 kubelet → CRI → containerd → runc 链条。Worker Pod 本身是标准 K8s Pod，沙箱在 Pod 内部创建。</p>
+<h4 id="调度器-1"><a class="header" href="#调度器-1">调度器</a></h4>
+<p>随机选择空闲 worker，约束匹配（sandbox class + labels），乐观并发认领。无优先级/抢占——瓶颈在 Redis 延迟和快照恢复，不在调度算法。</p>
+<h4 id="快照系统"><a class="header" href="#快照系统">快照系统</a></h4>
+<p>Golden Snapshot（T0 冷启动创建，agent 首次 resume 用）→ Last Snapshot（T3 自动 suspend 时创建，T5 resume 用）。FULL 作用域（进程树 + rootfs delta）。</p>
+<h4 id="actor-资源管理-1"><a class="header" href="#actor-资源管理-1">Actor 资源管理</a></h4>
+<p>无独立 requests/limits。agent-luna 在 RUNNING 时占用 worker-1 的全部资源（2CPU/4Gi），SUSPENDED 时消耗 0 资源。3 个 agent ↔ 2 个 worker，通过时间维度多路复用。</p>
+<h4 id="request-parking"><a class="header" href="#request-parking">Request Parking</a></h4>
+<p>T5 时两个 worker 都忙，Router 不立即返回 503，而是持有请求重试 ResumeActor（默认 5s 预算），等待 worker 释放。通过 <code>singleflight.Group</code> 去重。</p>
+<h4 id="路由"><a class="header" href="#路由">路由</a></h4>
+<pre><code>DNS 解析 agent-luna.ns.actors.resources.substrate.ate.dev
+  → Envoy ext_proc 触发 ResumeActor
+  → ORIGINAL_DST 改道到 worker IP
+  → atunnel mTLS :443 → 私有 veth → actor :80
+</code></pre>
+<p>整个过程对客户端透明——客户端只知道 actor DNS 名。</p>
+<h4 id="suspend-触发机制"><a class="header" href="#suspend-触发机制">Suspend 触发机制</a></h4>
+<p>Suspend 不是“检测到 <code>sleep</code>“触发的，而是<strong>空闲超时</strong>。ateapi 追踪每个 actor 的空闲时长——当 actor 在配置的时间窗口内没有收到 HTTP 请求、且进程处于可 checkpoint 状态（线程 quiesced，无活跃 syscall），自动发起 Suspend。<code>sleep</code> 只是让进程进入完全静止状态，使 <code>runsc checkpoint</code> 能瞬间完成。</p>
+<h4 id="suspendresume"><a class="header" href="#suspendresume">Suspend/Resume</a></h4>
+<p><code>runsc checkpoint</code> 捕获 bash + sleep + claude 的完整进程状态 → 上传 GCS → 释放 worker。下次 resume 时 <code>runsc restore</code>，bash 从 <code>sleep</code> 后继续执行，不知道自已被迁移过。</p>
+<h4 id="两种-actor-运行模式"><a class="header" href="#两种-actor-运行模式">两种 Actor 运行模式</a></h4>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th></th><th>HTTP Server Actor</th><th>Autonomous Script Actor</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>形态</strong></td><td>长期运行 HTTP server，监听 <code>:80</code></td><td>脚本/程序，启动后自主执行，sleep → Suspend → Resume 循环</td></tr>
+<tr><td><strong>连续执行</strong></td><td>持续在线，每次 HTTP 请求触发处理</td><td>启动 → 执行 → sleep → Suspend → 再 Resume</td></tr>
+<tr><td><strong>输入</strong></td><td>HTTP request body（每次可不同）</td><td>环境变量（冷启动时固化，suspend/resume 不变）</td></tr>
+<tr><td><strong>输出</strong></td><td>HTTP response（调用方同步拿到）</td><td>stdout/stderr（<code>kubectl logs</code>）</td></tr>
+<tr><td><strong>示例</strong></td><td>sandbox demo: <code>POST /process</code></td><td>claude-code-multiplex: <code>claude --print</code></td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="输入输出模式"><a class="header" href="#输入输出模式">输入/输出模式</a></h4>
+<p><strong>输入</strong>：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方式</th><th>传递路径</th><th>何时生效</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>HTTP body</strong></td><td>Client → Router → atunnel → actor <code>:80</code></td><td>每次请求实时</td></tr>
+<tr><td><strong>环境变量</strong></td><td><code>ActorTemplate.spec.containers[].env</code> → OCI spec → Golden Snapshot → 进程启动</td><td>冷启动时固化</td></tr>
+</tbody>
+</table>
+</div>
+<p>以 TASK 参数为例：CRD env 写入 Golden Snapshot → atelet restore 时注入容器 → <code>run.sh</code> 中 <code>${TASK}</code> 被 bash 展开：<code>claude --print "${TASK}"</code>。环境变量固化在 Golden Snapshot 中，要换 TASK 需删除 actor 重新冷启动。HTTP 模式无此限制。</p>
+<p><strong>输出</strong>：</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>方式</th><th>去向</th><th>谁读取</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>HTTP response</strong></td><td>Client ← Router ← atunnel ← actor</td><td>调用方同步拿到</td></tr>
+<tr><td><strong>stdout/stderr</strong></td><td>容器 stdout → <code>kubectl logs</code></td><td>运维 / log collector</td></tr>
+<tr><td><strong>DurableDir 文件</strong></td><td>actor 容器内 → 随快照持久化</td><td>下次 resume 的 actor 自己</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>stdin 桥接</strong>：Substrate 不参与 stdin 传递（Router 只转发 TCP）。HTTP Server Actor 可在应用层桥接 HTTP body → 子进程 stdin：</p>
+<pre><code class="language-go">cmd := exec.CommandContext(ctx, req.Command[0], req.Command[1:]...)
+cmd.Stdin = strings.NewReader(req.Stdin)  // HTTP body → fd 0
+</code></pre>
 <h2 id="与-kagentagent-sandbox-的关系"><a class="header" href="#与-kagentagent-sandbox-的关系">与 kagent、Agent Sandbox 的关系</a></h2>
 <p>三个项目形成了 AI 基础设施的技术栈：</p>
 <pre><code>┌─────────────────────────────────────────────────┐
