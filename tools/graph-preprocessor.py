@@ -319,7 +319,16 @@ if __name__ == '__main__':
 
     nodes, edges, categories = _build_graph()
 
-    book['items'].insert(0, {
+    # Insert the Graph View right after the 'Latest updates' chapter, which is
+    # inserted at the front by blog-preprocessor.py (runs before this one per
+    # book.toml preprocessor order). Fall back to the front if not found.
+    insert_at = 0
+    for i, item in enumerate(book['items']):
+        if 'Chapter' in item and item['Chapter'].get('name') == 'Latest updates':
+            insert_at = i + 1
+            break
+
+    book['items'].insert(insert_at, {
         'Chapter': {
             'name': 'Graph View',
             'content': _graph_html(nodes, edges, categories),
